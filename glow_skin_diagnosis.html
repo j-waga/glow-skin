@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow 肌診断ツール</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0e0b14;
+    --surface:   #1a1525;
+    --card:      #211b30;
+    --border:    rgba(192,160,255,0.15);
+    --accent:    #c9a0f5;
+    --accent2:   #f4a8d0;
+    --accent3:   #87ceeb;
+    --gold:      #e8c97a;
+    --text:      #ede8f7;
+    --muted:     #9b91b8;
+    --radius:    16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 32px 16px 60px;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(130,60,220,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 80%, rgba(244,168,208,0.12) 0%, transparent 50%);
+  }
+
+  .wrapper {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  /* ─── ヘッダー ─── */
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+    animation: fadeDown 0.7s ease both;
+  }
+  .logo {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(22px, 5vw, 30px);
+    font-weight: 700;
+    line-height: 1.4;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ─── プログレスバー ─── */
+  .progress-wrap {
+    margin-bottom: 28px;
+    animation: fadeDown 0.7s 0.1s ease both;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 99px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* ─── カード ─── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    margin-bottom: 16px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .q-number {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .q-text {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .q-note {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: -12px;
+    margin-bottom: 18px;
+  }
+
+  /* ─── 選択肢ボタン ─── */
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+  .options.col2 { grid-template-columns: 1fr 1fr; }
+
+  .opt {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+  }
+  .opt::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .opt:hover { border-color: rgba(201,160,245,0.4); transform: translateY(-1px); }
+  .opt:hover::before { opacity: 0.06; }
+  .opt.selected {
+    border-color: var(--accent);
+    background: rgba(201,160,245,0.1);
+  }
+  .opt.selected::before { opacity: 0.08; }
+  .opt-icon { font-size: 22px; margin-bottom: 6px; display: block; position: relative; z-index: 1; }
+  .opt-label { font-size: 14px; font-weight: 500; display: block; position: relative; z-index: 1; }
+  .opt-desc { font-size: 11px; color: var(--muted); margin-top: 3px; display: block; position: relative; z-index: 1; }
+
+  /* ─── ナビゲーション ─── */
+  .nav {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    letter-spacing: 0.05em;
+  }
+  .btn-back {
+    background: rgba(255,255,255,0.06);
+    color: var(--muted);
+    border: 1px solid var(--border);
+    flex: 0 0 auto;
+    width: 80px;
+  }
+  .btn-back:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+  .btn-next {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    color: #0e0b14;
+  }
+  .btn-next:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(201,160,245,0.3); }
+  .btn-next:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* ─── 結果画面 ─── */
+  .result-header {
+    text-align: center;
+    padding: 32px 24px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .result-badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    border: 1px solid rgba(201,160,245,0.3);
+    border-radius: 99px;
+    padding: 4px 14px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .result-skin-type {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(24px, 6vw, 34px);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+  .result-summary {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .section-title {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    padding-left: 2px;
+  }
+
+  /* ─── ブランドカード ─── */
+  .brands-grid {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 16px;
+    animation: fadeUp 0.5s 0.1s ease both;
+  }
+  .brand-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .brand-rank {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+    min-width: 36px;
+  }
+  .rank-1 { color: var(--gold); }
+  .rank-2 { color: var(--accent); }
+  .rank-3 { color: var(--accent3); }
+  .brand-info { flex: 1; }
+  .brand-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .brand-category {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    background: rgba(201,160,245,0.12);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin-bottom: 6px;
+  }
+  .brand-reason { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .brand-price { font-size: 11px; color: var(--gold); margin-top: 6px; font-weight: 500; }
+
+  /* ─── 成分カード ─── */
+  .ingredients-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+    animation: fadeUp 0.5s 0.2s ease both;
+  }
+  .ing-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .ing-tag {
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 99px;
+    font-weight: 500;
+  }
+  .ing-tag.good {
+    background: rgba(135,206,235,0.12);
+    color: var(--accent3);
+    border: 1px solid rgba(135,206,235,0.25);
+  }
+  .ing-tag.avoid {
+    background: rgba(244,100,100,0.1);
+    color: #f48a8a;
+    border: 1px solid rgba(244,100,100,0.2);
+  }
+  .ing-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin: 12px 0 6px;
+  }
+
+  /* ─── CTAカード ─── */
+  .cta-card {
+    background: linear-gradient(135deg, rgba(201,160,245,0.12), rgba(244,168,208,0.08));
+    border: 1px solid rgba(201,160,245,0.25);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+    animation: fadeUp 0.5s 0.3s ease both;
+  }
+  .cta-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .cta-text { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+  .cta-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #0e0b14;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 12px 28px;
+    border-radius: 99px;
+    cursor: pointer;
+    border: none;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,160,245,0.35); }
+
+  .restart-btn {
+    display: block;
+    width: 100%;
+    margin-top: 12px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 13px;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .restart-btn:hover { color: var(--text); border-color: rgba(201,160,245,0.3); }
+
+  /* ─── アニメーション ─── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hidden { display: none; }
+
+  /* ─── レスポンシブ ─── */
+  @media (max-width: 400px) {
+    .options.col2 { grid-template-columns: 1fr; }
+    .card { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- ヘッダー -->
+  <div class="header">
+    <div class="logo">✦ Glow</div>
+    <div class="title">あなたの肌に合う<br>スキンケアを診断します</div>
+    <div class="subtitle">4つの質問に答えるだけ。<br>肌タイプ×悩み×予算から最適なブランドTop3をご提案します。</div>
+  </div>
+
+  <!-- プログレスバー -->
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="prog-text">Q1 / 4</span>
+      <span id="prog-pct">25%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:25%"></div></div>
+  </div>
+
+  <!-- ===== Q1: 肌タイプ ===== -->
+  <div class="card" id="q1">
+    <div class="q-number">Question 01</div>
+    <div class="q-text">あなたの肌タイプは？</div>
+    <div class="options col2">
+      <button class="opt" onclick="select(1,'dry')">
+        <span class="opt-icon">💧</span>
+        <span class="opt-label">乾燥肌</span>
+        <span class="opt-desc">つっぱり感・粉吹きが気になる</span>
+      </button>
+      <button class="opt" onclick="select(1,'oily')">
+        <span class="opt-icon">✨</span>
+        <span class="opt-label">脂性肌</span>
+        <span class="opt-desc">テカリ・毛穴が気になる</span>
+      </button>
+      <button class="opt" onclick="select(1,'combo')">
+        <span class="opt-icon">🌗</span>
+        <span class="opt-label">混合肌</span>
+        <span class="opt-desc">Tゾーンはテカるのに頬は乾燥</span>
+      </button>
+      <button class="opt" onclick="select(1,'sensitive')">
+        <span class="opt-icon">🌸</span>
+        <span class="opt-label">敏感肌</span>
+        <span class="opt-desc">刺激に弱い・赤みが出やすい</span>
+      </button>
+    </div>
+    <div class="nav" style="margin-top:18px">
+      <button class="btn btn-next" id="q1-next" disabled onclick="next(1)">次へ →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q2: 悩み ===== -->
+  <div class="card hidden" id="q2">
+    <div class="q-number">Question 02</div>
+    <div class="q-text">一番気になる肌悩みは？</div>
+    <div class="options">
+      <button class="opt" onclick="select(2,'pore')">
+        <span class="opt-icon">🔍</span>
+        <span class="opt-label">毛穴・黒ずみ</span>
+        <span class="opt-desc">毛穴の開き・詰まり・黒ずみが気になる</span>
+      </button>
+      <button class="opt" onclick="select(2,'acne')">
+        <span class="opt-icon">🌿</span>
+        <span class="opt-label">ニキビ・肌荒れ</span>
+        <span class="opt-desc">ニキビや赤みが繰り返し出る</span>
+      </button>
+      <button class="opt" onclick="select(2,'spot')">
+        <span class="opt-icon">⭐</span>
+        <span class="opt-label">シミ・くすみ</span>
+        <span class="opt-desc">透明感がなく顔色が暗い</span>
+      </button>
+      <button class="opt" onclick="select(2,'dry')">
+        <span class="opt-icon">💦</span>
+        <span class="opt-label">乾燥・インナードライ</span>
+        <span class="opt-desc">保湿してもすぐ乾く・化粧崩れが気になる</span>
+      </button>
+      <button class="opt" onclick="select(2,'aging')">
+        <span class="opt-icon">🪷</span>
+        <span class="opt-label">シワ・ハリ不足</span>
+        <span class="opt-desc">年齢とともにたるみ・シワが気になり始めた</span>
+      </button>
+    </div>
+    <div class="nav" style="margin-top:18px">
+      <button class="btn btn-back" onclick="back(2)">← 戻る</button>
+      <button class="btn btn-next" id="q2-next" disabled onclick="next(2)">次へ →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q3: こだわり ===== -->
+  <div class="card hidden" id="q3">
+    <div class="q-number">Question 03</div>
+    <div class="q-text">スキンケアで大切にしていることは？</div>
+    <div class="options">
+      <button class="opt" onclick="select(3,'ingredient')">
+        <span class="opt-icon">🔬</span>
+        <span class="opt-label">成分・効果重視</span>
+        <span class="opt-desc">配合成分と科学的根拠を重視する</span>
+      </button>
+      <button class="opt" onclick="select(3,'korean')">
+        <span class="opt-icon">🇰🇷</span>
+        <span class="opt-label">韓国コスメ好き</span>
+        <span class="opt-desc">K-BeautyやSNSで話題のブランドが好き</span>
+      </button>
+      <button class="opt" onclick="select(3,'additivefree')">
+        <span class="opt-icon">🍃</span>
+        <span class="opt-label">無添加・低刺激</span>
+        <span class="opt-desc">香料・アルコールフリーなど肌に優しいものを選ぶ</span>
+      </button>
+      <button class="opt" onclick="select(3,'brand')">
+        <span class="opt-icon">👑</span>
+        <span class="opt-label">ブランド・信頼性</span>
+        <span class="opt-desc">実績あるブランドや皮膚科推奨ものを使いたい</span>
+      </button>
+    </div>
+    <div class="nav" style="margin-top:18px">
+      <button class="btn btn-back" onclick="back(3)">← 戻る</button>
+      <button class="btn btn-next" id="q3-next" disabled onclick="next(3)">次へ →</button>
+    </div>
+  </div>
+
+  <!-- ===== Q4: 予算 ===== -->
+  <div class="card hidden" id="q4">
+    <div class="q-number">Question 04</div>
+    <div class="q-text">スキンケアの月間予算は？</div>
+    <div class="q-note">※ 化粧水・乳液・美容液などスキンケア全体の合計目安</div>
+    <div class="options">
+      <button class="opt" onclick="select(4,'low')">
+        <span class="opt-icon">💴</span>
+        <span class="opt-label">〜2,000円</span>
+        <span class="opt-desc">ドラッグストアのプチプラ中心</span>
+      </button>
+      <button class="opt" onclick="select(4,'mid')">
+        <span class="opt-icon">💳</span>
+        <span class="opt-label">2,000〜8,000円</span>
+        <span class="opt-desc">機能性重視のミドルレンジ</span>
+      </button>
+      <button class="opt" onclick="select(4,'high')">
+        <span class="opt-icon">✦</span>
+        <span class="opt-label">8,000円〜</span>
+        <span class="opt-desc">効果優先・デパコスも視野に</span>
+      </button>
+    </div>
+    <div class="nav" style="margin-top:18px">
+      <button class="btn btn-back" onclick="back(4)">← 戻る</button>
+      <button class="btn btn-next" id="q4-next" disabled onclick="showResult()">診断する ✦</button>
+    </div>
+  </div>
+
+  <!-- ===== 結果 ===== -->
+  <div id="result" class="hidden">
+
+    <div class="result-header">
+      <div class="result-badge">診断結果</div>
+      <div class="result-skin-type" id="res-title"></div>
+      <div class="result-summary" id="res-summary"></div>
+    </div>
+
+    <!-- ブランドTop3 -->
+    <div class="brands-grid" id="brands-wrap">
+      <div class="section-title">おすすめブランド Top 3</div>
+    </div>
+
+    <!-- 成分情報 -->
+    <div class="ingredients-card" id="ing-wrap">
+      <div class="section-title">あなたの肌に効く成分 / 避けるべき成分</div>
+      <div class="ing-label">✅ おすすめ成分</div>
+      <div class="ing-grid" id="ing-good"></div>
+      <div class="ing-label" style="margin-top:14px">⚠️ 避けたい成分</div>
+      <div class="ing-grid" id="ing-avoid"></div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-card">
+      <div class="cta-title">📖 もっと詳しく知りたい方へ</div>
+      <div class="cta-text">Glowでは毎日、最新の美容成分・ブランド情報をXとnoteで発信しています。<br>フォローして、あなたの肌に合う情報を受け取ってください✨</div>
+      <button class="cta-btn" onclick="alert('Xアカウント・noteへのリンクをここに設定してください')">Glowをフォローする →</button>
+      <button class="restart-btn" onclick="restart()">🔄 もう一度診断する</button>
+    </div>
+
+  </div><!-- /result -->
+
+</div><!-- /wrapper -->
+
+<script>
+// ===== 回答データ =====
+var answers = { q1: null, q2: null, q3: null, q4: null };
+
+// ===== 選択処理 =====
+function select(qNum, val) {
+  answers['q' + qNum] = val;
+  var card = document.getElementById('q' + qNum);
+  card.querySelectorAll('.opt').forEach(function(b) { b.classList.remove('selected'); });
+  event.currentTarget.classList.add('selected');
+  document.getElementById('q' + qNum + '-next').disabled = false;
+}
+
+// ===== 画面遷移 =====
+function next(current) {
+  document.getElementById('q' + current).classList.add('hidden');
+  var nextQ = document.getElementById('q' + (current + 1));
+  nextQ.classList.remove('hidden');
+  nextQ.style.animation = 'none';
+  nextQ.offsetHeight;
+  nextQ.style.animation = '';
+  updateProgress(current + 1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function back(current) {
+  document.getElementById('q' + current).classList.add('hidden');
+  document.getElementById('q' + (current - 1)).classList.remove('hidden');
+  updateProgress(current - 1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function updateProgress(step) {
+  var pct = Math.round((step / 4) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = 'Q' + step + ' / 4';
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+// ===== 結果データベース =====
+var DB = {
+  // 肌タイプ別ラベル・サマリー
+  skinLabel: {
+    dry:       '乾燥肌タイプ',
+    oily:      '脂性肌タイプ',
+    combo:     '混合肌タイプ',
+    sensitive: '敏感肌タイプ'
+  },
+  skinSummary: {
+    dry:       '水分・油分ともに不足しがちな乾燥肌。バリア機能を補うセラミドやヒアルロン酸が鍵です。',
+    oily:      '皮脂分泌が多く毛穴トラブルが起きやすいタイプ。皮脂コントロールしながら保湿を忘れずに。',
+    combo:     'Tゾーンと頬で異なるケアが必要な混合肌。軽めの保湿でバランスを整えましょう。',
+    sensitive: '外部刺激に反応しやすい敏感肌。低刺激・無添加処方で肌のバリアを守ることが最優先。'
+  },
+
+  // 成分データ
+  ingredients: {
+    dry: {
+      good:  ['セラミド', 'ヒアルロン酸', 'グリセリン', 'スクワラン', 'シアバター', 'ポリグルタミン酸'],
+      avoid: ['アルコール（エタノール）', 'サリチル酸', '強いピーリング剤']
+    },
+    oily: {
+      good:  ['ナイアシンアミド', 'サリチル酸(BHA)', 'グリコール酸(AHA)', 'ドクダミエキス', 'アゼライン酸'],
+      avoid: ['鉱物油', '重いシリコン', 'ラノリン']
+    },
+    combo: {
+      good:  ['ナイアシンアミド', 'ペプチド', 'ドクダミエキス', '軽めセラミド', 'グリセリン'],
+      avoid: ['全顔への重ベースオイル', '高濃度アルコール']
+    },
+    sensitive: {
+      good:  ['シカ(センテラ)', 'パンテノール', 'アラントイン', 'トラネキサム酸', 'ベータグルカン'],
+      avoid: ['エタノール', '香料', '強いAHA/BHA', 'メントール']
+    }
+  },
+
+  // ブランドデータ（肌タイプ×予算×こだわり）
+  brands: function(skin, concern, pref, budget) {
+    var all = {
+
+      // ─── 乾燥肌 ───
+      dry: {
+        low: {
+          ingredient:    [
+            { name: 'キュレル', cat: 'スキンケア基礎', reason: '花王の独自セラミドカプセル技術で角層深部まで保湿。医薬部外品で効果を科学的に訴求。', price: '¥700〜1,500' },
+            { name: 'ヒフミド', cat: 'スキンケア基礎', reason: '小林製薬の高濃度ヒト型セラミド（4%配合）。乾燥が気になる年齢肌に特化した設計。', price: '¥2,000〜4,000' },
+            { name: 'ミノン アミノモイスト', cat: 'スキンケア基礎', reason: 'アミノ酸系保湿成分配合の敏感乾燥肌の定番。低刺激で毎日使いやすい。', price: '¥1,000〜2,500' }
+          ],
+          korean:        [
+            { name: 'Laneige', cat: 'スキンケア基礎', reason: 'ウォータースリーピングマスクが大ヒット。ヒアルロン酸×グリーンティーで水分チャージ。', price: '¥2,500〜4,000' },
+            { name: 'COSRX', cat: 'スキンケア基礎', reason: 'スネイルムチン・セラミド配合。成分透明性が高くSNSで世界的人気。', price: '¥1,500〜3,000' },
+            { name: 'キュレル', cat: 'スキンケア基礎', reason: 'セラミドカプセル技術で角層深部まで浸透。乾燥性敏感肌の定番ブランド。', price: '¥700〜1,500' }
+          ],
+          additivefree:  [
+            { name: 'ファンケル', cat: 'スキンケア基礎', reason: '無添加化粧品の先駆け。防腐剤・香料不使用で敏感乾燥肌にも安心。', price: '¥1,500〜3,500' },
+            { name: '無印良品', cat: 'スキンケア基礎', reason: '天然由来成分100%・7フリー処方。釜石天然水ベースでシンプルに保湿。', price: '¥300〜1,500' },
+            { name: 'オルビス', cat: 'スキンケア基礎', reason: 'ノンオイルでも高保湿。無添加×D2Cで長く愛用されるブランド。', price: '¥1,500〜3,000' }
+          ],
+          brand:         [
+            { name: 'キュレル', cat: 'スキンケア基礎', reason: '花王の研究力×セラミド技術。皮膚科医からも信頼される乾燥性敏感肌の代名詞。', price: '¥700〜1,500' },
+            { name: 'ミノン アミノモイスト', cat: 'スキンケア基礎', reason: '第一三共ヘルスケア発。医薬品メーカーの信頼性とアミノ酸保湿の実力が評価される。', price: '¥1,000〜2,500' },
+            { name: 'ヒフミド', cat: 'スキンケア基礎', reason: '小林製薬のセラミド研究から生まれたブランド。高純度成分で乾燥肌を集中ケア。', price: '¥2,000〜4,000' }
+          ]
+        },
+        mid: {
+          ingredient:    [
+            { name: 'CeraVe', cat: 'スキンケア基礎', reason: 'セラミド（1・3・6-II）×MVE徐放技術。皮膚科医推奨の成分主義ブランド。', price: '¥1,500〜3,500' },
+            { name: 'キュレル', cat: 'スキンケア基礎', reason: 'セラミドカプセル×医薬部外品。乾燥性敏感肌特化で全ラインが揃う。', price: '¥700〜2,000' },
+            { name: 'ユーセリン', cat: 'スキンケア基礎', reason: '欧州皮膚科学ブランド。バクチオール配合の新シリーズも展開中。', price: '¥2,000〜5,000' }
+          ],
+          korean:        [
+            { name: 'Laneige', cat: 'スキンケア基礎', reason: '水分密着ケアが得意。スリーピングマスクで朝までしっとり肌を実現。', price: '¥2,500〜5,000' },
+            { name: 'anua', cat: 'スキンケア基礎', reason: 'PDRN×ヒアルロン酸カプセルセラムが新発売。乾燥・くすみ同時ケア。', price: '¥2,000〜4,000' },
+            { name: 'COSRX', cat: 'スキンケア基礎', reason: 'Advanced Snail 96ムチンが乾燥肌に絶大な人気。成分コスパが高い。', price: '¥1,500〜3,000' }
+          ],
+          additivefree:  [
+            { name: 'ファンケル', cat: 'スキンケア基礎', reason: '徹底した無添加処方。ビタミンC誘導体×保湿のWアプローチが人気。', price: '¥2,000〜4,500' },
+            { name: 'オルビス', cat: 'スキンケア基礎', reason: 'サステナ×無添加×D2C。敏感乾燥肌向けのしっとりラインが充実。', price: '¥2,000〜4,000' },
+            { name: 'CeraVe', cat: 'スキンケア基礎', reason: '香料・パラベンフリーで低刺激。セラミド補充でバリア機能を根本から強化。', price: '¥1,500〜3,500' }
+          ],
+          brand:         [
+            { name: 'CeraVe', cat: 'スキンケア基礎', reason: 'ロレアル傘下×皮膚科医推奨。セラミド科学を世界に広めたブランド。', price: '¥1,500〜3,500' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '温泉水×皮膚科学。欧州医療機関でも使われる信頼の敏感肌ブランド。', price: '¥2,500〜5,000' },
+            { name: 'ユーセリン', cat: 'スキンケア基礎', reason: 'Beiersdorf傘下の欧州皮膚科ブランド。バクチオール×保湿の新シリーズが注目。', price: '¥2,000〜5,000' }
+          ]
+        },
+        high: {
+          ingredient:    [
+            { name: 'Estée Lauder', cat: 'ポイントケア', reason: 'ANR（小棕瓶）でEGF類似成分×ナイアシンアミド×ペプチドを贅沢に配合。', price: '¥8,000〜15,000' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '皮膚科学×温泉水。シカルファット+成分で乾燥とバリアを同時に強化。', price: '¥3,000〜7,000' },
+            { name: 'コスデコルテ', cat: 'ポイントケア', reason: '独自リポソーム技術で有効成分を角層深部へ。百貨店の信頼ブランド。', price: '¥8,000〜18,000' }
+          ],
+          korean:        [
+            { name: 'Sulwhasoo', cat: 'スキンケア基礎', reason: '高麗人参×韓方複合エキス。韓国最高峰の保湿プレステージライン。', price: '¥8,000〜20,000' },
+            { name: 'Laneige', cat: 'スキンケア基礎', reason: 'Waterbankシリーズがデパートでも展開。本格保湿×K-Beauty。', price: '¥5,000〜10,000' },
+            { name: 'IOPE', cat: 'ポイントケア', reason: '植物幹細胞×バイオエッセンス技術で乾燥エイジング肌に集中アプローチ。', price: '¥5,000〜12,000' }
+          ],
+          additivefree:  [
+            { name: 'ポーラ', cat: 'ポイントケア', reason: 'B.A・WRINKLESHOT等プレステージライン。無添加志向×高機能の両立。', price: '¥10,000〜30,000' },
+            { name: 'ファンケル', cat: 'スキンケア基礎', reason: '無添加の先駆けでありながら高機能美容液ラインも充実。安心感と実力を両立。', price: '¥3,000〜8,000' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '皮膚科推奨×低刺激。シカルファット配合でバリア修復に特化。', price: '¥3,000〜7,000' }
+          ],
+          brand:         [
+            { name: 'ポーラ', cat: 'ポイントケア', reason: '日本のエイジングケア研究の最高峰。B.Aラインは国内最高クラスの実力。', price: '¥10,000〜30,000' },
+            { name: 'Estée Lauder', cat: 'ポイントケア', reason: '25以上のブランドを持つ世界的グループ。ANRは世界中で愛されるロングセラー。', price: '¥8,000〜15,000' },
+            { name: 'Clinique', cat: 'スキンケア基礎', reason: 'アレルギーテスト済み×皮膚科学。敏感乾燥肌でも安心して使えるデパコス。', price: '¥5,000〜12,000' }
+          ]
+        }
+      },
+
+      // ─── 脂性肌 ───
+      oily: {
+        low: {
+          ingredient:    [
+            { name: 'anua（アヌア）', cat: 'スキンケア基礎', reason: 'ドクダミ×ナイアシンアミドで皮脂・毛穴・くすみを同時ケア。SNSで爆発的人気。', price: '¥1,500〜3,000' },
+            { name: 'Some By Mi', cat: 'ポイントケア', reason: 'AHA+BHA+PHAトリプル酸で毛穴・ニキビに集中アプローチ。30日間で変化を実感。', price: '¥1,500〜2,500' },
+            { name: 'The Ordinary', cat: 'ポイントケア', reason: 'ナイアシンアミド10%＋亜鉛など成分特化の超低価格ブランド。毛穴・皮脂に直接効く。', price: '¥1,000〜2,000' }
+          ],
+          korean:        [
+            { name: 'COSRX', cat: 'ポイントケア', reason: 'BHA(サリチル酸)セラムで毛穴の詰まりを溶かす。韓国コスメ成分特化の代表格。', price: '¥1,500〜3,000' },
+            { name: 'anua', cat: 'スキンケア基礎', reason: 'ドクダミシリーズで脂性肌の炎症・毛穴を穏やかにケア。日本でも大人気。', price: '¥1,500〜3,000' },
+            { name: 'Some By Mi', cat: 'ポイントケア', reason: '成分×悩み解決訴求の韓国ブランド。脂性・ニキビ肌に特化したシリーズが充実。', price: '¥1,500〜2,500' }
+          ],
+          additivefree:  [
+            { name: 'オルビス', cat: 'スキンケア基礎', reason: 'ノンオイルスキンケアのパイオニア。べたつかず保湿できる脂性肌の定番。', price: '¥1,500〜3,000' },
+            { name: '無印良品', cat: 'スキンケア基礎', reason: 'さっぱりタイプが脂性肌に◎。天然由来成分×7フリーでシンプルケア。', price: '¥300〜1,200' },
+            { name: 'anua', cat: 'スキンケア基礎', reason: 'ドクダミ×無香料系ラインは脂性肌の低刺激ケアにぴったり。', price: '¥1,500〜3,000' }
+          ],
+          brand:         [
+            { name: 'オルビス', cat: 'スキンケア基礎', reason: 'ノンオイル×無添加×D2C。脂性肌向けスキンケアのブランドとして長年の信頼。', price: '¥1,500〜3,000' },
+            { name: 'キュレル 脂性肌ライン', cat: 'スキンケア基礎', reason: '花王の研究力×セラミドで脂性肌でもバリア機能を守りながらさっぱりケア。', price: '¥700〜1,500' },
+            { name: 'COSRX', cat: 'ポイントケア', reason: '成分主義×皮膚科医推奨で世界的に認められた韓国コスメブランド。', price: '¥1,500〜3,000' }
+          ]
+        },
+        mid: {
+          ingredient:    [
+            { name: 'The Ordinary', cat: 'ポイントケア', reason: 'ナイアシンアミド・AHA・BHAを単品で使い分ける成分設計が脂性肌に最適。', price: '¥1,000〜2,500' },
+            { name: 'medicube（メディキューブ）', cat: 'ポイントケア', reason: 'アゼライン酸×エクソソーム配合で毛穴・ニキビ跡に集中アプローチ。韓国最注目。', price: '¥3,000〜7,000' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: 'エファクラーラインが脂性肌の定番。BHA×ナイアシンアミドで皮脂コントロール。', price: '¥2,500〜5,000' }
+          ],
+          korean:        [
+            { name: 'medicube', cat: 'ポイントケア', reason: '2026年最注目の韓国ブランド。アゼライン酸・エクソソーム・PDRNで毛穴を本気ケア。', price: '¥3,000〜7,000' },
+            { name: 'COSRX', cat: 'ポイントケア', reason: 'スネイルムチン×BHAでニキビ跡・毛穴をダブルアプローチ。コスパ最高クラス。', price: '¥1,500〜4,000' },
+            { name: 'UIQ（ユイク）', cat: 'スキンケア基礎', reason: 'マイクロバイオーム配合でバリア機能を整えながら脂性肌の炎症を鎮静。', price: '¥3,000〜6,000' }
+          ],
+          additivefree:  [
+            { name: 'オルビス', cat: 'スキンケア基礎', reason: 'ノンオイル×無添加×軽めの保湿。脂性肌が一番ストレスなく続けられる設計。', price: '¥2,000〜4,000' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '無香料×皮膚科医推奨。エファクラーラインは脂性肌向け低刺激ケアの定番。', price: '¥2,500〜5,000' },
+            { name: 'COSRX', cat: 'ポイントケア', reason: '余分な添加物を極力省いた成分設計。脂性肌にもやさしく効果を届ける。', price: '¥1,500〜4,000' }
+          ],
+          brand:         [
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '皮膚科医推奨×ロレアル傘下。エファクラーラインは世界中の脂性肌に支持される。', price: '¥2,500〜5,000' },
+            { name: 'Clinique', cat: 'スキンケア基礎', reason: 'アレルギーテスト済み×皮膚科学。脂性肌向けのバランス処方が充実。', price: '¥3,000〜8,000' },
+            { name: 'オルビス', cat: 'スキンケア基礎', reason: 'ノンオイルスキンケアの国内トップブランド。信頼性の高いD2Cブランド。', price: '¥2,000〜4,000' }
+          ]
+        },
+        high: {
+          ingredient:    [
+            { name: 'medicube', cat: 'ポイントケア', reason: '最先端成分（アゼライン酸・エクソソーム・PDRN）を高濃度配合。毛穴・ニキビ跡を本気で攻略。', price: '¥5,000〜12,000' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '皮膚科学×成分設計で脂性肌の悩みを根本から攻略。プレステージラインも充実。', price: '¥3,000〜8,000' },
+            { name: 'Estée Lauder', cat: 'ポイントケア', reason: 'DayWear SPF50等の高機能ラインでUV×皮脂コントロールを同時に実現。', price: '¥8,000〜15,000' }
+          ],
+          korean:        [
+            { name: 'Sulwhasoo', cat: 'スキンケア基礎', reason: '韓方×最先端技術で脂性肌でもバランス良く整える高級ライン。', price: '¥10,000〜25,000' },
+            { name: 'medicube', cat: 'ポイントケア', reason: '2026年の韓国ビューティートレンドをリードする高機能ブランド。', price: '¥5,000〜12,000' },
+            { name: 'IOPE', cat: 'ポイントケア', reason: 'バイオエッセンス技術×レチノールで毛穴・ニキビ跡・エイジングを一括ケア。', price: '¥5,000〜12,000' }
+          ],
+          additivefree:  [
+            { name: 'ポーラ', cat: 'ポイントケア', reason: '日本の研究力×無添加志向。B.Aラインで脂性エイジング肌にアプローチ。', price: '¥10,000〜30,000' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '低刺激×皮膚科学で敏感脂性肌も安心。プレステージラインで本格ケア。', price: '¥3,000〜8,000' },
+            { name: 'Clinique', cat: 'スキンケア基礎', reason: 'アレルギーテスト全済み。脂性肌向けの高機能無添加ラインが充実したデパコス。', price: '¥5,000〜12,000' }
+          ],
+          brand:         [
+            { name: '資生堂', cat: 'ポイントケア', reason: '国内シェア1位・世界4位。MICRO RETINOLテクノロジーで毛穴・エイジングを科学的に攻略。', price: '¥8,000〜20,000' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '世界の皮膚科医が推奨する信頼性の高さは他の追随を許さない。', price: '¥3,000〜8,000' },
+            { name: 'コーセー', cat: 'ポイントケア', reason: 'ナイアシンアミド×コウジ酸研究で国内美白・毛穴ケアをリード。雪肌精が代表作。', price: '¥5,000〜15,000' }
+          ]
+        }
+      },
+
+      // ─── 混合肌 ───
+      combo: {
+        low:  { ingredient: [
+            { name: 'anua', cat: 'スキンケア基礎', reason: 'ドクダミ×ナイアシンアミドでTゾーンの皮脂と頬の乾燥を同時にバランス調整。', price: '¥1,500〜3,000' },
+            { name: '無印良品', cat: 'スキンケア基礎', reason: 'シンプル処方でオイリー部分もドライ部分も対応できる万能スキンケア。', price: '¥300〜1,500' },
+            { name: 'COSRX', cat: 'ポイントケア', reason: '混合肌向けのバランスケアが得意。スネイルムチンで保湿しながら毛穴も整える。', price: '¥1,500〜3,000' }
+          ], korean: [
+            { name: 'anua', cat: 'スキンケア基礎', reason: 'ドクダミシリーズが混合肌のベストセラー。部分使いにも対応できる軽いテクスチャ。', price: '¥1,500〜3,000' },
+            { name: 'COSRX', cat: 'スキンケア基礎', reason: 'BHAセラム（Tゾーン）×スネイルムチン（頬）の組み合わせが混合肌の定番。', price: '¥1,500〜3,000' },
+            { name: 'Some By Mi', cat: 'ポイントケア', reason: 'AHA+BHA+PHAで混合肌のバランスを整える30Daysシリーズが人気。', price: '¥1,500〜2,500' }
+          ], additivefree: [
+            { name: '無印良品', cat: 'スキンケア基礎', reason: '7フリー×天然由来成分。混合肌でも全顔に使えるシンプルな処方設計。', price: '¥300〜1,500' },
+            { name: 'オルビス', cat: 'スキンケア基礎', reason: 'ノンオイル処方で混合肌のバランスを整える。無添加×軽いテクスチャが◎。', price: '¥1,500〜3,000' },
+            { name: 'ファンケル', cat: 'スキンケア基礎', reason: '無添加の先駆け。混合肌でも使いやすいさっぱり〜しっとりが選べるライン。', price: '¥1,500〜3,500' }
+          ], brand: [
+            { name: 'オルビス', cat: 'スキンケア基礎', reason: 'ノンオイルスキンケアで混合肌をバランス良くコントロール。D2Cの信頼性。', price: '¥1,500〜3,000' },
+            { name: 'anua', cat: 'スキンケア基礎', reason: 'SNSで口コミ拡散中。混合肌に効く成分設計が評判。', price: '¥1,500〜3,000' },
+            { name: '無印良品', cat: 'スキンケア基礎', reason: 'シンプル処方の安心感。混合肌の全顔使いに最も適した万能ライン。', price: '¥300〜1,500' }
+          ]
+        },
+        mid: { ingredient: [
+            { name: 'The Ordinary', cat: 'ポイントケア', reason: 'ナイアシンアミド（Tゾーン用）とセラミド（頬用）を個別に使い分けできる低価格設計。', price: '¥1,000〜2,500' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: 'エファクラーラインで混合肌のオイリー部分をコントロール。敏感部分は保湿ラインで対応。', price: '¥2,500〜5,000' },
+            { name: 'anua', cat: 'スキンケア基礎', reason: 'PDRN×ヒアルロン酸の新ラインが混合肌の保湿×皮脂バランスに最適。', price: '¥2,000〜4,000' }
+          ], korean: [
+            { name: 'anua', cat: 'スキンケア基礎', reason: 'ドクダミシリーズで混合肌のバランスを整える。PDRNセラムで保湿力もUP。', price: '¥2,000〜4,000' },
+            { name: 'MISSHA', cat: 'スキンケア基礎', reason: 'ナイアシンアミド配合のタイム革命シリーズが混合肌のエイジング×皮脂を両立ケア。', price: '¥2,000〜4,500' },
+            { name: 'UIQ', cat: 'スキンケア基礎', reason: 'マイクロバイオーム×バリアケアで混合肌の揺らぎを根本から整える。', price: '¥3,000〜6,000' }
+          ], additivefree: [
+            { name: 'ファンケル', cat: 'スキンケア基礎', reason: '無添加×機能性。混合肌のゾーン別ケアに対応したラインアップが充実。', price: '¥2,000〜4,500' },
+            { name: 'オルビス', cat: 'スキンケア基礎', reason: 'ノンオイル×無添加で混合肌のベタつきと乾燥を同時解決。D2Cで継続しやすい。', price: '¥2,000〜4,000' },
+            { name: 'CeraVe', cat: 'スキンケア基礎', reason: '香料フリー×皮膚科医推奨。混合肌でも全顔に使えるバリアケア設計。', price: '¥1,500〜3,500' }
+          ], brand: [
+            { name: 'オルビス', cat: 'スキンケア基礎', reason: 'ノンオイルスキンケアの国内パイオニア。混合肌の長年の定番ブランド。', price: '¥2,000〜4,000' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '皮膚科推奨の信頼性。混合肌向けのバランスラインが充実している。', price: '¥2,500〜5,000' },
+            { name: 'Clinique', cat: 'スキンケア基礎', reason: '皮膚科学×アレルギーテスト済み。混合肌向けのゾーンケア処方が定番。', price: '¥3,000〜8,000' }
+          ]
+        },
+        high: { ingredient: [
+            { name: 'Estée Lauder', cat: 'ポイントケア', reason: 'ANR×ペプチドで混合肌のエイジングを本格ケア。部分使い美容液として最適。', price: '¥8,000〜15,000' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '皮膚科学×成分設計の最高峰。混合肌向けのプレステージラインで本格ケア。', price: '¥3,000〜8,000' },
+            { name: 'コスデコルテ', cat: 'ポイントケア', reason: '独自リポソーム技術で混合肌の乾燥部分に集中保湿。百貨店の信頼感。', price: '¥8,000〜18,000' }
+          ], korean: [
+            { name: 'Sulwhasoo', cat: 'スキンケア基礎', reason: '韓方×高麗人参で混合肌全体のバランスを整える最高峰K-Beautyライン。', price: '¥10,000〜25,000' },
+            { name: 'medicube', cat: 'ポイントケア', reason: 'アゼライン酸×エクソソームで混合肌の毛穴・ニキビ跡を集中ケア。', price: '¥5,000〜12,000' },
+            { name: 'IOPE', cat: 'ポイントケア', reason: '植物幹細胞×バイオ技術で混合肌のエイジングと皮脂バランスを両立。', price: '¥5,000〜12,000' }
+          ], additivefree: [
+            { name: 'ポーラ', cat: 'ポイントケア', reason: '日本最高峰のエイジングケア研究。混合肌でも使えるB.Aラインが人気。', price: '¥10,000〜30,000' },
+            { name: 'ファンケル', cat: 'スキンケア基礎', reason: '無添加×高機能の両立。プレステージ無添加ラインで混合肌を上質にケア。', price: '¥3,000〜8,000' },
+            { name: 'Clinique', cat: 'スキンケア基礎', reason: 'アレルギーテスト済みデパコス。混合肌でも安心して使えるプレミアムライン。', price: '¥5,000〜12,000' }
+          ], brand: [
+            { name: '資生堂', cat: 'ポイントケア', reason: '国内1位×世界4位の研究力。POLYREPAIRテクノロジーで混合肌の複合悩みを解決。', price: '¥8,000〜20,000' },
+            { name: 'コーセー', cat: 'ポイントケア', reason: 'DECORTÉ・雪肌精等プレステージラインが豊富。混合肌向け処方も充実。', price: '¥5,000〜15,000' },
+            { name: 'Estée Lauder', cat: 'ポイントケア', reason: '世界的プレステージブランド。混合肌向けの高機能美容液ラインが充実。', price: '¥8,000〜15,000' }
+          ]
+        }
+      },
+
+      // ─── 敏感肌 ───
+      sensitive: {
+        low: {
+          ingredient:   [
+            { name: 'キュレル', cat: 'スキンケア基礎', reason: '花王の独自セラミドカプセル×消炎剤（有効成分）で乾燥性敏感肌のバリアを守る。', price: '¥700〜2,000' },
+            { name: 'ミノン アミノモイスト', cat: 'スキンケア基礎', reason: 'アミノ酸系保湿×低刺激処方。敏感肌の定番として皮膚科医にも推奨される。', price: '¥1,000〜2,500' },
+            { name: 'アルージェ', cat: 'スキンケア基礎', reason: '全薬工業×医師共同開発。超敏感肌・アトピー傾向でも使えるフルライン。', price: '¥1,500〜4,500' }
+          ],
+          korean:       [
+            { name: 'anua', cat: 'スキンケア基礎', reason: 'ドクダミ×センテラアジアチカで敏感肌の炎症・赤みを穏やかにケア。', price: '¥1,500〜3,000' },
+            { name: 'COSRX', cat: 'スキンケア基礎', reason: '低刺激×成分特化。センテラ・プロポリス配合で敏感肌のバリアを整える。', price: '¥1,500〜3,000' },
+            { name: 'Beauty of Joseon', cat: 'UV', reason: '敏感肌でも使いやすいノンケミカル日焼け止めが世界的ヒット。', price: '¥2,000〜3,500' }
+          ],
+          additivefree: [
+            { name: 'ファンケル', cat: 'スキンケア基礎', reason: '無添加化粧品の先駆け。防腐剤・香料ゼロで敏感肌でも安心して使える。', price: '¥1,500〜3,500' },
+            { name: '無印良品', cat: 'スキンケア基礎', reason: '天然由来成分100%×7フリー×スティンギングテスト済み。敏感肌の入門に最適。', price: '¥300〜1,500' },
+            { name: 'キュレル', cat: 'スキンケア基礎', reason: '医薬部外品×無香料×アルコールフリー。乾燥性敏感肌のための設計が完璧。', price: '¥700〜2,000' }
+          ],
+          brand:        [
+            { name: 'キュレル', cat: 'スキンケア基礎', reason: '皮膚科推奨×花王研究力。乾燥性敏感肌ケアの国内最強ブランド。', price: '¥700〜2,000' },
+            { name: 'ノブ（NOB）', cat: 'スキンケア基礎', reason: '皮膚科医・アレルギー専門医共同開発。全アイテムアレルギーテスト済みの信頼性。', price: '¥1,500〜4,000' },
+            { name: 'アルージェ', cat: 'スキンケア基礎', reason: '医師共同開発×超敏感肌特化。皮膚科処方の発想で設計されたフルライン。', price: '¥1,500〜4,500' }
+          ]
+        },
+        mid: {
+          ingredient:   [
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '温泉水×ナイアシンアミド×シカルファット。皮膚科学に基づく敏感肌ケアの世界標準。', price: '¥2,500〜6,000' },
+            { name: 'CeraVe', cat: 'スキンケア基礎', reason: 'セラミド×MVE技術で24時間バリアを維持。皮膚科医推奨の成分設計。', price: '¥1,500〜3,500' },
+            { name: 'ユーセリン', cat: 'スキンケア基礎', reason: '欧州皮膚科ブランド。尿素×ヒアルロン酸×敏感肌処方で日本独自開発ラインも登場。', price: '¥2,000〜5,000' }
+          ],
+          korean:       [
+            { name: 'anua', cat: 'スキンケア基礎', reason: 'ドクダミ×センテラで敏感肌の赤み・炎症をダブルケア。SNS口コミで世界的人気。', price: '¥2,000〜4,000' },
+            { name: 'UIQ', cat: 'スキンケア基礎', reason: 'マイクロバイオーム×バリアケアで敏感肌のバランスを根本から整える新世代ブランド。', price: '¥3,000〜6,000' },
+            { name: 'Beauty of Joseon', cat: 'UV', reason: '伝統成分×現代技術。敏感肌でも使えるノンケミカルUVが世界中でヒット中。', price: '¥2,000〜4,000' }
+          ],
+          additivefree: [
+            { name: 'ファンケル', cat: 'スキンケア基礎', reason: '無添加の最高峰。全成分の安全性を徹底審査した敏感肌向けシリーズが充実。', price: '¥2,000〜5,000' },
+            { name: 'CeraVe', cat: 'スキンケア基礎', reason: '香料・パラベンフリー×皮膚科推奨。敏感肌でも安心なシンプル高機能設計。', price: '¥1,500〜3,500' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '無香料×低刺激×皮膚科学。敏感肌の国際スタンダードブランド。', price: '¥2,500〜6,000' }
+          ],
+          brand:        [
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '世界の皮膚科医が推奨する信頼の頂点。敏感肌研究の歴史と実績が圧倒的。', price: '¥2,500〜6,000' },
+            { name: 'Clinique', cat: 'スキンケア基礎', reason: 'アレルギーテスト全品実施。敏感肌でも安心して使えるデパコスブランド。', price: '¥3,000〜8,000' },
+            { name: 'ノブ', cat: 'スキンケア基礎', reason: '皮膚科医×アレルギー専門医との共同開発。日本の敏感肌研究に特化したブランド。', price: '¥1,500〜4,000' }
+          ]
+        },
+        high: {
+          ingredient:   [
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '温泉水×最先端成分で敏感肌のバリアを本格的に修復。世界のスタンダード。', price: '¥3,000〜8,000' },
+            { name: 'Estée Lauder', cat: 'ポイントケア', reason: 'ANRで敏感肌でも使えるEGF類似成分×ペプチドのプレステージ美容液。', price: '¥8,000〜15,000' },
+            { name: 'Clinique', cat: 'スキンケア基礎', reason: '全品アレルギーテスト済み×皮膚科学。敏感肌が安心して使えるデパコスの最高峰。', price: '¥5,000〜12,000' }
+          ],
+          korean:       [
+            { name: 'Sulwhasoo', cat: 'スキンケア基礎', reason: '韓方×高麗人参エキスで敏感肌を穏やかに整える。K-Beautyプレステージの頂点。', price: '¥10,000〜25,000' },
+            { name: 'UIQ', cat: 'スキンケア基礎', reason: 'マイクロバイオーム科学で敏感肌のバリアを根本再建。2026年注目ブランド。', price: '¥5,000〜10,000' },
+            { name: 'medicube', cat: 'ポイントケア', reason: '敏感肌でも使えるエクソソーム配合ラインで再生美容を体験。', price: '¥5,000〜12,000' }
+          ],
+          additivefree: [
+            { name: 'ポーラ', cat: 'ポイントケア', reason: '日本最高峰の無添加志向×エイジングケア。敏感肌でも使えるB.Aラインが特別。', price: '¥10,000〜30,000' },
+            { name: 'ファンケル', cat: 'スキンケア基礎', reason: '無添加の先駆けが誇るプレステージライン。敏感肌の長期ケアに最適。', price: '¥3,000〜8,000' },
+            { name: 'Clinique', cat: 'スキンケア基礎', reason: 'アレルギーテスト済み×高機能。敏感肌向けデパコスの定番中の定番。', price: '¥5,000〜12,000' }
+          ],
+          brand:        [
+            { name: 'ポーラ', cat: 'ポイントケア', reason: '日本のスキンケア研究の頂点。B.Aラインは敏感肌でも使えるプレステージ最高峰。', price: '¥10,000〜30,000' },
+            { name: 'La Roche-Posay', cat: 'スキンケア基礎', reason: '世界の皮膚科標準ブランド。敏感肌研究で世界をリードする圧倒的な信頼性。', price: '¥3,000〜8,000' },
+            { name: 'Clinique', cat: 'スキンケア基礎', reason: 'Estée Lauder傘下×全品アレルギーテスト済み。敏感肌のデパコス最高峰。', price: '¥5,000〜12,000' }
+          ]
+        }
+      }
+    };
+
+    var budgetKey = budget === 'low' ? 'low' : budget === 'mid' ? 'mid' : 'high';
+    var prefKey   = pref || 'ingredient';
+    try {
+      return all[skin][budgetKey][prefKey] || all['dry']['low']['ingredient'];
+    } catch(e) {
+      return all['dry']['low']['ingredient'];
+    }
+  }
+};
+
+// ===== 結果表示 =====
+function showResult() {
+  // 質問画面を非表示
+  ['q1','q2','q3','q4'].forEach(function(id) {
+    document.getElementById(id).classList.add('hidden');
+  });
+  document.querySelector('.progress-wrap').classList.add('hidden');
+
+  var skin    = answers.q1;
+  var concern = answers.q2;
+  var pref    = answers.q3;
+  var budget  = answers.q4;
+
+  // タイトル・サマリー
+  document.getElementById('res-title').textContent = DB.skinLabel[skin];
+  document.getElementById('res-summary').textContent = DB.skinSummary[skin];
+
+  // ブランドTop3
+  var brands = DB.brands(skin, concern, pref, budget);
+  var bWrap  = document.getElementById('brands-wrap');
+  brands.forEach(function(b, i) {
+    var card = document.createElement('div');
+    card.className = 'brand-card';
+    var rankClass = ['rank-1','rank-2','rank-3'][i];
+    card.innerHTML =
+      '<div class="brand-rank ' + rankClass + '">' + (i + 1) + '</div>' +
+      '<div class="brand-info">' +
+        '<div class="brand-name">' + b.name + '</div>' +
+        '<span class="brand-category">' + b.cat + '</span>' +
+        '<div class="brand-reason">' + b.reason + '</div>' +
+        '<div class="brand-price">' + b.price + '</div>' +
+      '</div>';
+    bWrap.appendChild(card);
+  });
+
+  // 成分情報
+  var ing = DB.ingredients[skin];
+  var gWrap = document.getElementById('ing-good');
+  var aWrap = document.getElementById('ing-avoid');
+  ing.good.forEach(function(s) {
+    var t = document.createElement('span');
+    t.className = 'ing-tag good';
+    t.textContent = s;
+    gWrap.appendChild(t);
+  });
+  ing.avoid.forEach(function(s) {
+    var t = document.createElement('span');
+    t.className = 'ing-tag avoid';
+    t.textContent = s;
+    aWrap.appendChild(t);
+  });
+
+  document.getElementById('result').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== リスタート =====
+function restart() {
+  answers = { q1: null, q2: null, q3: null, q4: null };
+  ['q2','q3','q4','result'].forEach(function(id) {
+    document.getElementById(id).classList.add('hidden');
+  });
+  // ブランド・成分をリセット
+  var bWrap = document.getElementById('brands-wrap');
+  while(bWrap.children.length > 1) bWrap.removeChild(bWrap.lastChild);
+  document.getElementById('ing-good').innerHTML  = '';
+  document.getElementById('ing-avoid').innerHTML = '';
+  // 選択リセット
+  document.querySelectorAll('.opt').forEach(function(b) { b.classList.remove('selected'); });
+  ['q1-next','q2-next','q3-next','q4-next'].forEach(function(id) {
+    document.getElementById(id).disabled = true;
+  });
+  document.getElementById('q1').classList.remove('hidden');
+  document.querySelector('.progress-wrap').classList.remove('hidden');
+  updateProgress(1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
