@@ -1,5 +1,4 @@
-[glow_skin_diagnosis.html](https://github.com/user-attachments/files/27057771/glow_skin_diagnosis.html)
-# glow-skin<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -464,27 +463,6 @@
 
   .stars { color: var(--gold); font-size: 0.82rem; }
 
-  .rakuten-btn {
-    display: block;
-    width: 100%;
-    margin-top: 14px;
-    padding: 12px;
-    background: linear-gradient(135deg, #bf0000, #e60000);
-    color: #fff;
-    border-radius: 10px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 0.88rem;
-    letter-spacing: 0.06em;
-    text-decoration: none;
-    transition: all 0.22s ease;
-    box-shadow: 0 4px 12px rgba(191,0,0,0.25);
-  }
-  .rakuten-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(191,0,0,0.35);
-  }
-
   @media (max-width: 500px) {
     .options-grid.cols2 { grid-template-columns: 1fr; }
     .step-card { padding: 28px 20px; }
@@ -695,46 +673,46 @@ const DB = {
   brands: {
     // ── 乾燥肌 ──
     dry: {
-      pore:    { ingredient: ['cerave','theordinary','cosrx'],    brand: ['hadalabo','curel','shiseido'],    korea: ['cosrx','laneige','anua'],       natural: ['muji','fancl','orbis'],       pharma: ['hadalabo','minon','curel'],    luxury: ['decorte','pola','esteelauder'] },
-      acne:    { ingredient: ['theordinary','cosrx','somebymi'],  brand: ['minon','curel','lrp'],            korea: ['cosrx','somebymi','anua'],      natural: ['muji_clear','fancl','nov'],   pharma: ['minon','nov','adryS'],        luxury: ['clinique','esteelauder','lrp'] },
-      spot:    { ingredient: ['theordinary','transino','obagi'],  brand: ['transino','pola','shiseido'],     korea: ['cosrx','missha','some'],        natural: ['muji_white','fancl','orbis'], pharma: ['transino','keshimin','adryS'],luxury: ['pola','sk2','esteelauder'] },
-      wrinkle: { ingredient: ['theordinary','obagi','pola'],      brand: ['pola','shiseido','esteelauder'], korea: ['iope','laneige','sulwhasoo'],   natural: ['muji_age','fancl','pola'],    pharma: ['adryS','hifmid','obagi'],    luxury: ['pola','decorte','esteelauder'] },
-      dry:     { ingredient: ['cerave','hadalabo','theordinary'], brand: ['hadalabo','curel','laneige'],     korea: ['laneige','cosrx','anua'],       natural: ['muji','fancl','orbis'],       pharma: ['hadalabo','minon','locobace'],luxury: ['decorte','albion','esteelauder'] },
-      redness: { ingredient: ['cerave','lrp','theordinary'],      brand: ['curel','minon','lrp'],            korea: ['cosrx','anua','laneige'],       natural: ['fancl','muji','orbis'],       pharma: ['curel','minon','arouge'],     luxury: ['lrp','clinique','esteelauder'] },
+      pore:    { ingredient: ['cerave','theordinary','cosrx'],    brand: ['hadalabo','curel','shiseido'],    korea: ['cosrx','laneige','anua'],       natural: ['muji','etvos','naturie'],        pharma: ['hadalabo','minon','curel'],    luxury: ['decorte','pola','esteelauder'] },
+      acne:    { ingredient: ['theordinary','cosrx','somebymi'],  brand: ['minon','curel','lrp'],            korea: ['cosrx','somebymi','anua'],      natural: ['muji_clear','etvos','dhc'],      pharma: ['minon','nov','adryS'],        luxury: ['clinique','esteelauder','lrp'] },
+      spot:    { ingredient: ['theordinary','transino','obagi'],  brand: ['transino','pola','shiseido'],     korea: ['cosrx','missha','some'],        natural: ['muji_white','drcilabo','fancl'], pharma: ['transino','keshimin','adryS'],luxury: ['pola','sk2','esteelauder'] },
+      wrinkle: { ingredient: ['theordinary','obagi','pola'],      brand: ['pola','shiseido','esteelauder'], korea: ['iope','laneige','sulwhasoo'],   natural: ['muji_age','aesop','johnmasters'],pharma: ['adryS','hifmid','obagi'],    luxury: ['pola','decorte','esteelauder'] },
+      dry:     { ingredient: ['cerave','hadalabo','theordinary'], brand: ['hadalabo','curel','laneige'],     korea: ['laneige','cosrx','anua'],       natural: ['muji','etvos','naturie'],        pharma: ['hadalabo','minon','locobace'],luxury: ['decorte','albion','esteelauder'] },
+      redness: { ingredient: ['cerave','lrp','theordinary'],      brand: ['curel','minon','lrp'],            korea: ['cosrx','anua','laneige'],       natural: ['etvos','muji','mimc'],           pharma: ['curel','minon','arouge'],     luxury: ['lrp','clinique','esteelauder'] },
     },
     // ── 脂性肌 ──
     oily: {
-      pore:    { ingredient: ['theordinary','cosrx','somebymi'],  brand: ['biore','somebi','cosrx'],         korea: ['cosrx','somebymi','anua'],      natural: ['muji_clear','innisfree','fancl'], pharma: ['biore','keshimin','transino'], luxury: ['clinique','nars','mac'] },
-      acne:    { ingredient: ['cosrx','theordinary','somebymi'],  brand: ['minon','cosrx','nov'],            korea: ['cosrx','somebymi','anua'],      natural: ['muji_clear','innisfree','fancl'],pharma: ['minon','nov','biore'],       luxury: ['clinique','lrp','esteelauder'] },
-      spot:    { ingredient: ['theordinary','cosrx','transino'],  brand: ['transino','cosrx','biore'],       korea: ['cosrx','tonymoly','missha'],    natural: ['muji_white','innisfree','fancl'],pharma: ['transino','keshimin','biore'],luxury: ['clinique','pola','esteelauder'] },
-      wrinkle: { ingredient: ['theordinary','obagi','cerave'],    brand: ['esteelauder','clinique','pola'],  korea: ['iope','laneige','cosrx'],       natural: ['muji_age','innisfree','fancl'],  pharma: ['obagi','adryS','hifmid'],    luxury: ['pola','esteelauder','decorte'] },
-      dry:     { ingredient: ['theordinary','cosrx','cerave'],    brand: ['hadalabo','laneige','cosrx'],     korea: ['laneige','anua','cosrx'],       natural: ['muji','innisfree','orbis'],      pharma: ['hadalabo','minon','adryS'],  luxury: ['laneige','decorte','clinique'] },
-      redness: { ingredient: ['theordinary','lrp','cosrx'],       brand: ['lrp','cosrx','minon'],            korea: ['cosrx','anua','somebymi'],      natural: ['muji','innisfree','fancl'],      pharma: ['lrp','minon','biore'],       luxury: ['lrp','clinique','esteelauder'] },
+      pore:    { ingredient: ['theordinary','cosrx','somebymi'],  brand: ['biore','somebi','cosrx'],         korea: ['cosrx','somebymi','anua'],      natural: ['muji_clear','naturie','etvos'],   pharma: ['biore','keshimin','transino'], luxury: ['clinique','nars','mac'] },
+      acne:    { ingredient: ['cosrx','theordinary','somebymi'],  brand: ['minon','cosrx','nov'],            korea: ['cosrx','somebymi','anua'],      natural: ['muji_clear','etvos','dhc'],       pharma: ['minon','nov','biore'],       luxury: ['clinique','lrp','esteelauder'] },
+      spot:    { ingredient: ['theordinary','cosrx','transino'],  brand: ['transino','cosrx','biore'],       korea: ['cosrx','tonymoly','missha'],    natural: ['muji_white','drcilabo','naturie'],pharma: ['transino','keshimin','biore'],luxury: ['clinique','pola','esteelauder'] },
+      wrinkle: { ingredient: ['theordinary','obagi','cerave'],    brand: ['esteelauder','clinique','pola'],  korea: ['iope','laneige','cosrx'],       natural: ['muji_age','aesop','johnmasters'], pharma: ['obagi','adryS','hifmid'],    luxury: ['pola','esteelauder','decorte'] },
+      dry:     { ingredient: ['theordinary','cosrx','cerave'],    brand: ['hadalabo','laneige','cosrx'],     korea: ['laneige','anua','cosrx'],       natural: ['muji','naturie','etvos'],         pharma: ['hadalabo','minon','adryS'],  luxury: ['laneige','decorte','clinique'] },
+      redness: { ingredient: ['theordinary','lrp','cosrx'],       brand: ['lrp','cosrx','minon'],            korea: ['cosrx','anua','somebymi'],      natural: ['muji','etvos','naturie'],         pharma: ['lrp','minon','biore'],       luxury: ['lrp','clinique','esteelauder'] },
     },
     // ── 混合肌 ──
     combo: {
-      pore:    { ingredient: ['theordinary','cosrx','anua'],      brand: ['anua','cosrx','biore'],           korea: ['anua','cosrx','somebymi'],      natural: ['muji','innisfree','fancl'],      pharma: ['biore','transino','muji_clear'],luxury: ['clinique','nars','lrp'] },
-      acne:    { ingredient: ['cosrx','theordinary','somebymi'],  brand: ['cosrx','minon','nov'],            korea: ['cosrx','anua','somebymi'],      natural: ['muji_clear','innisfree','fancl'],pharma: ['minon','nov','muji_clear'], luxury: ['clinique','lrp','esteelauder'] },
-      spot:    { ingredient: ['theordinary','cosrx','transino'],  brand: ['transino','cosrx','shiseido'],    korea: ['cosrx','missha','anua'],        natural: ['muji_white','fancl','innisfree'],pharma: ['transino','keshimin','adryS'],luxury: ['pola','shiseido','esteelauder'] },
-      wrinkle: { ingredient: ['theordinary','obagi','cosrx'],     brand: ['esteelauder','pola','shiseido'], korea: ['iope','laneige','sulwhasoo'],   natural: ['muji_age','fancl','orbis'],      pharma: ['obagi','adryS','hifmid'],   luxury: ['pola','esteelauder','decorte'] },
-      dry:     { ingredient: ['theordinary','cerave','anua'],     brand: ['hadalabo','anua','laneige'],      korea: ['anua','laneige','cosrx'],       natural: ['muji','orbis','fancl'],          pharma: ['hadalabo','adryS','minon'],  luxury: ['decorte','laneige','esteelauder'] },
-      redness: { ingredient: ['theordinary','lrp','cosrx'],       brand: ['lrp','curel','minon'],            korea: ['anua','cosrx','laneige'],       natural: ['muji','fancl','orbis'],          pharma: ['curel','minon','lrp'],       luxury: ['lrp','clinique','esteelauder'] },
+      pore:    { ingredient: ['theordinary','cosrx','anua'],      brand: ['anua','cosrx','biore'],           korea: ['anua','cosrx','somebymi'],      natural: ['muji','naturie','etvos'],         pharma: ['biore','transino','muji_clear'],luxury: ['clinique','nars','lrp'] },
+      acne:    { ingredient: ['cosrx','theordinary','somebymi'],  brand: ['cosrx','minon','nov'],            korea: ['cosrx','anua','somebymi'],      natural: ['muji_clear','etvos','dhc'],       pharma: ['minon','nov','muji_clear'], luxury: ['clinique','lrp','esteelauder'] },
+      spot:    { ingredient: ['theordinary','cosrx','transino'],  brand: ['transino','cosrx','shiseido'],    korea: ['cosrx','missha','anua'],        natural: ['muji_white','drcilabo','etvos'],  pharma: ['transino','keshimin','adryS'],luxury: ['pola','shiseido','esteelauder'] },
+      wrinkle: { ingredient: ['theordinary','obagi','cosrx'],     brand: ['esteelauder','pola','shiseido'], korea: ['iope','laneige','sulwhasoo'],   natural: ['muji_age','aesop','johnmasters'], pharma: ['obagi','adryS','hifmid'],   luxury: ['pola','esteelauder','decorte'] },
+      dry:     { ingredient: ['theordinary','cerave','anua'],     brand: ['hadalabo','anua','laneige'],      korea: ['anua','laneige','cosrx'],       natural: ['muji','naturie','etvos'],         pharma: ['hadalabo','adryS','minon'],  luxury: ['decorte','laneige','esteelauder'] },
+      redness: { ingredient: ['theordinary','lrp','cosrx'],       brand: ['lrp','curel','minon'],            korea: ['anua','cosrx','laneige'],       natural: ['muji','etvos','naturie'],         pharma: ['curel','minon','lrp'],       luxury: ['lrp','clinique','esteelauder'] },
     },
     // ── 敏感肌 ──
     sensitive: {
-      pore:    { ingredient: ['lrp','cerave','theordinary'],      brand: ['curel','minon','lrp'],            korea: ['cosrx','anua','laneige'],       natural: ['fancl','muji','arouge'],         pharma: ['curel','minon','nov'],       luxury: ['lrp','clinique','esteelauder'] },
-      acne:    { ingredient: ['lrp','cosrx','cerave'],            brand: ['minon','nov','curel'],            korea: ['cosrx','anua','somebymi'],      natural: ['fancl','muji_clear','nov'],      pharma: ['minon','nov','curel'],       luxury: ['lrp','clinique','esteelauder'] },
-      spot:    { ingredient: ['lrp','theordinary','transino'],    brand: ['transino','curel','minon'],       korea: ['cosrx','anua','laneige'],       natural: ['fancl','muji_white','orbis'],    pharma: ['transino','curel','keshimin'],luxury: ['lrp','clinique','esteelauder'] },
-      wrinkle: { ingredient: ['theordinary','cerave','lrp'],      brand: ['esteelauder','curel','minon'],    korea: ['laneige','iope','cosrx'],       natural: ['muji_age','fancl','orbis'],      pharma: ['adryS','hifmid','locobace'], luxury: ['esteelauder','clinique','decorte'] },
-      dry:     { ingredient: ['cerave','lrp','hadalabo'],         brand: ['curel','minon','lrp'],            korea: ['laneige','anua','cosrx'],       natural: ['fancl','muji','arouge'],         pharma: ['curel','minon','locobace'], luxury: ['lrp','clinique','esteelauder'] },
-      redness: { ingredient: ['lrp','cerave','theordinary'],      brand: ['curel','minon','lrp'],            korea: ['anua','cosrx','laneige'],       natural: ['fancl','muji','arouge'],         pharma: ['curel','minon','arouge'],   luxury: ['lrp','clinique','esteelauder'] },
+      pore:    { ingredient: ['lrp','cerave','theordinary'],      brand: ['curel','minon','lrp'],            korea: ['cosrx','anua','laneige'],       natural: ['etvos','mimc','naturie'],         pharma: ['curel','minon','nov'],       luxury: ['lrp','clinique','esteelauder'] },
+      acne:    { ingredient: ['lrp','cosrx','cerave'],            brand: ['minon','nov','curel'],            korea: ['cosrx','anua','somebymi'],      natural: ['etvos','muji_clear','dhc'],       pharma: ['minon','nov','curel'],       luxury: ['lrp','clinique','esteelauder'] },
+      spot:    { ingredient: ['lrp','theordinary','transino'],    brand: ['transino','curel','minon'],       korea: ['cosrx','anua','laneige'],       natural: ['etvos','muji_white','mimc'],      pharma: ['transino','curel','keshimin'],luxury: ['lrp','clinique','esteelauder'] },
+      wrinkle: { ingredient: ['theordinary','cerave','lrp'],      brand: ['esteelauder','curel','minon'],    korea: ['laneige','iope','cosrx'],       natural: ['muji_age','aesop','etvos'],       pharma: ['adryS','hifmid','locobace'], luxury: ['esteelauder','clinique','decorte'] },
+      dry:     { ingredient: ['cerave','lrp','hadalabo'],         brand: ['curel','minon','lrp'],            korea: ['laneige','anua','cosrx'],       natural: ['etvos','mimc','naturie'],         pharma: ['curel','minon','locobace'], luxury: ['lrp','clinique','esteelauder'] },
+      redness: { ingredient: ['lrp','cerave','theordinary'],      brand: ['curel','minon','lrp'],            korea: ['anua','cosrx','laneige'],       natural: ['etvos','mimc','naturie'],         pharma: ['curel','minon','arouge'],   luxury: ['lrp','clinique','esteelauder'] },
     },
     // ── インナードライ ──
     innerdry: {
-      pore:    { ingredient: ['theordinary','cosrx','hadalabo'],  brand: ['hadalabo','laneige','anua'],      korea: ['laneige','anua','cosrx'],       natural: ['muji','orbis','fancl'],          pharma: ['hadalabo','adryS','minon'],  luxury: ['decorte','laneige','esteelauder'] },
-      acne:    { ingredient: ['cosrx','theordinary','hadalabo'],  brand: ['cosrx','minon','nov'],            korea: ['cosrx','anua','laneige'],       natural: ['muji_clear','fancl','orbis'],    pharma: ['minon','nov','hadalabo'],   luxury: ['lrp','clinique','esteelauder'] },
-      spot:    { ingredient: ['theordinary','transino','hadalabo'],brand: ['transino','hadalabo','shiseido'],korea: ['cosrx','laneige','missha'],     natural: ['muji_white','fancl','orbis'],    pharma: ['transino','hadalabo','adryS'],luxury: ['pola','esteelauder','decorte'] },
-      wrinkle: { ingredient: ['theordinary','hadalabo','obagi'],  brand: ['esteelauder','hadalabo','pola'],  korea: ['laneige','iope','sulwhasoo'],   natural: ['muji_age','fancl','orbis'],      pharma: ['obagi','adryS','hifmid'],   luxury: ['pola','decorte','esteelauder'] },
+      pore:    { ingredient: ['theordinary','cosrx','hadalabo'],  brand: ['hadalabo','laneige','anua'],      korea: ['laneige','anua','cosrx'],       natural: ['muji','naturie','etvos'],         pharma: ['hadalabo','adryS','minon'],  luxury: ['decorte','laneige','esteelauder'] },
+      acne:    { ingredient: ['cosrx','theordinary','hadalabo'],  brand: ['cosrx','minon','nov'],            korea: ['cosrx','anua','laneige'],       natural: ['muji_clear','etvos','dhc'],       pharma: ['minon','nov','hadalabo'],   luxury: ['lrp','clinique','esteelauder'] },
+      spot:    { ingredient: ['theordinary','transino','hadalabo'],brand: ['transino','hadalabo','shiseido'],korea: ['cosrx','laneige','missha'],     natural: ['muji_white','drcilabo','etvos'],  pharma: ['transino','hadalabo','adryS'],luxury: ['pola','esteelauder','decorte'] },
+      wrinkle: { ingredient: ['theordinary','hadalabo','obagi'],  brand: ['esteelauder','hadalabo','pola'],  korea: ['laneige','iope','sulwhasoo'],   natural: ['muji_age','aesop','johnmasters'], pharma: ['obagi','adryS','hifmid'],   luxury: ['pola','decorte','esteelauder'] },
       dry:     { ingredient: ['hadalabo','cerave','theordinary'], brand: ['hadalabo','laneige','curel'],     korea: ['laneige','cosrx','anua'],       natural: ['muji','orbis','fancl'],          pharma: ['hadalabo','minon','adryS'], luxury: ['decorte','laneige','esteelauder'] },
       redness: { ingredient: ['cerave','lrp','hadalabo'],         brand: ['curel','minon','lrp'],            korea: ['anua','laneige','cosrx'],       natural: ['muji','fancl','arouge'],         pharma: ['curel','hadalabo','minon'], luxury: ['lrp','clinique','esteelauder'] },
     },
@@ -750,26 +728,6 @@ const DB = {
   },
 
   // ── BRAND PROFILES ──
-  // 楽天アフィリエイトリンク（製薬系17社）
-  rakutenLinks: {
-    hadalabo:   'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/soukai/4987241155767/',
-    curel:      'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/soukai/4901301259233/',
-    minon:      'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/soukai/4987107640109/',
-    transino:   'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/soukai/4987107636621/',
-    obagi:      'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/soukai/4987241162819/',
-    locobace:   'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/soukai/4987107639004/',
-    hifmid:     'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/soukai/4987072038505/',
-    keshimin:   'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/soukai/4987072040027/',
-    adryS:      'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/soukai/4987316044965/',
-    nov:        'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/soukai/4987087961301/',
-    arouge:     'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/soukai/4987138403201/',
-    biore:      'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/soukai/4901301390233/',
-    muji:       'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/muji/4550583855962/',
-    muji_clear: 'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/muji/4550583855962/',
-    muji_white: 'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/muji/4550583855962/',
-    muji_age:   'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://item.rakuten.co.jp/muji/4550583855962/',
-  },
-
   profiles: {
     hadalabo:     { name:'肌ラボ（HADALABO）', region:'🇯🇵 JP', maker:'ロート製薬', price:'¥500〜¥1,500', stars:5, tag:'製薬系', key:'5種ヒアルロン酸・スーパーHA', series:'極潤シリーズ・白潤プレミアム', step:'STEP3化粧水・STEP5乳液', note:'ドラッグストア最強保湿ブランド', reason:'5種ヒアルロン酸（スーパーHA）で業界トップクラスの保湿力。製薬会社ロート製薬が開発し、医薬部外品ラインも豊富。コスパと成分量のバランスが圧倒的。' },
     curel:        { name:'キュレル（Curel）', region:'🇯🇵 JP', maker:'花王', price:'¥1,000〜¥3,000', stars:5, tag:'製薬系', key:'潤浸保湿セラミド・グリセリン', series:'潤浸保湿シリーズ・UVケア', step:'STEP3化粧水・STEP5乳液', note:'乾燥性敏感肌のNo.1定番ブランド', reason:'花王が開発した独自の「潤浸保湿セラミド機能成分」がバリア機能を補強。皮膚科医推奨で、乾燥性敏感肌・アトピー傾向の方に長年支持されている。' },
@@ -810,6 +768,17 @@ const DB = {
     albion:       { name:'ALBION（アルビオン）', region:'🇯🇵 JP', maker:'アルビオン', price:'¥8,000〜¥30,000', stars:4, tag:'プレステージ', key:'独自保湿成分・植物エキス複合体', series:'エクサージュ・アルティミューン', step:'STEP3化粧水・STEP5クリーム', note:'百貨店カウンセリング販売の老舗', reason:'独自処方と百貨店でのカウンセリング販売にこだわる日本の老舗高級コスメブランド。エクサージュシリーズは長年の根強いファンを持ち、乾燥肌エイジングケアに定評がある。' },
     biore:        { name:'ビオレ（Biore）', region:'🇯🇵 JP', maker:'花王', price:'¥500〜¥1,500', stars:4, tag:'製薬系', key:'アミノ酸系洗浄成分・UV吸収剤', series:'スキンケア洗顔料・ビオレUV', step:'STEP1洗顔・STEP7日焼け止め', note:'日焼け止め・洗顔のプチプラ定番', reason:'花王のアミノ酸系洗浄技術で毛穴汚れをしっかり除去しながら肌を傷めない。ビオレUVは日焼け止め国内シェア上位で、学生・若年層に特に人気の最強プチプラUVブランド。' },
     innisfree:    { name:'innisfree（イニスフリー）', region:'🇰🇷 KR', maker:'アモーレパシフィック', price:'¥1,200〜¥4,000', stars:3, tag:'韓国コスメ', key:'グリーンティー・火山岩・済州島自然成分', series:'グリーンティーシード・ポアブラー', step:'STEP3化粧水・STEP4美容液', note:'済州島自然派クリーンビューティー', reason:'済州島の清潔な自然環境から採れるグリーンティーと火山岩成分が特徴。クリーンビューティー×サステナブル訴求で、自然由来成分にこだわる方に最適な韓国コスメ。' },
+    // ── D2C・自然派・プチプラ（PHASE2追加）──
+    dhc:          { name:'DHC', region:'🇯🇵 JP', maker:'DHC', price:'¥500〜¥3,000', stars:4, tag:'D2C通販', key:'オリーブバージンオイル・コエンザイムQ10・ビタミンC誘導体', series:'薬用ディープクレンジングオイル・薬用Qシリーズ', step:'STEP0クレンジング・STEP3化粧水', note:'日本最多出荷クレンジングオイルの王者', reason:'オリーブバージンオイル100%配合のクレンジングオイルは日本最多出荷実績。サプリ事業との相乗効果でインナービューティーも訴求。コスパ最強のD2C通販ブランド。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/DHC+%E8%96%AC%E7%94%A8%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%82%AF%E3%83%AC%E3%83%B3%E3%82%B8%E3%83%B3%E3%82%B0%E3%82%AA%E3%82%A4%E3%83%AB/' },
+    drcilabo:     { name:'ドクターシーラボ', region:'🇯🇵 JP', maker:'ドクターシーラボ', price:'¥2,000〜¥8,000', stars:4, tag:'D2C高機能', key:'ビタミンC誘導体（VC100）・コラーゲン・ヒアルロン酸', series:'VC100エッセンスローション・アクアコラーゲンゲル', step:'STEP3化粧水・STEP4美容液', note:'皮膚科医監修のVC100美容液が定番', reason:'皮膚科医監修の高機能スキンケア。VC100（高濃度ビタミンC誘導体）シリーズがシミ・毛穴改善に実績。オールインワンゲルも人気で、スキンケア時短派にも対応。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E3%83%89%E3%82%AF%E3%82%BF%E3%83%BC%E3%82%B7%E3%83%BC%E3%83%A9%E3%83%9C+VC100/' },
+    mimc:         { name:'MiMC', region:'🇯🇵 JP', maker:'MiMC', price:'¥2,500〜¥8,000', stars:4, tag:'オーガニック', key:'ミネラル成分・植物由来成分・無添加処方', series:'ミネラルリキッドリー ファンデーション・バームクレンジング', step:'STEP0クレンジング・STEP5ファンデ', note:'日本発オーガニックミネラルコスメの先駆け', reason:'日本発のオーガニックミネラルコスメブランド。敏感肌でも使えるミネラルファンデーションが主力。化粧品成分への厳しい基準と植物由来処方で、肌に優しいメイクを実現。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/MiMC+%E3%83%9F%E3%83%8D%E3%83%A9%E3%83%AB%E3%83%95%E3%82%A1%E3%83%B3%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3/' },
+    etvos:        { name:'ETVOS（エトヴォス）', region:'🇯🇵 JP', maker:'ETVOS', price:'¥1,500〜¥6,000', stars:4, tag:'自然派', key:'セラミド・ミネラル成分・植物由来エキス', series:'モイスチャライジングセラム・ミネラルスムースファンデーション', step:'STEP4美容液・STEP5ファンデ', note:'敏感肌×ミネラルコスメの日本代表ブランド', reason:'敏感肌×ミネラルコスメの先駆けD2Cブランド。セラミドスキンケアとミネラルメイクの両輪展開。無添加処方でSNS口コミが強く、敏感肌女性に圧倒的支持を誇る。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/ETVOS+%E3%82%A8%E3%83%88%E3%83%B4%E3%82%A9%E3%82%B9+%E3%82%BB%E3%83%A9%E3%83%9F%E3%83%89/' },
+    johnmasters:  { name:'ジョンマスターオーガニック', region:'🇺🇸 US', maker:'John Masters Organics', price:'¥2,500〜¥6,000', stars:4, tag:'オーガニック', key:'オーガニック植物エキス・精油・天然由来100%', series:'ラベンダー＆アボカドインテンシブコンディショナー・スカルプシャンプー', step:'STEP0クレンジング・ヘアケア', note:'NYオーガニックサロン発・日本で大人気', reason:'NYのオーガニックサロン発祥・全成分オーガニック認証取得。天然由来成分100%で頭皮・肌に優しいライフスタイルブランド。日本でも高い知名度とブランド信頼度を持つ。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E3%82%B8%E3%83%A7%E3%83%B3%E3%83%9E%E3%82%B9%E3%82%BF%E3%83%BC%E3%82%AA%E3%83%BC%E3%82%AC%E3%83%8B%E3%83%83%E3%82%AF/' },
+    aesop:        { name:'イソップ（Aesop）', region:'🇦🇺 AU', maker:'L\'Oréal（ロレアル）', price:'¥3,000〜¥10,000', stars:4, tag:'自然派', key:'植物由来エキス・精油・ビタミン類', series:'パリセードデイクリーム・ファーブラッシュフォームフェイシャルクレンザー', step:'STEP1洗顔・STEP5クリーム', note:'豪州発・五感に訴えるライフスタイルブランド', reason:'豪州発の植物由来成分×独特の世界観が特徴。2023年にロレアル傘下へ。店舗デザイン・香り・テクスチャーで五感に訴えるライフスタイルブランドとして世界的に人気急上昇中。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/Aesop+%E3%82%A4%E3%82%BD%E3%83%83%E3%83%97/' },
+    dejavu:       { name:'デジャヴュ（dejavu）', region:'🇯🇵 JP', maker:'イミュ株式会社', price:'¥700〜¥1,500', stars:4, tag:'プチプラ', key:'ウォータープルーフ成分・密着ポリマー・アイメイク特化処方', series:'塗るつけまつげ・密着アイライナー・パウダーペンシルアイブロウ', step:'アイメイク特化', note:'落ちないアイライナーのプチプラ最強ブランド', reason:'イミュ株式会社展開のアイメイク特化ブランド。ウォータープルーフ処方で汗・皮脂に強く「落ちない」を実現。プチプラながら高機能で、アイメイク派女性に長年支持される。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E3%83%87%E3%82%B8%E3%83%A3%E3%83%B4%E3%83%A5+%E3%82%A2%E3%82%A4%E3%83%A9%E3%82%A4%E3%83%8A%E3%83%BC/' },
+    naturie:      { name:'ナチュリエ（naturie）', region:'🇯🇵 JP', maker:'イミュ株式会社', price:'¥400〜¥1,000', stars:5, tag:'プチプラ', key:'ハトムギエキス（ヨクイニン）・グリセリン・植物エキス', series:'ハトムギ化粧水・ハトムギスキンコンディショナー', step:'STEP3化粧水', note:'コスパ最強・ハトムギ化粧水の代名詞', reason:'イミュ株式会社展開のハトムギ化粧水が爆発的人気。ヨクイニン（ハトムギエキス）の肌荒れ予防効果と驚異的なコスパでSNS口コミが拡散。プチプラスキンケアの定番中の定番。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E3%83%8A%E3%83%81%E3%83%A5%E3%83%AA%E3%82%A8+%E3%83%8F%E3%83%88%E3%83%A0%E3%82%AE%E5%8C%96%E7%B2%A7%E6%B0%B4/' },
+    opera:        { name:'オペラ（OPERA）', region:'🇯🇵 JP', maker:'イミュ株式会社', price:'¥1,200〜¥2,000', stars:5, tag:'プチプラ', key:'保湿成分・発色持続ポリマー・植物オイル', series:'リップティントN・シアーリップカラーN', step:'リップメイク特化', note:'Z世代No.1リップ・SNS映え最強ブランド', reason:'イミュ株式会社展開のリップティントが若年層に爆発的人気。発色と保湿を両立した処方でSNS映え抜群。「落ちない・にじまない」で長時間美しいリップを実現するプチプラ最強リップブランド。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E3%82%AA%E3%83%9A%E3%83%A9+%E3%83%AA%E3%83%83%E3%83%97%E3%83%86%E3%82%A3%E3%83%B3%E3%83%88/' },
+    canmake:      { name:'CANMAKE（キャンメイク）', region:'🇯🇵 JP', maker:'井田ラボラトリーズ', price:'¥500〜¥1,200', stars:5, tag:'プチプラ', key:'保湿成分・カラー色素安定化技術・軽量処方', series:'マシュマロフィニッシュパウダー・クリームチーク・ステイオンバームルージュ', step:'STEP5ベースメイク・チーク・リップ', note:'1,000円以下でデパコス品質のプチプラ最強', reason:'井田ラボラトリーズ展開の日本プチプラコスメ代表格。1,000円以下でデパコス並みの品質を実現。トレンドカラーを素早く投入するスピード感と可愛いデザインで10〜20代に圧倒的支持。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/CANMAKE+%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%A1%E3%82%A4%E3%82%AF/' },
   },
 
   // ── INGREDIENT INFO ──
@@ -872,10 +841,10 @@ function showResult() {
 
   // Filter by budget
   const budgetFilter = {
-    under1500: ['hadalabo','biore','muji','muji_clear','muji_white','cosrx','anua','somebymi','theordinary','keshimin','curel'],
-    '1500to5000': ['hadalabo','curel','minon','lrp','cerave','theordinary','cosrx','anua','laneige','somebymi','transino','iope','missha','tonymoly','fancl','orbis','muji','muji_clear','muji_white','muji_age','adryS','hifmid','nov','locobace','arouge','obagi','innisfree'],
-    '5000to15000': ['obagi','pola','shiseido','esteelauder','decorte','clinique','lrp','cerave','iope','sulwhasoo','fancl','orbis','mac','nars','adryS'],
-    over15000: ['pola','shiseido','esteelauder','decorte','clinique','sk2','albion','sulwhasoo','nars','mac'],
+    under1500: ['hadalabo','biore','muji','muji_clear','muji_white','cosrx','anua','somebymi','theordinary','keshimin','curel','naturie','canmake','dejavu'],
+    '1500to5000': ['hadalabo','curel','minon','lrp','cerave','theordinary','cosrx','anua','laneige','somebymi','transino','iope','missha','tonymoly','fancl','orbis','muji','muji_clear','muji_white','muji_age','adryS','hifmid','nov','locobace','arouge','obagi','innisfree','dhc','etvos','opera','canmake','naturie','dejavu'],
+    '5000to15000': ['obagi','pola','shiseido','esteelauder','decorte','clinique','lrp','cerave','iope','sulwhasoo','fancl','orbis','mac','nars','adryS','drcilabo','mimc','johnmasters','aesop','etvos'],
+    over15000: ['pola','shiseido','esteelauder','decorte','clinique','sk2','albion','sulwhasoo','nars','mac','aesop'],
   };
   const allowed = budgetFilter[budget] || Object.keys(DB.profiles);
 
@@ -930,7 +899,7 @@ function showResult() {
           <span class="stars">${stars(b.stars)}</span>
           &nbsp;${b.note}
         </div>
-        ${DB.rakutenLinks[id] ? '<a href="' + DB.rakutenLinks[id] + '" target="_blank" rel="noopener" class="rakuten-btn">🛒 楽天市場で購入する（PR）</a>' : ''}
+        ${b.buyUrl ? `<a href="${b.buyUrl}" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;letter-spacing:0.05em;">🛒 楽天市場で購入（PR）</a>` : ''}
       </div>`;
   }).join('');
 
