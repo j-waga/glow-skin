@@ -568,6 +568,11 @@ function nextStep(n) {
   const pct = (n / 4) * 100;
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressLabel').textContent = `STEP ${n} / 4`;
+  // STEP2以降はランキング・信頼性ブロックを非表示
+  if (n >= 2) {
+    document.getElementById('rankingSection').style.display = 'none';
+    document.getElementById('trustBlock').style.display = 'none';
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
