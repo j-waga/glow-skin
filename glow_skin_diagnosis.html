@@ -33,6 +33,15 @@
   header p { color: rgba(255,255,255,0.82); font-size: 0.92rem; letter-spacing: 0.08em; margin-top: 10px; position: relative; font-weight: 300; }
   .badge { display: inline-block; background: var(--gold); color: var(--plum-dark); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; padding: 4px 14px; border-radius: 20px; margin-bottom: 16px; position: relative; }
 
+  /* ── TRUST BLOCK ── */
+  .trust-block { background: var(--white); max-width: 680px; margin: 0 auto 0; padding: 20px 20px 18px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; border-bottom: 1px solid var(--rose-light); }
+  .trust-item { display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 80px; flex: 1; }
+  .trust-num { font-family: 'Shippori Mincho', serif; font-size: clamp(1.3rem, 4vw, 1.7rem); font-weight: 700; color: var(--plum-dark); line-height: 1; }
+  .trust-num span { font-size: 0.7em; color: var(--rose); }
+  .trust-label { font-size: 0.68rem; color: #999; text-align: center; line-height: 1.4; font-weight: 700; letter-spacing: 0.04em; }
+  .trust-divider { width: 1px; background: var(--rose-light); align-self: stretch; flex: 0; min-width: 1px; }
+  .trust-source { width: 100%; text-align: center; font-size: 0.68rem; color: #bbb; margin-top: 4px; letter-spacing: 0.05em; }
+
   /* ── RANKING SECTION ── */
   .ranking-section { background: var(--white); max-width: 680px; margin: 0 auto; padding: 28px 20px 20px; border-radius: 0 0 20px 20px; box-shadow: 0 4px 16px rgba(42,31,45,0.08); margin-bottom: 8px; }
   .ranking-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
@@ -187,6 +196,27 @@
   .stars { color: var(--gold); font-size: 0.82rem; }
 
   @media (max-width: 500px) { .options-grid.cols2 { grid-template-columns: 1fr; } .step-card { padding: 28px 20px; } .ranking-section { border-radius: 0; } }
+
+  /* ── SHARE CARD ── */
+  .share-card-wrap { margin-bottom: 24px; }
+  .share-card { background: linear-gradient(135deg, var(--plum-dark) 0%, var(--plum) 45%, var(--rose) 100%); border-radius: 20px; padding: 28px 24px 20px; position: relative; overflow: hidden; }
+  .share-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 10%, rgba(201,168,108,0.25) 0%, transparent 55%), radial-gradient(ellipse at 10% 90%, rgba(255,255,255,0.06) 0%, transparent 40%); pointer-events: none; }
+  .share-card-catch { font-size: 0.72rem; color: rgba(255,255,255,0.7); letter-spacing: 0.15em; font-weight: 700; margin-bottom: 6px; position: relative; }
+  .share-card-title { font-family: 'Shippori Mincho', serif; font-size: clamp(1.05rem, 3.5vw, 1.3rem); font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.4; position: relative; }
+  .share-card-brands { display: flex; flex-direction: column; gap: 7px; margin-bottom: 16px; position: relative; }
+  .share-card-brand-item { display: flex; align-items: center; gap: 10px; }
+  .share-card-rank { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 700; flex-shrink: 0; }
+  .scr1 { background: linear-gradient(135deg, #d4af37, #f0d060); color: #4a2d00; }
+  .scr2 { background: linear-gradient(135deg, #c0c0c8, #e0e0e8); color: #2a2a3a; }
+  .scr3 { background: linear-gradient(135deg, #c07a50, #e0a070); color: #3a1500; }
+  .share-card-brand-name { font-size: 0.88rem; font-weight: 700; color: #fff; }
+  .share-card-footer { display: flex; align-items: center; justify-content: space-between; position: relative; }
+  .share-card-logo { font-family: 'Shippori Mincho', serif; font-size: 1rem; font-weight: 700; color: rgba(255,255,255,0.6); letter-spacing: 0.15em; }
+  .share-card-logo span { color: var(--gold); }
+  .share-card-url { font-size: 0.65rem; color: rgba(255,255,255,0.45); }
+  .share-btn-x { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; background: #000; color: #fff; border-radius: 20px; font-size: 0.8rem; font-weight: 700; border: none; cursor: pointer; font-family: 'Zen Kaku Gothic New', sans-serif; transition: all 0.2s; margin-top: 14px; width: 100%; justify-content: center; letter-spacing: 0.05em; }
+  .share-btn-x:hover { background: #1a1a1a; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+  .share-btn-x svg { width: 16px; height: 16px; fill: #fff; flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -196,6 +226,30 @@
   <div class="logo">G<span>low</span></div>
   <p>肌タイプ × 悩み × こだわり × 予算から<br>あなただけの最適スキンケアを提案</p>
 </header>
+
+<!-- ── 信頼性ブロック ── -->
+<div class="trust-block" id="trustBlock">
+  <div class="trust-item">
+    <div class="trust-num">49<span>ブランド</span></div>
+    <div class="trust-label">国内外の主要<br>スキンケアブランド</div>
+  </div>
+  <div class="trust-divider"></div>
+  <div class="trust-item">
+    <div class="trust-num">864<span>通り</span></div>
+    <div class="trust-label">診断パターン数<br>あなただけの結果</div>
+  </div>
+  <div class="trust-divider"></div>
+  <div class="trust-item">
+    <div class="trust-num">6<span>軸</span></div>
+    <div class="trust-label">肌タイプ×悩み×<br>こだわり×予算</div>
+  </div>
+  <div class="trust-divider"></div>
+  <div class="trust-item">
+    <div class="trust-num">毎日<span>更新</span></div>
+    <div class="trust-label">AlgoBeautyDBで<br>自動収集・反映</div>
+  </div>
+  <div class="trust-source">📊 データ出典：アットコスメ・LIPS・Allure・Byrdie・美的・Google News ／ 2026年最新情報</div>
+</div>
 
 <!-- ── ランキングセクション ── -->
 <div class="ranking-section" id="rankingSection">
@@ -384,6 +438,25 @@
 
   <!-- RESULT -->
   <div id="result">
+    <!-- シェアカード -->
+    <div class="share-card-wrap">
+      <div class="share-card" id="shareCard">
+        <div class="share-card-catch">✨ Glow 無料肌診断 — 私の結果</div>
+        <div class="share-card-title" id="shareCardTitle">診断結果</div>
+        <div class="share-card-brands" id="shareCardBrands"></div>
+        <div class="share-card-footer">
+          <div>
+            <div class="share-card-logo">G<span>low</span></div>
+            <div class="share-card-url">j-waga.github.io/glow-skin/</div>
+          </div>
+        </div>
+      </div>
+      <button class="share-btn-x" onclick="shareToX()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        この診断結果をXでシェアする
+      </button>
+    </div>
+
     <div class="result-hero">
       <h2 id="resultTitle">診断結果</h2>
       <p id="resultDesc"></p>
@@ -397,7 +470,7 @@
       <div id="rankingFitResult"></div>
     </div>
 
-    <div class="section-title">🏆 おすすめブランド TOP3</div>
+    <div class="section-title">✨ あなたへのおすすめ TOP3</div>
     <div id="brandCards"></div>
 
     <div class="section-title">🧪 あなたの肌に効く成分</div>
@@ -553,45 +626,45 @@ const DB = {
     },
   },
   profiles: {
-    hadalabo: { name:'肌ラボ（HADALABO）', region:'🇯🇵 JP', maker:'ロート製薬', price:'¥500〜¥1,500', stars:5, tag:'製薬系', key:'5種ヒアルロン酸・スーパーHA', series:'極潤シリーズ・白潤プレミアム', step:'STEP3化粧水・STEP5乳液', note:'ドラッグストア最強保湿ブランド', reason:'5種ヒアルロン酸（スーパーHA）で業界トップクラスの保湿力。製薬会社ロート製薬が開発し、医薬部外品ラインも豊富。コスパと成分量のバランスが圧倒的。' },
-    curel: { name:'キュレル（Curel）', region:'🇯🇵 JP', maker:'花王', price:'¥1,000〜¥3,000', stars:5, tag:'製薬系', key:'潤浸保湿セラミド・グリセリン', series:'潤浸保湿シリーズ・UVケア', step:'STEP3化粧水・STEP5乳液', note:'乾燥性敏感肌のNo.1定番ブランド', reason:'花王が開発した独自の「潤浸保湿セラミド機能成分」がバリア機能を補強。皮膚科医推奨で、乾燥性敏感肌・アトピー傾向の方に長年支持されている。' },
-    minon: { name:'ミノン（MINON）', region:'🇯🇵 JP', maker:'第一三共ヘルスケア', price:'¥1,000〜¥3,000', stars:5, tag:'製薬系', key:'18種アミノ酸・セラミド', series:'アミノモイストシリーズ・アクネケア', step:'STEP3化粧水・STEP5乳液', note:'敏感肌の聖典ブランド', reason:'18種のアミノ酸系保湿成分がバリア機能を強化。刺激成分ゼロで敏感肌・アレルギー肌でも安心。キュレルと並ぶ皮膚科医推奨の定番。' },
-    theordinary: { name:'The Ordinary', region:'🇺🇸 US', maker:'DECIEM', price:'¥1,200〜¥3,500', stars:5, tag:'成分特化', key:'ナイアシンアミド・レチノール・AHA/BHA', series:'ナイアシンアミド10%・レチノール・AHA 30%', step:'STEP4美容液', note:'成分透明性×超低価格の革命ブランド', reason:'成分名・濃度を正直に表記する透明性と圧倒的な低価格が特徴。ナイアシンアミド・レチノール・AHA/BHAなど高濃度成分を手軽に試せる成分主義ブランドの先駆け。' },
-    cosrx: { name:'COSRX', region:'🇰🇷 KR', maker:'COSRX', price:'¥1,500〜¥3,500', stars:5, tag:'韓国コスメ', key:'スネイル分泌液・BHA・ナイアシンアミド', series:'スネイルクリーム・AHAトナー・BHAブラックヘッド', step:'STEP3化粧水・STEP4美容液', note:'成分主義Glowと方向性が完全一致', reason:'スネイル分泌液（96%）が世界的ヒット。成分の透明性を重視し、BHA・ナイアシンアミド・AHAを高配合。Glowの成分主義と完全一致する韓国コスメの代表格。' },
-    anua: { name:'anua（アヌア）', region:'🇰🇷 KR', maker:'ANUA', price:'¥1,200〜¥3,500', stars:4, tag:'韓国コスメ', key:'ドクダミ・センテラアジアチカ・ナイアシンアミド', series:'ドクダミシリーズ・ナイアシンアミドトナー', step:'STEP3化粧水・STEP4美容液', note:'日本でも爆発的人気の敏感肌向け', reason:'ドクダミ（フラボノイド）が赤みや炎症を鎮静。センテラアジアチカでバリア補強。成分特化でSNS口コミが拡散中。混合肌・脂性肌の日本人に特にフィット。' },
-    laneige: { name:'Laneige（ラネージュ）', region:'🇰🇷 KR', maker:'アモーレパシフィック', price:'¥2,000〜¥5,000', stars:4, tag:'韓国コスメ', key:'ヒアルロン酸・グリーンティー・水分成分', series:'リップスリーピングマスク・ウォータースリーピングマスク', step:'STEP3化粧水・STEP8マスク', note:'リップ・保湿マスクが世界的ヒット', reason:'ヒアルロン酸×グリーンティーの水分補給が特徴。リップスリーピングマスクが世界中でヒット。SNS特化マーケティングでZ世代に絶大な人気。' },
-    somebymi: { name:'Some By Mi（サムバイミー）', region:'🇰🇷 KR', maker:'Some By Mi', price:'¥1,200〜¥2,800', stars:4, tag:'韓国コスメ', key:'AHA・BHA・PHA・ティーツリー', series:'AHA BHA PHA 30Days トナー', step:'STEP3化粧水・STEP4美容液', note:'30日間で肌が変わると話題', reason:'AHA・BHA・PHA三重酸の角質ケアとティーツリーの抗菌作用。ニキビ・毛穴改善に実績があり、30日間チャレンジがSNSで世界的に拡散した。' },
-    lrp: { name:'La Roche-Posay（ラロッシュポゼ）', region:'🇪🇺 EU', maker:'L\'Oréal', price:'¥2,500〜¥6,000', stars:5, tag:'皮膚科学', key:'温泉水・シカルファット・ニアシンアミド', series:'シカプラスト・トレリアン・エファクラー', step:'STEP3化粧水・STEP5クリーム', note:'世界の皮膚科医が最も推奨するブランド', reason:'フランスの温泉水を配合した独自処方で、皮膚科学に基づいた設計が特徴。敏感肌・アレルギー肌に世界中の皮膚科医が推奨する最高信頼度ブランド。' },
-    cerave: { name:'CeraVe（セラヴィ）', region:'🇺🇸 US', maker:'L\'Oréal（ロレアル）', price:'¥1,500〜¥3,500', stars:5, tag:'成分特化', key:'セラミド1・3・6-II・ヒアルロン酸・MVE技術', series:'モイスチャライジングクリーム・フォーミングクレンザー', step:'STEP3化粧水・STEP5クリーム', note:'皮膚科医推奨の成分主義ブランド', reason:'独自のMVE技術で成分を24時間かけてゆっくり放出。セラミド3種配合でバリア機能を修復。皮膚科医推奨のCEで最も信頼される処方。' },
-    transino: { name:'トランシーノ', region:'🇯🇵 JP', maker:'第一三共ヘルスケア', price:'¥2,000〜¥5,000', stars:4, tag:'製薬系', key:'トラネキサム酸・ビタミンC誘導体', series:'薬用美白シリーズ', step:'STEP3化粧水・STEP4美容液', note:'医薬部外品美白の代名詞', reason:'トラネキサム酸（美白有効成分）配合の全品医薬部外品。内服薬と外用化粧品の一貫ブランドで、シミ・そばかす改善の実績が高い。製薬会社の本気美白ブランド。' },
-    obagi: { name:'Obagi（オバジ）', region:'🇯🇵 JP', maker:'ロート製薬', price:'¥3,000〜¥10,000', stars:4, tag:'製薬系', key:'ピュアビタミンC・レチノール・ペプチド', series:'ObagiCシリーズ・ObagiXシリーズ', step:'STEP4美容液・STEP5クリーム', note:'製薬×皮膚科学の信頼感が高い', reason:'高濃度安定化ピュアビタミンCが特徴。ロート製薬の技術力で成分の安定性を実現。シミ・毛穴・シワへの科学的アプローチで口コミ拡散力が強い。' },
-    pola: { name:'POLA（ポーラ）', region:'🇯🇵 JP', maker:'ポーラ・オルビスHD', price:'¥7,000〜¥30,000', stars:5, tag:'プレステージ', key:'レチノール・ペプチド・独自複合成分', series:'B.A シリーズ・WRINKLESHOT', step:'STEP4美容液・STEP5クリーム', note:'エイジングケア特化の最高峰', reason:'1929年創業・独自複合成分とR&D投資が他を圧倒。WRINKLESHOTはシワ改善初の有効成分として認可。プレステージエイジングケアの頂点ブランド。' },
-    shiseido: { name:'資生堂 Shiseido', region:'🇯🇵 JP', maker:'資生堂', price:'¥5,000〜¥20,000', stars:5, tag:'プレステージ', key:'MICRO RETINOLテクノロジー・POLYREPAIRテクノロジー', series:'エリクシール・アルティミューン・WASO', step:'STEP3〜5全般', note:'世界120ヶ国展開の日本最大美容ブランド', reason:'MICRO RETINOLテクノロジーによる高浸透レチノール処方が特徴。世界120カ国以上で展開し、日本の美容科学の最先端を走る。Beauty Keyアプリで個別成分診断も提供開始。' },
-    esteelauder: { name:'Estée Lauder（エスティローダー）', region:'🇪🇺 EU', maker:'エスティローダー社', price:'¥8,000〜¥25,000', stars:5, tag:'プレステージ', key:'EGF類似成分（ANR）・ナイアシンアミド・ペプチド', series:'アドバンスナイトリペア・フューチャリスト', step:'STEP4美容液・STEP5クリーム', note:'世界最多のスキンケアInstagramフォロワー', reason:'アドバンスナイトリペア（ANR）はEGF類似成分配合の伝説的美容液。25以上のブランドを保有するグループで、R&D投資量が業界随一。' },
-    decorte: { name:'DECORTÉ（コスデコルテ）', region:'🇯🇵 JP', maker:'コーセー', price:'¥7,000〜¥25,000', stars:4, tag:'プレステージ', key:'AQ成分・独自リポソーム技術・植物幹細胞', series:'AQシリーズ・リポソームアドバンスト', step:'STEP4美容液・STEP5クリーム', note:'百貨店デパコスの頂点ブランド', reason:'コーセー傘下の最高級ラインで、独自のリポソーム技術が成分の深部浸透を実現。植物幹細胞エキスによるエイジングケアが百貨店層に絶大な人気。' },
-    clinique: { name:'Clinique（クリニーク）', region:'🇪🇺 EU', maker:'エスティローダー社', price:'¥4,000〜¥15,000', stars:4, tag:'プレステージ', key:'ヒアルロン酸・BHA・皮膚科学成分', series:'クラリファイングローション・モイスチャーサージ', step:'STEP3〜5全般', note:'アレルギーテスト済みの信頼感', reason:'全製品アレルギーテスト・皮膚科テスト済みで敏感肌でも使えるプレステージブランド。脱「派手さ」で成分と処方の質にこだわる知性派。' },
-    fancl: { name:'ファンケル FANCL', region:'🇯🇵 JP', maker:'ファンケル', price:'¥1,500〜¥6,000', stars:4, tag:'無添加', key:'ビタミンC誘導体・グリセリン・植物エキス', series:'マイルドクレンジングオイル・無添加スキンケア', step:'STEP0クレンジング・STEP3化粧水', note:'無添加化粧品の先駆けブランド', reason:'防腐剤・香料・合成色素などをすべて排除した「無添加」の先駆け。健康食品との相乗効果でインナービューティーも訴求。成分へのこだわりが強い方に最適。' },
-    orbis: { name:'オルビス ORBIS', region:'🇯🇵 JP', maker:'ポーラ・オルビスHD', price:'¥1,200〜¥5,000', stars:4, tag:'無添加', key:'ヒアルロン酸・セラミド・コラーゲン', series:'クリアシリーズ・ユードットシリーズ', step:'STEP3化粧水・STEP5乳液', note:'サステナ×無添加D2C最強', reason:'ポーラ・オルビスHD傘下のD2C美容ブランド。「ノンオイルスキンケア」の先駆けで、サステナブル志向と無添加処方が強み。定期購入モデルで継続ユーザーが多い。' },
-    muji: { name:'無印良品 敏感肌用シリーズ', region:'🇯🇵 JP', maker:'良品計画', price:'¥690〜¥1,290', stars:5, tag:'無添加', key:'セラミド・5種アミノ酸・天然水', series:'敏感肌用さっぱり/しっとり/高保湿', step:'STEP3化粧水・STEP5乳液', note:'1ブランドで全悩みに対応できる唯一の存在', reason:'岩手釜石の天然水ベースに5種アミノ酸とセラミドを配合。香料・着色料・鉱物油など7フリー設計。プチプラ最高コスパで敏感肌も安心。' },
-    muji_clear: { name:'無印良品 薬用クリアケア', region:'🇯🇵 JP', maker:'良品計画', price:'¥990〜¥1,690', stars:5, tag:'無添加', key:'グリチルリチン酸2K・ドクダミエキス', series:'薬用クリアケアシリーズ', step:'STEP3薬用化粧水', note:'医薬部外品でCOSRXと同成分アプローチ', reason:'グリチルリチン酸2K（抗炎症有効成分）配合の医薬部外品。ドクダミエキスでニキビ・肌荒れ予防。COSRXのような韓国式成分アプローチを日本の医薬部外品基準で実現。' },
-    muji_white: { name:'無印良品 エイジングケア薬用美白', region:'🇯🇵 JP', maker:'良品計画', price:'¥1,490〜¥2,490', stars:5, tag:'無添加', key:'ビタミンC誘導体・トラネキサム酸・ヒアルロン酸', series:'エイジングケア薬用美白シリーズ', step:'STEP3〜STEP6', note:'トランシーノと同有効成分が約1,500円から', reason:'トランシーノ（¥5,000超）と同じトラネキサム酸（有効成分）を配合しながら約1,490円から。ビタミンC誘導体も配合したシミ・シワ・美白の三冠医薬部外品。' },
-    muji_age: { name:'無印良品 エイジングケアシリーズ', region:'🇯🇵 JP', maker:'良品計画', price:'¥1,490〜¥2,490', stars:4, tag:'無添加', key:'11種植物エキス・レチノール誘導体・天然由来100%', series:'エイジングケアシリーズ', step:'STEP3化粧水・STEP5乳液', note:'天然由来100%×レチノール誘導体', reason:'天然由来成分100%でレチノール誘導体（パルミチン酸レチノール）とビタミンC誘導体を配合。The Ordinaryと近い成分設計を大幅低価格で実現した革命的コスパ。' },
-    adryS: { name:'AdryS（アドライズ）', region:'🇯🇵 JP', maker:'大正製薬', price:'¥3,000〜¥5,000', stars:4, tag:'製薬系', key:'ヘパリン類似物質・プラセンタエキス・セラミド', series:'アクティブローション・アクティブクリーム', step:'STEP3化粧水・STEP5クリーム', note:'ヒルドイドと同成分の市販スキンケア', reason:'皮膚科処方のヒルドイドと同成分「ヘパリン類似物質」を配合。さらに美白プラセンタエキスとセラミドも複合配合。大正製薬の本気スキンケアとしてSNS高評価。' },
-    hifmid: { name:'ヒフミド（HIFMID）', region:'🇯🇵 JP', maker:'小林製薬', price:'¥2,000〜¥5,000', stars:4, tag:'製薬系', key:'ヒト型セラミドⅡ（4%高配合）', series:'エッセンスローション・エッセンスミルク', step:'STEP3化粧水・STEP5乳液', note:'ヒト型セラミド配合量が業界トップクラス', reason:'ヒト型セラミドⅡを4%高配合（業界最高水準）。小林製薬の製薬技術でセラミド1・3を複合配合。バリア機能修復に特化した「製薬会社×セラミドの王道」。' },
-    nov: { name:'ノブ（NOV）', region:'🇯🇵 JP', maker:'常盤薬品工業', price:'¥1,500〜¥5,000', stars:4, tag:'製薬系', key:'アミノ酸系保湿成分・セラミド', series:'NOBシリーズⅠ・Ⅲ・L', step:'STEP3化粧水・STEP4美容液', note:'1985年誕生の老舗皮膚科推奨ブランド', reason:'臨床皮膚医学に基づき1985年に誕生した老舗敏感肌ブランド。皮膚科医推奨で、敏感肌からニキビ肌・エイジングまで対応するシリーズ展開が強み。' },
-    locobace: { name:'ロコベース（LOCOBACE）', region:'🇯🇵 JP', maker:'第一三共ヘルスケア', price:'¥1,000〜¥2,500', stars:3, tag:'製薬系', key:'セラミド・コレステロール・脂肪酸', series:'リペアクリーム・リペアミルク', step:'STEP5クリーム', note:'超乾燥肌・バリア補修の実力派', reason:'皮膚科学的に重要な「セラミド・コレステロール・脂肪酸」の3種肌脂質を同時補給。ナノ粒子化で浸透力を強化。超乾燥肌・アトピー傾向の方のバリア補修に特化。' },
-    arouge: { name:'アルージェ（Arouge）', region:'🇯🇵 JP', maker:'全薬工業', price:'¥1,500〜¥3,000', stars:3, tag:'製薬系', key:'温泉水・アミノ酸系成分', series:'モイスチャーシリーズ', step:'STEP3化粧水・STEP5ジェル', note:'温泉水ベースの敏感肌特化', reason:'NMFと同ミネラル組成の温泉水をベースに、アミノ酸系保湿成分でバリア機能を補強。皮膚科医監修で安全性が高く、根強いファンを持つ敏感肌特化ブランド。' },
-    keshimin: { name:'ケシミン（KESHIMIN）', region:'🇯🇵 JP', maker:'小林製薬', price:'¥800〜¥2,000', stars:3, tag:'製薬系', key:'ビタミンC誘導体・ヒアルロン酸', series:'浸透化粧水・浸透クリームC', step:'STEP3化粧水・STEP5クリーム', note:'プチプラ美白の定番入門ブランド', reason:'ビタミンC誘導体（アスコルビン酸2-グルコシド）配合の医薬部外品。薬局で手軽に購入でき、美白初心者の入門として最適なプチプラ美白ブランド。' },
-    iope: { name:'IOPE（イオペ）', region:'🇰🇷 KR', maker:'アモーレパシフィック', price:'¥3,000〜¥8,000', stars:4, tag:'韓国コスメ', key:'バイオエッセンス・植物幹細胞・レチノール', series:'バイオエッセンス・スーパービタル', step:'STEP3化粧水・STEP4美容液', note:'エアクッションファンデーション発明ブランド', reason:'エアクッションファンデーションを世界で初めて発明したイノベーションブランド。バイオエッセンスと植物幹細胞技術でテクノロジー×韓方を融合したエイジングケア。' },
-    sulwhasoo: { name:'Sulwhasoo（雪花秀）', region:'🇰🇷 KR', maker:'アモーレパシフィック', price:'¥8,000〜¥30,000', stars:5, tag:'韓国コスメ', key:'高麗人参・韓方複合エキス・発酵成分', series:'滋陰生津クリーム・エセンシャルシリーズ', step:'STEP3化粧水・STEP5クリーム', note:'韓方高級スキンケアの最高峰', reason:'高麗人参を中心とした韓方成分と最先端テクノロジーを融合。アモーレパシフィックの最高級ラインで、プレステージ韓国コスメを代表するラグジュアリーブランド。' },
-    missha: { name:'MISSHA（ミシャ）', region:'🇰🇷 KR', maker:'エイブルC&C', price:'¥1,200〜¥4,000', stars:4, tag:'韓国コスメ', key:'ナイアシンアミド・タイム革命成分・レチノール', series:'タイムレボリューション・BBクリーム', step:'STEP3化粧水・STEP4美容液', note:'BBクリームの先駆けブランド', reason:'韓国初のBBクリームブランドとして世界市場を開拓。タイムレボリューション シリーズがSK-IIのフェイシャルトリートメントエッセンスの廉価代替として口コミ拡散。' },
-    tonymoly: { name:'Tony Moly（トニーモリー）', region:'🇰🇷 KR', maker:'Tony Moly', price:'¥1,000〜¥3,000', stars:3, tag:'韓国コスメ', key:'アルブチン・ビタミンC・植物エキス', series:'パンダパック・アイブロウシリーズ', step:'STEP4美容液・STEP8マスク', note:'パッケージデザイン×SNS映え戦略', reason:'ユニークなアニマルパッケージでSNSで拡散力が高い。アルブチン・ビタミンCの美白成分を配合しながら低価格を実現。K-beautyらしい遊び心ある体験ができる。' },
-    mac: { name:'MAC Cosmetics（マック）', region:'🇺🇸 US', maker:'エスティローダー社', price:'¥3,000〜¥8,000', stars:4, tag:'プレステージ', key:'高発色色素・保湿成分・SPF', series:'スタジオフィックスフルイド・リップグラス', step:'STEP5クリームファンデ', note:'プロメイクアップアーティスト御用達', reason:'世界のプロメイクアップアーティストに選ばれる高発色・長持ち処方。多様性重視のインクルーシブ戦略で全人種・肌色に対応。40色以上のファンデーションシェード展開。' },
-    nars: { name:'NARS（ナーズ）', region:'🇺🇸 US', maker:'シャネル', price:'¥4,000〜¥10,000', stars:4, tag:'プレステージ', key:'保湿成分・シアバター・SPF', series:'オーガズムコレクション・ライトリフレクティング', step:'STEP5ファンデ・チーク', note:'「オーガズム」が世界的カルト人気', reason:'シアバター配合の高保湿処方と芸術性の高い色設計が特徴。「オーガズムブラッシュ」は世界最多売れたコスメの一つ。カラーコスメ×アート訴求のプレステージブランド。' },
-    sk2: { name:'SK-II', region:'🇯🇵 JP', maker:'P&G', price:'¥15,000〜¥35,000', stars:5, tag:'プレステージ', key:'ピテラ（発酵成分）・ナイアシンアミド', series:'フェイシャルトリートメントエッセンス', step:'STEP2導入液・STEP4美容液', note:'30年以上愛される伝説の発酵エッセンス', reason:'独自成分ピテラ（酵母発酵エキス）が30年以上の実績を持つ。ナイアシンアミドと組み合わせた透明感・ハリ改善に定評。「骨格からの輝き」がコンセプトのラグジュアリーブランド。' },
-    albion: { name:'ALBION（アルビオン）', region:'🇯🇵 JP', maker:'アルビオン', price:'¥8,000〜¥30,000', stars:4, tag:'プレステージ', key:'独自保湿成分・植物エキス複合体', series:'エクサージュ・アルティミューン', step:'STEP3化粧水・STEP5クリーム', note:'百貨店カウンセリング販売の老舗', reason:'独自処方と百貨店でのカウンセリング販売にこだわる日本の老舗高級コスメブランド。エクサージュシリーズは長年の根強いファンを持ち、乾燥肌エイジングケアに定評がある。' },
-    biore: { name:'ビオレ（Biore）', region:'🇯🇵 JP', maker:'花王', price:'¥500〜¥1,500', stars:4, tag:'製薬系', key:'アミノ酸系洗浄成分・UV吸収剤', series:'スキンケア洗顔料・ビオレUV', step:'STEP1洗顔・STEP7日焼け止め', note:'日焼け止め・洗顔のプチプラ定番', reason:'花王のアミノ酸系洗浄技術で毛穴汚れをしっかり除去しながら肌を傷めない。ビオレUVは日焼け止め国内シェア上位で、学生・若年層に特に人気の最強プチプラUVブランド。' },
-    innisfree: { name:'innisfree（イニスフリー）', region:'🇰🇷 KR', maker:'アモーレパシフィック', price:'¥1,200〜¥4,000', stars:3, tag:'韓国コスメ', key:'グリーンティー・火山岩・済州島自然成分', series:'グリーンティーシード・ポアブラー', step:'STEP3化粧水・STEP4美容液', note:'済州島自然派クリーンビューティー', reason:'済州島の清潔な自然環境から採れるグリーンティーと火山岩成分が特徴。クリーンビューティー×サステナブル訴求で、自然由来成分にこだわる方に最適な韓国コスメ。' },
+    hadalabo: { name:'肌ラボ（HADALABO）', region:'🇯🇵 JP', maker:'ロート製薬', price:'¥500〜¥1,500', stars:5, tag:'製薬系', key:'5種ヒアルロン酸・スーパーHA', series:'極潤シリーズ・白潤プレミアム', step:'STEP3化粧水・STEP5乳液', note:'ドラッグストア最強保湿ブランド', reason:'5種ヒアルロン酸（スーパーHA）で業界トップクラスの保湿力。製薬会社ロート製薬が開発し、医薬部外品ラインも豊富。コスパと成分量のバランスが圧倒的。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/肌ラボ+極潤+ヒアルロン液/' },
+    curel: { name:'キュレル（Curel）', region:'🇯🇵 JP', maker:'花王', price:'¥1,000〜¥3,000', stars:5, tag:'製薬系', key:'潤浸保湿セラミド・グリセリン', series:'潤浸保湿シリーズ・UVケア', step:'STEP3化粧水・STEP5乳液', note:'乾燥性敏感肌のNo.1定番ブランド', reason:'花王が開発した独自の「潤浸保湿セラミド機能成分」がバリア機能を補強。皮膚科医推奨で、乾燥性敏感肌・アトピー傾向の方に長年支持されている。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/キュレル+化粧水/' },
+    minon: { name:'ミノン（MINON）', region:'🇯🇵 JP', maker:'第一三共ヘルスケア', price:'¥1,000〜¥3,000', stars:5, tag:'製薬系', key:'18種アミノ酸・セラミド', series:'アミノモイストシリーズ・アクネケア', step:'STEP3化粧水・STEP5乳液', note:'敏感肌の聖典ブランド', reason:'18種のアミノ酸系保湿成分がバリア機能を強化。刺激成分ゼロで敏感肌・アレルギー肌でも安心。キュレルと並ぶ皮膚科医推奨の定番。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/ミノン+アミノモイスト+化粧水/' },
+    theordinary: { name:'The Ordinary', region:'🇺🇸 US', maker:'DECIEM', price:'¥1,200〜¥3,500', stars:5, tag:'成分特化', key:'ナイアシンアミド・レチノール・AHA/BHA', series:'ナイアシンアミド10%・レチノール・AHA 30%', step:'STEP4美容液', note:'成分透明性×超低価格の革命ブランド', reason:'成分名・濃度を正直に表記する透明性と圧倒的な低価格が特徴。ナイアシンアミド・レチノール・AHA/BHAなど高濃度成分を手軽に試せる成分主義ブランドの先駆け。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/The+Ordinary+ナイアシンアミド/' },
+    cosrx: { name:'COSRX', region:'🇰🇷 KR', maker:'COSRX', price:'¥1,500〜¥3,500', stars:5, tag:'韓国コスメ', key:'スネイル分泌液・BHA・ナイアシンアミド', series:'スネイルクリーム・AHAトナー・BHAブラックヘッド', step:'STEP3化粧水・STEP4美容液', note:'成分主義Glowと方向性が完全一致', reason:'スネイル分泌液（96%）が世界的ヒット。成分の透明性を重視し、BHA・ナイアシンアミド・AHAを高配合。Glowの成分主義と完全一致する韓国コスメの代表格。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/COSRX+スネイルクリーム/' },
+    anua: { name:'anua（アヌア）', region:'🇰🇷 KR', maker:'ANUA', price:'¥1,200〜¥3,500', stars:4, tag:'韓国コスメ', key:'ドクダミ・センテラアジアチカ・ナイアシンアミド', series:'ドクダミシリーズ・ナイアシンアミドトナー', step:'STEP3化粧水・STEP4美容液', note:'日本でも爆発的人気の敏感肌向け', reason:'ドクダミ（フラボノイド）が赤みや炎症を鎮静。センテラアジアチカでバリア補強。成分特化でSNS口コミが拡散中。混合肌・脂性肌の日本人に特にフィット。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/anua+アヌア+ドクダミ/' },
+    laneige: { name:'Laneige（ラネージュ）', region:'🇰🇷 KR', maker:'アモーレパシフィック', price:'¥2,000〜¥5,000', stars:4, tag:'韓国コスメ', key:'ヒアルロン酸・グリーンティー・水分成分', series:'リップスリーピングマスク・ウォータースリーピングマスク', step:'STEP3化粧水・STEP8マスク', note:'リップ・保湿マスクが世界的ヒット', reason:'ヒアルロン酸×グリーンティーの水分補給が特徴。リップスリーピングマスクが世界中でヒット。SNS特化マーケティングでZ世代に絶大な人気。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/Laneige+ラネージュ+スリーピングマスク/' },
+    somebymi: { name:'Some By Mi（サムバイミー）', region:'🇰🇷 KR', maker:'Some By Mi', price:'¥1,200〜¥2,800', stars:4, tag:'韓国コスメ', key:'AHA・BHA・PHA・ティーツリー', series:'AHA BHA PHA 30Days トナー', step:'STEP3化粧水・STEP4美容液', note:'30日間で肌が変わると話題', reason:'AHA・BHA・PHA三重酸の角質ケアとティーツリーの抗菌作用。ニキビ・毛穴改善に実績があり、30日間チャレンジがSNSで世界的に拡散した。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/Some+By+Mi+AHA+BHA+トナー/' },
+    lrp: { name:'La Roche-Posay（ラロッシュポゼ）', region:'🇪🇺 EU', maker:'L\'Oréal', price:'¥2,500〜¥6,000', stars:5, tag:'皮膚科学', key:'温泉水・シカルファット・ニアシンアミド', series:'シカプラスト・トレリアン・エファクラー', step:'STEP3化粧水・STEP5クリーム', note:'世界の皮膚科医が最も推奨するブランド', reason:'フランスの温泉水を配合した独自処方で、皮膚科学に基づいた設計が特徴。敏感肌・アレルギー肌に世界中の皮膚科医が推奨する最高信頼度ブランド。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/ラロッシュポゼ+シカプラスト/' },
+    cerave: { name:'CeraVe（セラヴィ）', region:'🇺🇸 US', maker:'L\'Oréal（ロレアル）', price:'¥1,500〜¥3,500', stars:5, tag:'成分特化', key:'セラミド1・3・6-II・ヒアルロン酸・MVE技術', series:'モイスチャライジングクリーム・フォーミングクレンザー', step:'STEP3化粧水・STEP5クリーム', note:'皮膚科医推奨の成分主義ブランド', reason:'独自のMVE技術で成分を24時間かけてゆっくり放出。セラミド3種配合でバリア機能を修復。皮膚科医推奨のCEで最も信頼される処方。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/CeraVe+セラヴィ+モイスチャライジング/' },
+    transino: { name:'トランシーノ', region:'🇯🇵 JP', maker:'第一三共ヘルスケア', price:'¥2,000〜¥5,000', stars:4, tag:'製薬系', key:'トラネキサム酸・ビタミンC誘導体', series:'薬用美白シリーズ', step:'STEP3化粧水・STEP4美容液', note:'医薬部外品美白の代名詞', reason:'トラネキサム酸（美白有効成分）配合の全品医薬部外品。内服薬と外用化粧品の一貫ブランドで、シミ・そばかす改善の実績が高い。製薬会社の本気美白ブランド。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/トランシーノ+薬用美白化粧水/' },
+    obagi: { name:'Obagi（オバジ）', region:'🇯🇵 JP', maker:'ロート製薬', price:'¥3,000〜¥10,000', stars:4, tag:'製薬系', key:'ピュアビタミンC・レチノール・ペプチド', series:'ObagiCシリーズ・ObagiXシリーズ', step:'STEP4美容液・STEP5クリーム', note:'製薬×皮膚科学の信頼感が高い', reason:'高濃度安定化ピュアビタミンCが特徴。ロート製薬の技術力で成分の安定性を実現。シミ・毛穴・シワへの科学的アプローチで口コミ拡散力が強い。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/Obagi+オバジC+美容液/' },
+    pola: { name:'POLA（ポーラ）', region:'🇯🇵 JP', maker:'ポーラ・オルビスHD', price:'¥7,000〜¥30,000', stars:5, tag:'プレステージ', key:'レチノール・ペプチド・独自複合成分', series:'B.A シリーズ・WRINKLESHOT', step:'STEP4美容液・STEP5クリーム', note:'エイジングケア特化の最高峰', reason:'1929年創業・独自複合成分とR&D投資が他を圧倒。WRINKLESHOTはシワ改善初の有効成分として認可。プレステージエイジングケアの頂点ブランド。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/POLA+ポーラ+BA+美容液/' },
+    shiseido: { name:'資生堂 Shiseido', region:'🇯🇵 JP', maker:'資生堂', price:'¥5,000〜¥20,000', stars:5, tag:'プレステージ', key:'MICRO RETINOLテクノロジー・POLYREPAIRテクノロジー', series:'エリクシール・アルティミューン・WASO', step:'STEP3〜5全般', note:'世界120ヶ国展開の日本最大美容ブランド', reason:'MICRO RETINOLテクノロジーによる高浸透レチノール処方が特徴。世界120カ国以上で展開し、日本の美容科学の最先端を走る。Beauty Keyアプリで個別成分診断も提供開始。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/資生堂+エリクシール+化粧水/' },
+    esteelauder: { name:'Estée Lauder（エスティローダー）', region:'🇪🇺 EU', maker:'エスティローダー社', price:'¥8,000〜¥25,000', stars:5, tag:'プレステージ', key:'EGF類似成分（ANR）・ナイアシンアミド・ペプチド', series:'アドバンスナイトリペア・フューチャリスト', step:'STEP4美容液・STEP5クリーム', note:'世界最多のスキンケアInstagramフォロワー', reason:'アドバンスナイトリペア（ANR）はEGF類似成分配合の伝説的美容液。25以上のブランドを保有するグループで、R&D投資量が業界随一。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/エスティローダー+アドバンスナイトリペア/' },
+    decorte: { name:'DECORTÉ（コスデコルテ）', region:'🇯🇵 JP', maker:'コーセー', price:'¥7,000〜¥25,000', stars:4, tag:'プレステージ', key:'AQ成分・独自リポソーム技術・植物幹細胞', series:'AQシリーズ・リポソームアドバンスト', step:'STEP4美容液・STEP5クリーム', note:'百貨店デパコスの頂点ブランド', reason:'コーセー傘下の最高級ラインで、独自のリポソーム技術が成分の深部浸透を実現。植物幹細胞エキスによるエイジングケアが百貨店層に絶大な人気。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/コスデコルテ+AQ+美容液/' },
+    clinique: { name:'Clinique（クリニーク）', region:'🇪🇺 EU', maker:'エスティローダー社', price:'¥4,000〜¥15,000', stars:4, tag:'プレステージ', key:'ヒアルロン酸・BHA・皮膚科学成分', series:'クラリファイングローション・モイスチャーサージ', step:'STEP3〜5全般', note:'アレルギーテスト済みの信頼感', reason:'全製品アレルギーテスト・皮膚科テスト済みで敏感肌でも使えるプレステージブランド。脱「派手さ」で成分と処方の質にこだわる知性派。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/クリニーク+モイスチャーサージ/' },
+    fancl: { name:'ファンケル FANCL', region:'🇯🇵 JP', maker:'ファンケル', price:'¥1,500〜¥6,000', stars:4, tag:'無添加', key:'ビタミンC誘導体・グリセリン・植物エキス', series:'マイルドクレンジングオイル・無添加スキンケア', step:'STEP0クレンジング・STEP3化粧水', note:'無添加化粧品の先駆けブランド', reason:'防腐剤・香料・合成色素などをすべて排除した「無添加」の先駆け。健康食品との相乗効果でインナービューティーも訴求。成分へのこだわりが強い方に最適。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/ファンケル+無添加+化粧水/' },
+    orbis: { name:'オルビス ORBIS', region:'🇯🇵 JP', maker:'ポーラ・オルビスHD', price:'¥1,200〜¥5,000', stars:4, tag:'無添加', key:'ヒアルロン酸・セラミド・コラーゲン', series:'クリアシリーズ・ユードットシリーズ', step:'STEP3化粧水・STEP5乳液', note:'サステナ×無添加D2C最強', reason:'ポーラ・オルビスHD傘下のD2C美容ブランド。「ノンオイルスキンケア」の先駆けで、サステナブル志向と無添加処方が強み。定期購入モデルで継続ユーザーが多い。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/オルビス+ユードット+化粧水/' },
+    muji: { name:'無印良品 敏感肌用シリーズ', region:'🇯🇵 JP', maker:'良品計画', price:'¥690〜¥1,290', stars:5, tag:'無添加', key:'セラミド・5種アミノ酸・天然水', series:'敏感肌用さっぱり/しっとり/高保湿', step:'STEP3化粧水・STEP5乳液', note:'1ブランドで全悩みに対応できる唯一の存在', reason:'岩手釜石の天然水ベースに5種アミノ酸とセラミドを配合。香料・着色料・鉱物油など7フリー設計。プチプラ最高コスパで敏感肌も安心。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/無印良品+敏感肌用+化粧水/' },
+    muji_clear: { name:'無印良品 薬用クリアケア', region:'🇯🇵 JP', maker:'良品計画', price:'¥990〜¥1,690', stars:5, tag:'無添加', key:'グリチルリチン酸2K・ドクダミエキス', series:'薬用クリアケアシリーズ', step:'STEP3薬用化粧水', note:'医薬部外品でCOSRXと同成分アプローチ', reason:'グリチルリチン酸2K（抗炎症有効成分）配合の医薬部外品。ドクダミエキスでニキビ・肌荒れ予防。COSRXのような韓国式成分アプローチを日本の医薬部外品基準で実現。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81+%E8%96%AC%E7%94%A8%E3%82%AF%E3%83%AA%E3%82%A2%E3%82%B1%E3%82%A2/' },
+    muji_white: { name:'無印良品 エイジングケア薬用美白', region:'🇯🇵 JP', maker:'良品計画', price:'¥1,490〜¥2,490', stars:5, tag:'無添加', key:'ビタミンC誘導体・トラネキサム酸・ヒアルロン酸', series:'エイジングケア薬用美白シリーズ', step:'STEP3〜STEP6', note:'トランシーノと同有効成分が約1,500円から', reason:'トランシーノ（¥5,000超）と同じトラネキサム酸（有効成分）を配合しながら約1,490円から。ビタミンC誘導体も配合したシミ・シワ・美白の三冠医薬部外品。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/無印良品+薬用+美白化粧水/' },
+    muji_age: { name:'無印良品 エイジングケアシリーズ', region:'🇯🇵 JP', maker:'良品計画', price:'¥1,490〜¥2,490', stars:4, tag:'無添加', key:'11種植物エキス・レチノール誘導体・天然由来100%', series:'エイジングケアシリーズ', step:'STEP3化粧水・STEP5乳液', note:'天然由来100%×レチノール誘導体', reason:'天然由来成分100%でレチノール誘導体（パルミチン酸レチノール）とビタミンC誘導体を配合。The Ordinaryと近い成分設計を大幅低価格で実現した革命的コスパ。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/無印良品+エイジングケア+化粧水/' },
+    adryS: { name:'AdryS（アドライズ）', region:'🇯🇵 JP', maker:'大正製薬', price:'¥3,000〜¥5,000', stars:4, tag:'製薬系', key:'ヘパリン類似物質・プラセンタエキス・セラミド', series:'アクティブローション・アクティブクリーム', step:'STEP3化粧水・STEP5クリーム', note:'ヒルドイドと同成分の市販スキンケア', reason:'皮膚科処方のヒルドイドと同成分「ヘパリン類似物質」を配合。さらに美白プラセンタエキスとセラミドも複合配合。大正製薬の本気スキンケアとしてSNS高評価。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/AdryS+アドライズ+化粧水/' },
+    hifmid: { name:'ヒフミド（HIFMID）', region:'🇯🇵 JP', maker:'小林製薬', price:'¥2,000〜¥5,000', stars:4, tag:'製薬系', key:'ヒト型セラミドⅡ（4%高配合）', series:'エッセンスローション・エッセンスミルク', step:'STEP3化粧水・STEP5乳液', note:'ヒト型セラミド配合量が業界トップクラス', reason:'ヒト型セラミドⅡを4%高配合（業界最高水準）。小林製薬の製薬技術でセラミド1・3を複合配合。バリア機能修復に特化した「製薬会社×セラミドの王道」。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/ヒフミド+エッセンスローション/' },
+    nov: { name:'ノブ（NOV）', region:'🇯🇵 JP', maker:'常盤薬品工業', price:'¥1,500〜¥5,000', stars:4, tag:'製薬系', key:'アミノ酸系保湿成分・セラミド', series:'NOBシリーズⅠ・Ⅲ・L', step:'STEP3化粧水・STEP4美容液', note:'1985年誕生の老舗皮膚科推奨ブランド', reason:'臨床皮膚医学に基づき1985年に誕生した老舗敏感肌ブランド。皮膚科医推奨で、敏感肌からニキビ肌・エイジングまで対応するシリーズ展開が強み。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/ノブ+NOV+化粧水/' },
+    locobace: { name:'ロコベース（LOCOBACE）', region:'🇯🇵 JP', maker:'第一三共ヘルスケア', price:'¥1,000〜¥2,500', stars:3, tag:'製薬系', key:'セラミド・コレステロール・脂肪酸', series:'リペアクリーム・リペアミルク', step:'STEP5クリーム', note:'超乾燥肌・バリア補修の実力派', reason:'皮膚科学的に重要な「セラミド・コレステロール・脂肪酸」の3種肌脂質を同時補給。ナノ粒子化で浸透力を強化。超乾燥肌・アトピー傾向の方のバリア補修に特化。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/ロコベース+リペアクリーム/' },
+    arouge: { name:'アルージェ（Arouge）', region:'🇯🇵 JP', maker:'全薬工業', price:'¥1,500〜¥3,000', stars:3, tag:'製薬系', key:'温泉水・アミノ酸系成分', series:'モイスチャーシリーズ', step:'STEP3化粧水・STEP5ジェル', note:'温泉水ベースの敏感肌特化', reason:'NMFと同ミネラル組成の温泉水をベースに、アミノ酸系保湿成分でバリア機能を補強。皮膚科医監修で安全性が高く、根強いファンを持つ敏感肌特化ブランド。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/アルージェ+モイスチャー+化粧水/' },
+    keshimin: { name:'ケシミン（KESHIMIN）', region:'🇯🇵 JP', maker:'小林製薬', price:'¥800〜¥2,000', stars:3, tag:'製薬系', key:'ビタミンC誘導体・ヒアルロン酸', series:'浸透化粧水・浸透クリームC', step:'STEP3化粧水・STEP5クリーム', note:'プチプラ美白の定番入門ブランド', reason:'ビタミンC誘導体（アスコルビン酸2-グルコシド）配合の医薬部外品。薬局で手軽に購入でき、美白初心者の入門として最適なプチプラ美白ブランド。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/ケシミン+浸透化粧水/' },
+    iope: { name:'IOPE（イオペ）', region:'🇰🇷 KR', maker:'アモーレパシフィック', price:'¥3,000〜¥8,000', stars:4, tag:'韓国コスメ', key:'バイオエッセンス・植物幹細胞・レチノール', series:'バイオエッセンス・スーパービタル', step:'STEP3化粧水・STEP4美容液', note:'エアクッションファンデーション発明ブランド', reason:'エアクッションファンデーションを世界で初めて発明したイノベーションブランド。バイオエッセンスと植物幹細胞技術でテクノロジー×韓方を融合したエイジングケア。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/IOPE+イオペ+バイオエッセンス/' },
+    sulwhasoo: { name:'Sulwhasoo（雪花秀）', region:'🇰🇷 KR', maker:'アモーレパシフィック', price:'¥8,000〜¥30,000', stars:5, tag:'韓国コスメ', key:'高麗人参・韓方複合エキス・発酵成分', series:'滋陰生津クリーム・エセンシャルシリーズ', step:'STEP3化粧水・STEP5クリーム', note:'韓方高級スキンケアの最高峰', reason:'高麗人参を中心とした韓方成分と最先端テクノロジーを融合。アモーレパシフィックの最高級ラインで、プレステージ韓国コスメを代表するラグジュアリーブランド。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/Sulwhasoo+雪花秀+クリーム/' },
+    missha: { name:'MISSHA（ミシャ）', region:'🇰🇷 KR', maker:'エイブルC&C', price:'¥1,200〜¥4,000', stars:4, tag:'韓国コスメ', key:'ナイアシンアミド・タイム革命成分・レチノール', series:'タイムレボリューション・BBクリーム', step:'STEP3化粧水・STEP4美容液', note:'BBクリームの先駆けブランド', reason:'韓国初のBBクリームブランドとして世界市場を開拓。タイムレボリューション シリーズがSK-IIのフェイシャルトリートメントエッセンスの廉価代替として口コミ拡散。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/MISSHA+ミシャ+タイムレボリューション/' },
+    tonymoly: { name:'Tony Moly（トニーモリー）', region:'🇰🇷 KR', maker:'Tony Moly', price:'¥1,000〜¥3,000', stars:3, tag:'韓国コスメ', key:'アルブチン・ビタミンC・植物エキス', series:'パンダパック・アイブロウシリーズ', step:'STEP4美容液・STEP8マスク', note:'パッケージデザイン×SNS映え戦略', reason:'ユニークなアニマルパッケージでSNSで拡散力が高い。アルブチン・ビタミンCの美白成分を配合しながら低価格を実現。K-beautyらしい遊び心ある体験ができる。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/Tony+Moly+トニーモリー/' },
+    mac: { name:'MAC Cosmetics（マック）', region:'🇺🇸 US', maker:'エスティローダー社', price:'¥3,000〜¥8,000', stars:4, tag:'プレステージ', key:'高発色色素・保湿成分・SPF', series:'スタジオフィックスフルイド・リップグラス', step:'STEP5クリームファンデ', note:'プロメイクアップアーティスト御用達', reason:'世界のプロメイクアップアーティストに選ばれる高発色・長持ち処方。多様性重視のインクルーシブ戦略で全人種・肌色に対応。40色以上のファンデーションシェード展開。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/MAC+スタジオフィックス+ファンデーション/' },
+    nars: { name:'NARS（ナーズ）', region:'🇺🇸 US', maker:'シャネル', price:'¥4,000〜¥10,000', stars:4, tag:'プレステージ', key:'保湿成分・シアバター・SPF', series:'オーガズムコレクション・ライトリフレクティング', step:'STEP5ファンデ・チーク', note:'「オーガズム」が世界的カルト人気', reason:'シアバター配合の高保湿処方と芸術性の高い色設計が特徴。「オーガズムブラッシュ」は世界最多売れたコスメの一つ。カラーコスメ×アート訴求のプレステージブランド。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/NARS+ナーズ+ファンデーション/' },
+    sk2: { name:'SK-II', region:'🇯🇵 JP', maker:'P&G', price:'¥15,000〜¥35,000', stars:5, tag:'プレステージ', key:'ピテラ（発酵成分）・ナイアシンアミド', series:'フェイシャルトリートメントエッセンス', step:'STEP2導入液・STEP4美容液', note:'30年以上愛される伝説の発酵エッセンス', reason:'独自成分ピテラ（酵母発酵エキス）が30年以上の実績を持つ。ナイアシンアミドと組み合わせた透明感・ハリ改善に定評。「骨格からの輝き」がコンセプトのラグジュアリーブランド。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/SK-II+フェイシャルトリートメントエッセンス/' },
+    albion: { name:'ALBION（アルビオン）', region:'🇯🇵 JP', maker:'アルビオン', price:'¥8,000〜¥30,000', stars:4, tag:'プレステージ', key:'独自保湿成分・植物エキス複合体', series:'エクサージュ・アルティミューン', step:'STEP3化粧水・STEP5クリーム', note:'百貨店カウンセリング販売の老舗', reason:'独自処方と百貨店でのカウンセリング販売にこだわる日本の老舗高級コスメブランド。エクサージュシリーズは長年の根強いファンを持ち、乾燥肌エイジングケアに定評がある。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/ALBION+アルビオン+エクサージュ/' },
+    biore: { name:'ビオレ（Biore）', region:'🇯🇵 JP', maker:'花王', price:'¥500〜¥1,500', stars:4, tag:'製薬系', key:'アミノ酸系洗浄成分・UV吸収剤', series:'スキンケア洗顔料・ビオレUV', step:'STEP1洗顔・STEP7日焼け止め', note:'日焼け止め・洗顔のプチプラ定番', reason:'花王のアミノ酸系洗浄技術で毛穴汚れをしっかり除去しながら肌を傷めない。ビオレUVは日焼け止め国内シェア上位で、学生・若年層に特に人気の最強プチプラUVブランド。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/ビオレ+UV+日焼け止め/' },
+    innisfree: { name:'innisfree（イニスフリー）', region:'🇰🇷 KR', maker:'アモーレパシフィック', price:'¥1,200〜¥4,000', stars:3, tag:'韓国コスメ', key:'グリーンティー・火山岩・済州島自然成分', series:'グリーンティーシード・ポアブラー', step:'STEP3化粧水・STEP4美容液', note:'済州島自然派クリーンビューティー', reason:'済州島の清潔な自然環境から採れるグリーンティーと火山岩成分が特徴。クリーンビューティー×サステナブル訴求で、自然由来成分にこだわる方に最適な韓国コスメ。' , buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/innisfree+イニスフリー+グリーンティー/' },
     dhc: { name:'DHC', region:'🇯🇵 JP', maker:'DHC', price:'¥500〜¥3,000', stars:4, tag:'D2C通販', key:'オリーブバージンオイル・コエンザイムQ10・ビタミンC誘導体', series:'薬用ディープクレンジングオイル・薬用Qシリーズ', step:'STEP0クレンジング・STEP3化粧水', note:'日本最多出荷クレンジングオイルの王者', reason:'オリーブバージンオイル100%配合のクレンジングオイルは日本最多出荷実績。サプリ事業との相乗効果でインナービューティーも訴求。コスパ最強のD2C通販ブランド。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/DHC+%E8%96%AC%E7%94%A8%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%82%AF%E3%83%AC%E3%83%B3%E3%82%B8%E3%83%B3%E3%82%B0%E3%82%AA%E3%82%A4%E3%83%AB/' },
     drcilabo: { name:'ドクターシーラボ', region:'🇯🇵 JP', maker:'ドクターシーラボ', price:'¥2,000〜¥8,000', stars:4, tag:'D2C高機能', key:'ビタミンC誘導体（VC100）・コラーゲン・ヒアルロン酸', series:'VC100エッセンスローション・アクアコラーゲンゲル', step:'STEP3化粧水・STEP4美容液', note:'皮膚科医監修のVC100美容液が定番', reason:'皮膚科医監修の高機能スキンケア。VC100（高濃度ビタミンC誘導体）シリーズがシミ・毛穴改善に実績。オールインワンゲルも人気で、スキンケア時短派にも対応。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E3%83%89%E3%82%AF%E3%82%BF%E3%83%BC%E3%82%B7%E3%83%BC%E3%83%A9%E3%83%9C+VC100/' },
     mimc: { name:'MiMC', region:'🇯🇵 JP', maker:'MiMC', price:'¥2,500〜¥8,000', stars:4, tag:'オーガニック', key:'ミネラル成分・植物由来成分・無添加処方', series:'ミネラルリキッドリーファンデーション・バームクレンジング', step:'STEP0クレンジング・STEP5ファンデ', note:'日本発オーガニックミネラルコスメの先駆け', reason:'日本発のオーガニックミネラルコスメブランド。敏感肌でも使えるミネラルファンデーションが主力。化粧品成分への厳しい基準と植物由来処方で、肌に優しいメイクを実現。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/MiMC+%E3%83%9F%E3%83%8D%E3%83%A9%E3%83%AB%E3%83%95%E3%82%A1%E3%83%B3%E3%83%87%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3/' },
@@ -630,6 +703,11 @@ function showResult() {
   document.getElementById('progressWrap').style.display = 'none';
 
   const { skin, concern, pref, budget } = answers;
+
+  // ── シェアカード更新 ──
+  document.getElementById('rankingSection').style.display = 'none';
+  document.getElementById('trustBlock').style.display = 'none';
+  document.getElementById('shareCardTitle').textContent = `${DB.skinLabel[skin]} × ${DB.concernLabel[concern]} の処方箋`;
 
   // ランキング相性結果
   const fitLabels = { good: ['◎ おすすめ', 'fit-good'], caution: ['△ 注意', 'fit-caution'], avoid: ['✕ 避けて', 'fit-avoid'] };
@@ -715,10 +793,34 @@ function showResult() {
 
   document.getElementById('result').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // シェアカードのブランド一覧を更新（top3確定後）
+  const rankClasses = ['scr1','scr2','scr3'];
+  document.getElementById('shareCardBrands').innerHTML = top3.map((id, idx) => {
+    const b = DB.profiles[id];
+    if (!b) return '';
+    return `<div class="share-card-brand-item">
+      <div class="share-card-rank ${rankClasses[idx]}">${idx+1}</div>
+      <div class="share-card-brand-name">${b.name}</div>
+    </div>`;
+  }).join('');
+}
+
+function shareToX() {
+  const { skin, concern, pref, budget } = answers;
+  const skinLabel = DB.skinLabel[skin] || '';
+  const concernLabel = DB.concernLabel[concern] || '';
+  const brands = document.querySelectorAll('#shareCardBrands .share-card-brand-name');
+  const brandList = Array.from(brands).map((b, i) => `${i+1}位：${b.textContent}`).join(' / ');
+  const url = 'https://j-waga.github.io/glow-skin/glow_skin_diagnosis.html';
+  const text = `【Glow 無料肌診断】✨\n私の肌タイプ：${skinLabel} × ${concernLabel}\n\nおすすめブランド TOP3\n${brandList}\n\nあなたも診断してみて👇\n${url}\n#肌診断 #スキンケア #Glow診断`;
+  const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+  window.open(xUrl, '_blank', 'width=600,height=500');
 }
 
 function resetDiagnosis() {
-  Object.assign(answers, { skin:'', concern:'', pref:'', budget:'' });
+  document.getElementById('rankingSection').style.display = 'block';
+  document.getElementById('trustBlock').style.display = 'flex';
   document.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
   document.querySelectorAll('.next-btn').forEach(b => b.disabled = true);
   document.getElementById('result').classList.remove('active');
