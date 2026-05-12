@@ -496,6 +496,9 @@ function nextStep(n) {
   const pct = (n / 4) * 100;
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressLabel').textContent = `STEP ${n} / 4`;
+  // STEP2以降はランキングセクションを非表示
+  const ranking = document.getElementById('rankingSection');
+  if (ranking) ranking.style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
