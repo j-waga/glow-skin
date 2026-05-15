@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>今月のランキング｜Glow / アルゴAI</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --purple:#7B2D8B;--purple-l:#F3E8FF;--purple-d:#4C1D95;
+  --pink:#BE185D;--pink-l:#FCE7F3;
+  --green:#166534;--green-l:#DCFCE7;
+  --blue:#1E40AF;--blue-l:#DBEAFE;
+  --amber:#92400E;--amber-l:#FEF9C3;
+  --teal:#065F46;--teal-l:#D1FAE5;
+  --warn:#991B1B;--warn-l:#FEE2E2;
+  --gray:#F9FAFB;--border:#E5E7EB;
+  --text:#111827;--text-s:#6B7280;--text-h:#9CA3AF;
+  --rakuten:#BF0000;
+}
+body{font-family:'Noto Sans JP',sans-serif;background:#F5F0FB;color:var(--text);min-height:100vh}
+
+nav{background:white;border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-size:18px;font-weight:700;color:var(--purple);text-decoration:none}
+.nav-back{font-size:13px;color:var(--text-s);text-decoration:none;display:flex;align-items:center;gap:4px}
+
+.hero{background:linear-gradient(135deg,#4C1D95 0%,#7B2D8B 50%,#BE185D 100%);padding:28px 20px 22px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'✦';position:absolute;top:14px;left:22px;color:rgba(255,255,255,0.2);font-size:20px}
+.hero::after{content:'✦';position:absolute;bottom:14px;right:22px;color:rgba(255,255,255,0.2);font-size:14px}
+.hero-badge{display:inline-block;background:rgba(255,255,255,0.18);color:white;font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.3)}
+.hero h1{color:white;font-size:20px;font-weight:700;line-height:1.4;margin-bottom:4px}
+.hero h1 em{color:#FDE68A;font-style:normal}
+.hero-sub{color:rgba(255,255,255,0.75);font-size:12px;margin-bottom:12px}
+.source-chips{display:flex;justify-content:center;flex-wrap:wrap;gap:5px}
+.chip{background:rgba(255,255,255,0.14);color:white;font-size:10px;padding:2px 9px;border-radius:10px}
+
+.main{max-width:600px;margin:0 auto;padding:18px 16px 48px}
+.sec-label{font-size:11px;color:var(--text-h);letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.filter-wrap{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.filter-btn{flex:1;min-width:90px;padding:9px 6px;border-radius:10px;font-size:12px;font-weight:700;border:1.5px solid var(--border);background:white;color:var(--text-s);cursor:pointer;text-align:center;transition:all .2s}
+.filter-btn.active{background:var(--purple);color:white;border-color:var(--purple)}
+.filter-btn:hover:not(.active){border-color:var(--purple);color:var(--purple)}
+
+.card{background:white;border-radius:14px;border:1px solid var(--border);margin-bottom:10px;overflow:hidden}
+.card-top{height:4px}
+.card-body{padding:14px 16px}
+.summary{display:flex;align-items:center;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.summary:hover{opacity:.85}
+.rank-circle{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.r1{background:#F5C518;color:#6B4A00}
+.r2{background:#D1D5DB;color:#374151}
+.r3{background:#D97706;color:white}
+.r4{background:var(--purple-l);color:var(--purple-d)}
+.r5{background:var(--teal-l);color:var(--teal)}
+.s-info{flex:1;min-width:0}
+.s-name{font-size:13px;font-weight:700;line-height:1.3;color:var(--text)}
+.s-price{font-size:12px;color:var(--pink);font-weight:700;margin-top:2px}
+.s-arrow{color:var(--text-h);font-size:20px;transition:transform .25s;flex-shrink:0;line-height:1}
+.detail{display:none;padding-top:12px;border-top:1px solid var(--gray);margin-top:12px}
+.card.open .detail{display:block}
+.card.open .s-arrow{transform:rotate(180deg)}
+
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px}
+.tg{background:var(--amber-l);color:var(--amber)}
+.tb{background:var(--blue-l);color:var(--blue)}
+.tp{background:var(--pink-l);color:var(--pink)}
+.tg2{background:var(--green-l);color:var(--green)}
+.tv{background:var(--purple-l);color:var(--purple-d)}
+.skin-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.sb{font-size:10px;font-weight:500;padding:2px 8px;border-radius:12px}
+.sb-o{background:#DCFCE7;color:#166534}
+.sb-d{background:#FEF9C3;color:#92400E}
+.sb-x{background:#FEE2E2;color:#991B1B}
+.memo{background:var(--gray);border-left:3px solid var(--purple);border-radius:0 8px 8px 0;padding:9px 11px;font-size:11px;color:var(--text-s);line-height:1.7;margin-bottom:12px}
+.memo strong{color:var(--purple);font-weight:700}
+.buy-row{display:flex;align-items:center;justify-content:flex-end}
+.buy-btn{display:inline-flex;align-items:center;gap:6px;background:var(--rakuten);color:white;font-size:13px;font-weight:700;padding:9px 18px;border-radius:9px;text-decoration:none}
+
+.more-toggle{text-align:center;margin:4px 0 12px;cursor:pointer;color:var(--purple);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:4px;padding:8px;background:white;border-radius:10px;border:1.5px dashed var(--purple)}
+.more-toggle:hover{background:var(--purple-l)}
+.more-cards{display:none}
+.more-cards.open{display:block}
+
+.diag-section{background:white;border-radius:14px;border:1px solid var(--border);padding:18px;margin-top:4px}
+.diag-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px}
+.diag-sub{font-size:12px;color:var(--text-s);margin-bottom:14px}
+.diag-step{display:none}
+.diag-step.active{display:block}
+.q-label{font-size:13px;font-weight:700;color:var(--purple);margin-bottom:10px}
+.q-opts{display:flex;flex-direction:column;gap:7px}
+.q-btn{padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);background:white;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;text-align:left;transition:all .2s}
+.q-btn:hover{border-color:var(--purple);color:var(--purple);background:var(--purple-l)}
+.diag-progress{display:flex;gap:5px;margin-bottom:14px}
+.prog-dot{flex:1;height:4px;border-radius:2px;background:var(--border)}
+.prog-dot.done{background:var(--purple)}
+.result-box{background:linear-gradient(135deg,var(--purple-d),var(--purple));border-radius:12px;padding:18px;color:white;text-align:center}
+.result-label{font-size:11px;opacity:.8;margin-bottom:6px}
+.result-name{font-size:16px;font-weight:700;margin-bottom:8px;color:#FDE68A;line-height:1.4}
+.result-reason{font-size:12px;opacity:.85;line-height:1.6;margin-bottom:14px}
+.result-buy{display:block;background:white;color:var(--purple);font-size:14px;font-weight:700;padding:12px;border-radius:9px;text-decoration:none;margin-bottom:10px}
+.result-retry{font-size:12px;color:rgba(255,255,255,.7);cursor:pointer;text-decoration:underline}
+
+.budget-section{background:white;border-radius:14px;border:1px solid var(--border);padding:18px;margin-top:4px}
+.budget-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px}
+.budget-group-label{font-size:11px;color:var(--text-h);margin:12px 0 6px;padding-left:2px}
+.budget-group-label:first-child{margin-top:0}
+.budget-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--gray);margin-bottom:7px;gap:8px}
+.b-info{flex:1;min-width:0}
+.b-name{font-size:13px;font-weight:700;color:var(--text);line-height:1.3}
+.b-meta{font-size:10px;color:var(--text-h);margin-top:2px}
+.b-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.b-price{font-size:12px;color:var(--pink);font-weight:700;white-space:nowrap}
+.b-buy{background:var(--rakuten);color:white;font-size:11px;font-weight:700;padding:6px 12px;border-radius:7px;text-decoration:none;white-space:nowrap}
+
+.data-note{font-size:10px;color:var(--text-h);text-align:center;padding:12px 16px;background:white;border-radius:10px;border:1px solid var(--border);margin-top:16px;line-height:1.7}
+footer{text-align:center;padding:24px 16px;font-size:11px;color:var(--text-h)}
+footer a{color:var(--purple);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://j-waga.github.io/glow-skin/glow_skin_diagnosis.html" class="nav-logo">✦ Glow</a>
+  <a href="https://j-waga.github.io/glow-skin/glow_skin_diagnosis.html" class="nav-back">&#8592; コスメ検索に戻る</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">今月の特集 &#8212; 2026年5月</div>
+  <h1>日焼け止め・<em>UV</em>人気ランキング</h1>
+  <p class="hero-sub">3サイト横断調査 ／ 成分から合うか確認できます</p>
+  <div class="source-chips">
+    <span class="chip">&#128202; ＠cosme</span>
+    <span class="chip">&#128132; LIPS</span>
+    <span class="chip">&#128300; マイベスト</span>
+    <span class="chip">集計：2026年2月〜5月15日</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="filter-wrap">
+    <button class="filter-btn active" onclick="setFilter('all',this)">すべて</button>
+    <button class="filter-btn" onclick="setFilter('skin',this)">&#128269; 肌で選ぶ</button>
+    <button class="filter-btn" onclick="setFilter('budget',this)">&#128176; 予算で選ぶ</button>
+  </div>
+
+  <!-- ランキング -->
+  <div id="ranking-section">
+    <p class="sec-label">&#127942; 総合ランキング TOP5</p>
+
+    <div class="card" id="c1">
+      <div class="card-top" style="background:linear-gradient(90deg,#F5C518,#F59E0B)"></div>
+      <div class="card-body">
+        <div class="summary" onclick="toggleCard('c1')">
+          <div class="rank-circle r1">1</div>
+          <div class="s-info">
+            <div class="s-name">ラ ロッシュ ポゼ UVイデア XL ローズ+</div>
+            <div class="s-price">&#165;3,960〜</div>
+          </div>
+          <div class="s-arrow">&#8250;</div>
+        </div>
+        <div class="detail">
+          <div class="tags">
+            <span class="tag tg">&#128081; 3サイト全部IN</span>
+            <span class="tag tb">＠cosme 7位</span>
+            <span class="tag tp">LIPS 2位</span>
+            <span class="tag tg2">マイベスト 1位</span>
+            <span class="tag tp">LIPS総合大賞2025</span>
+          </div>
+          <div class="skin-row">
+            <span class="sb sb-o">乾燥肌◎</span><span class="sb sb-o">敏感肌◎</span>
+            <span class="sb sb-o">混合肌◎</span><span class="sb sb-d">脂性肌△</span>
+          </div>
+          <div class="memo"><strong>Glow成分メモ：</strong>酸化亜鉛フリーでノンケミカル寄り。ナイアシンアミド配合でUVカット＋美白を同時に。敏感肌でもきしみにくい設計。3サイト全部ランクインの最強格。</div>
+          <div class="buy-row"><a href="https://room.rakuten.co.jp/room_055cccf046" class="buy-btn">&#128722; 楽天で購入</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="c2">
+      <div class="card-top" style="background:linear-gradient(90deg,#F5C518,#F59E0B)"></div>
+      <div class="card-body">
+        <div class="summary" onclick="toggleCard('c2')">
+          <div class="rank-circle r2">2</div>
+          <div class="s-info">
+            <div class="s-name">アネッサ パーフェクトUV スキンケアジェル NB</div>
+            <div class="s-price">&#165;1,496〜</div>
+          </div>
+          <div class="s-arrow">&#8250;</div>
+        </div>
+        <div class="detail">
+          <div class="tags">
+            <span class="tag tg">&#128081; 3サイト全部IN</span>
+            <span class="tag tb">＠cosme 4位</span>
+            <span class="tag tp">LIPS 9位</span>
+            <span class="tag tg2">マイベスト 1位</span>
+            <span class="tag tg2">2025ベストコスメ</span>
+          </div>
+          <div class="skin-row">
+            <span class="sb sb-o">混合肌◎</span><span class="sb sb-o">脂性肌◎</span>
+            <span class="sb sb-o">敏感肌◎</span><span class="sb sb-d">乾燥肌△</span>
+          </div>
+          <div class="memo"><strong>Glow成分メモ：</strong>汗・水に反応してUV膜が自動強化されるオートブースター技術。白浮きなし・ベタつきにくいジェル処方で顔体両用。マイベスト66商品検証1位。</div>
+          <div class="buy-row"><a href="https://room.rakuten.co.jp/room_055cccf046" class="buy-btn">&#128722; 楽天で購入</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="c3">
+      <div class="card-top" style="background:#D97706"></div>
+      <div class="card-body">
+        <div class="summary" onclick="toggleCard('c3')">
+          <div class="rank-circle r3">3</div>
+          <div class="s-info">
+            <div class="s-name">アリィー クロノビューティ フラットスムースフィルターUV</div>
+            <div class="s-price">&#165;2,178〜</div>
+          </div>
+          <div class="s-arrow">&#8250;</div>
+        </div>
+        <div class="detail">
+          <div class="tags">
+            <span class="tag tv">2サイトIN</span>
+            <span class="tag tb">＠cosme 10位</span>
+            <span class="tag tp">LIPS 3位</span>
+          </div>
+          <div class="skin-row">
+            <span class="sb sb-o">脂性肌◎</span><span class="sb sb-o">混合肌◎</span>
+            <span class="sb sb-d">乾燥肌△</span><span class="sb sb-x">敏感肌×</span>
+          </div>
+          <div class="memo"><strong>Glow成分メモ：</strong>フラットスムースフィルター処方で毛穴・凹凸を補正。ビーチフレンドリー処方採用。紫外線吸収剤配合のため敏感肌は注意。毛穴悩みの方に特におすすめ。</div>
+          <div class="buy-row"><a href="https://room.rakuten.co.jp/room_055cccf046" class="buy-btn">&#128722; 楽天で購入</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="more-toggle" onclick="toggleMore()" id="more-btn">&#9660; 4位・5位も見る</div>
+    <div class="more-cards" id="more-cards">
+
+      <div class="card" id="c4">
+        <div class="card-top" style="background:#BE185D"></div>
+        <div class="card-body">
+          <div class="summary" onclick="toggleCard('c4')">
+            <div class="rank-circle r4">4</div>
+            <div class="s-info">
+              <div class="s-name">スキンアクア ヒアルロンセラムUV</div>
+              <div class="s-price">&#165;1,320〜</div>
+            </div>
+            <div class="s-arrow">&#8250;</div>
+          </div>
+          <div class="detail">
+            <div class="tags">
+              <span class="tag tp">LIPS 1位</span>
+              <span class="tag tp">LIPSベストコスメ2025</span>
+            </div>
+            <div class="skin-row">
+              <span class="sb sb-o">乾燥肌◎</span><span class="sb sb-o">敏感肌◎</span>
+              <span class="sb sb-o">混合肌◎</span><span class="sb sb-d">脂性肌△</span>
+            </div>
+            <div class="memo"><strong>Glow成分メモ：</strong>ヒアルロン酸3種配合で美容液のような塗り心地。塗っているのを忘れる軽さ。2026年スキンケアUVトレンドを体現したプチプラ最強格。</div>
+            <div class="buy-row"><a href="https://room.rakuten.co.jp/room_055cccf046" class="buy-btn">&#128722; 楽天で購入</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="c5">
+        <div class="card-top" style="background:#059669"></div>
+        <div class="card-body">
+          <div class="summary" onclick="toggleCard('c5')">
+            <div class="rank-circle r5">5</div>
+            <div class="s-info">
+              <div class="s-name">キュレル 潤浸保湿 UVミルク</div>
+              <div class="s-price">&#165;990〜</div>
+            </div>
+            <div class="s-arrow">&#8250;</div>
+          </div>
+          <div class="detail">
+            <div class="tags">
+              <span class="tag tg2">マイベスト敏感肌満点</span>
+              <span class="tag tg2">ノンケミカル処方</span>
+            </div>
+            <div class="skin-row">
+              <span class="sb sb-o">敏感肌◎</span><span class="sb sb-o">乾燥肌◎</span>
+              <span class="sb sb-d">混合肌△</span><span class="sb sb-d">脂性肌△</span>
+            </div>
+            <div class="memo"><strong>Glow成分メモ：</strong>紫外線吸収剤フリーのノンケミカル処方。セラミド機能成分でバリアケアしながらUV防御。アルコールフリー・無香料。マイベスト敏感肌スコア満点5.00。</div>
+            <div class="buy-row"><a href="https://room.rakuten.co.jp/room_055cccf046" class="buy-btn">&#128722; 楽天で購入</a></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 肌タイプ診断 -->
+  <div class="diag-section" id="diag-section" style="display:none">
+    <div class="diag-title">&#128269; あなたに合うUVを診断</div>
+    <div class="diag-sub">3問に答えるだけ。成分から最適な1本を提案します。</div>
+    <div class="diag-progress" id="progress">
+      <div class="prog-dot" id="p1"></div>
+      <div class="prog-dot" id="p2"></div>
+      <div class="prog-dot" id="p3"></div>
+    </div>
+    <div class="diag-step active" id="step1">
+      <div class="q-label">Q1. 肌タイプを教えてください</div>
+      <div class="q-opts">
+        <button class="q-btn" onclick="answer(1,'dry')">&#127783; 乾燥肌（つっぱりやすい・粉ふきが気になる）</button>
+        <button class="q-btn" onclick="answer(1,'combo')">&#127780; 混合肌（Tゾーンはテカるが頬は乾燥）</button>
+        <button class="q-btn" onclick="answer(1,'oily')">&#9728; 脂性肌（全体的にテカりやすい・毛穴が目立つ）</button>
+        <button class="q-btn" onclick="answer(1,'sensitive')">&#127800; 敏感肌（刺激に弱い・赤みが出やすい）</button>
+      </div>
+    </div>
+    <div class="diag-step" id="step2">
+      <div class="q-label">Q2. 一番気になる肌悩みは？</div>
+      <div class="q-opts">
+        <button class="q-btn" onclick="answer(2,'pore')">&#128064; 毛穴・凹凸が気になる</button>
+        <button class="q-btn" onclick="answer(2,'moisture')">&#128167; 乾燥・保湿が足りない</button>
+        <button class="q-btn" onclick="answer(2,'blemish')">&#10024; シミ・くすみを予防したい</button>
+        <button class="q-btn" onclick="answer(2,'barrier')">&#128737; 肌バリアを強化したい</button>
+      </div>
+    </div>
+    <div class="diag-step" id="step3">
+      <div class="q-label">Q3. ご予算は？</div>
+      <div class="q-opts">
+        <button class="q-btn" onclick="answer(3,'low')">&#128176; 〜&#165;1,500（プチプラ重視）</button>
+        <button class="q-btn" onclick="answer(3,'mid')">&#128176;&#128176; 〜&#165;3,000（コスパ重視）</button>
+        <button class="q-btn" onclick="answer(3,'high')">&#128176;&#128176;&#128176; 金額より自分に合うもの重視</button>
+      </div>
+    </div>
+    <div class="diag-step" id="step-result">
+      <div class="result-box">
+        <div class="result-label">あなたへのおすすめ</div>
+        <div class="result-name" id="result-name"></div>
+        <div class="result-reason" id="result-reason"></div>
+        <a href="https://room.rakuten.co.jp/room_055cccf046" class="result-buy" id="result-url">&#128722; 楽天で購入する</a>
+        <div class="result-retry" onclick="resetDiag()">▲ もう一度診断する</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 予算で選ぶ -->
+  <div class="budget-section" id="budget-section" style="display:none">
+    <div class="budget-title">&#128176; 予算で選ぶ</div>
+    <div class="budget-group-label">〜&#165;1,500 プチプラ</div>
+    <div class="budget-item">
+      <div class="b-info">
+        <div class="b-name">スキンアクア ヒアルロンセラムUV</div>
+        <div class="b-meta">LIPS 1位 ／ LIPSベストコスメ2025 ／ 乾燥肌◎ 敏感肌◎</div>
+      </div>
+      <div class="b-right">
+        <span class="b-price">&#165;1,320〜</span>
+        <a href="https://room.rakuten.co.jp/room_055cccf046" class="b-buy">購入</a>
+      </div>
+    </div>
+    <div class="budget-item">
+      <div class="b-info">
+        <div class="b-name">アネッサ パーフェクトUV ジェル NB</div>
+        <div class="b-meta">3サイト全部 ／ マイベスト1位 ／ 混合肌◎ 脂性肌◎</div>
+      </div>
+      <div class="b-right">
+        <span class="b-price">&#165;1,496〜</span>
+        <a href="https://room.rakuten.co.jp/room_055cccf046" class="b-buy">購入</a>
+      </div>
+    </div>
+    <div class="budget-group-label">〜&#165;3,000 コスパ重視</div>
+    <div class="budget-item">
+      <div class="b-info">
+        <div class="b-name">アリィー クロノビューティ フラットUV</div>
+        <div class="b-meta">＠cosme・LIPS 2サイト入賞 ／ 脂性肌◎ 混合肌◎</div>
+      </div>
+      <div class="b-right">
+        <span class="b-price">&#165;2,178〜</span>
+        <a href="https://room.rakuten.co.jp/room_055cccf046" class="b-buy">購入</a>
+      </div>
+    </div>
+    <div class="budget-group-label">金額より品質・自分に合うもの重視</div>
+    <div class="budget-item">
+      <div class="b-info">
+        <div class="b-name">ラ ロッシュ ポゼ UVイデア XL ローズ+</div>
+        <div class="b-meta">3サイト全部 ／ LIPS総合大賞2025 ／ 敏感肌◎ 乾燥肌◎</div>
+      </div>
+      <div class="b-right">
+        <span class="b-price">&#165;3,960〜</span>
+        <a href="https://room.rakuten.co.jp/room_055cccf046" class="b-buy">購入</a>
+      </div>
+    </div>
+    <div class="budget-item">
+      <div class="b-info">
+        <div class="b-name">キュレル 潤浸保湿 UVミルク</div>
+        <div class="b-meta">マイベスト敏感肌満点 ／ ノンケミカル ／ 敏感肌◎</div>
+      </div>
+      <div class="b-right">
+        <span class="b-price">&#165;990〜</span>
+        <a href="https://room.rakuten.co.jp/room_055cccf046" class="b-buy">購入</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="data-note">
+    ※出典：＠cosme（集計2026/2/14〜5/13）× LIPS（2026/2/15〜5/15）× マイベスト（66商品検証）<br>
+    ◎おすすめ △注意 ×避けて ／ 成分メモ・肌タイプ評価：Glow / アルゴAI<br>
+    ※価格は楽天市場参考価格。変動する場合があります。
+  </div>
+
+</div>
+
+<footer>
+  <a href="https://j-waga.github.io/glow-skin/glow_skin_diagnosis.html">&#8592; コスメ検索に戻る</a>
+  ／ Glow / アルゴAI ／ 2026年5月
+</footer>
+
+<script>
+function toggleCard(id){
+  document.getElementById(id).classList.toggle('open');
+}
+function toggleMore(){
+  const mc=document.getElementById('more-cards');
+  const btn=document.getElementById('more-btn');
+  mc.classList.toggle('open');
+  btn.innerHTML=mc.classList.contains('open')?'&#9650; 閉じる':'&#9660; 4位・5位も見る';
+}
+function setFilter(type,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('ranking-section').style.display='none';
+  document.getElementById('diag-section').style.display='none';
+  document.getElementById('budget-section').style.display='none';
+  if(type==='all') document.getElementById('ranking-section').style.display='block';
+  else if(type==='skin') document.getElementById('diag-section').style.display='block';
+  else if(type==='budget') document.getElementById('budget-section').style.display='block';
+}
+const ans={};
+function answer(q,val){
+  ans[q]=val;
+  document.getElementById('step'+q).classList.remove('active');
+  document.getElementById('p'+q).classList.add('done');
+  if(q<3) document.getElementById('step'+(q+1)).classList.add('active');
+  else showResult();
+}
+const PRODUCTS={
+  laroches:{name:'ラ ロッシュ ポゼ UVイデア XL ローズ+',reason:'敏感肌・乾燥肌に最適。ナイアシンアミド配合で美白もケア。3サイト全部ランクインの信頼感があります。'},
+  anessa:{name:'アネッサ パーフェクトUV スキンケアジェル NB',reason:'混合肌・脂性肌に最適。汗でUV膜が強化されるオートブースター技術で一日中崩れません。顔体両用でコスパも抜群。'},
+  allie:{name:'アリィー クロノビューティ フラットスムースフィルターUV',reason:'毛穴・凹凸が気になる方に最適。フラットスムースフィルター処方で毛穴を補正しながらUVカット。'},
+  skinaqua:{name:'スキンアクア ヒアルロンセラムUV',reason:'ヒアルロン酸3種配合で美容液のような塗り心地。プチプラ最強格でLIPS1位受賞。乾燥しながらUVケアしたい方に。'},
+  curel:{name:'キュレル 潤浸保湿 UVミルク',reason:'紫外線吸収剤フリーのノンケミカル処方。セラミド配合でバリアケア。マイベスト敏感肌評価満点。肌が揺らぎやすい方の一択。'}
+};
+function showResult(){
+  const skin=ans[1],concern=ans[2],budget=ans[3];
+  let prod='laroches';
+  if(skin==='sensitive') prod='curel';
+  else if(skin==='oily'&&concern==='pore') prod='allie';
+  else if(concern==='barrier') prod='curel';
+  else if(skin==='dry'&&budget==='low') prod='skinaqua';
+  else if(skin==='dry') prod='laroches';
+  else if(skin==='combo'&&concern==='pore') prod='allie';
+  else if(skin==='combo'&&budget==='low') prod='skinaqua';
+  else if(skin==='combo') prod='anessa';
+  else if(skin==='oily') prod='anessa';
+  else if(budget==='low') prod='skinaqua';
+  const p=PRODUCTS[prod];
+  document.getElementById('result-name').textContent=p.name;
+  document.getElementById('result-reason').textContent=p.reason;
+  ['step1','step2','step3'].forEach(s=>document.getElementById(s).classList.remove('active'));
+  document.getElementById('step-result').classList.add('active');
+}
+function resetDiag(){
+  ans[1]=ans[2]=ans[3]=null;
+  ['p1','p2','p3'].forEach(id=>document.getElementById(id).classList.remove('done'));
+  ['step2','step3','step-result'].forEach(s=>document.getElementById(s).classList.remove('active'));
+  document.getElementById('step1').classList.add('active');
+}
+</script>
+</body>
+</html>
