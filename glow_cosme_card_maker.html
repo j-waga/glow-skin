@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Glowコスメプロフカードメーカー</title>
+<title>Glowコスメプロフカードメーカー v6</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9f6f2;padding:16px;max-width:480px;margin:0 auto}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9f6f2;padding:16px;max-width:480px;margin:0 auto;padding-bottom:40px}
 h1{font-size:18px;font-weight:600;margin-bottom:4px;color:#2C2C2A}
 .sub{font-size:13px;color:#888;margin-bottom:16px}
 .theme-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.tbtn{border-radius:999px;padding:7px 16px;font-size:13px;font-weight:500;cursor:pointer;border:2px solid transparent}
+.tbtn{border-radius:999px;padding:7px 16px;font-size:13px;font-weight:500;cursor:pointer;border:2px solid transparent;-webkit-tap-highlight-color:transparent}
 .tbtn.fem{background:#FBEAF0;color:#72243E}
 .tbtn.sim{background:#F1EFE8;color:#444441}
 .tbtn.pop{background:#EEEDFE;color:#3C3489}
@@ -19,59 +19,72 @@ h1{font-size:18px;font-weight:600;margin-bottom:4px;color:#2C2C2A}
 .tbtn.active.pop{border-color:#7F77DD}
 .stepbar{display:flex;gap:4px;margin-bottom:20px}
 .sp{flex:1;height:4px;border-radius:2px;background:#ddd}
-.sp.on{background:#D4537E}
 .card{background:#fff;border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.shead{font-size:13px;font-weight:600;color:#888;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid #eee}
+.shead{font-size:13px;font-weight:600;color:#888;margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid #eee}
 .flabel{font-size:12px;color:#888;margin-bottom:4px}
 .fwrap{margin-bottom:12px}
 input[type=text],select,textarea{width:100%;padding:10px 12px;border:1px solid #e0e0e0;border-radius:8px;font-size:14px;background:#fff;outline:none;-webkit-appearance:none}
 input[type=text]:focus,select:focus,textarea:focus{border-color:#D4537E}
 textarea{height:54px;resize:none}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.slot{border:1.5px dashed #ddd;border-radius:10px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:#fafafa;overflow:hidden;position:relative;-webkit-tap-highlight-color:transparent}
-.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
-.slot .ico{font-size:28px;color:#ccc}
-.slot .st{font-size:11px;color:#aaa;margin-top:4px;text-align:center;padding:0 4px}
-.avcircle{width:64px;height:64px;border-radius:50%;border:2px dashed #ddd;background:#fafafa;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;flex-shrink:0;position:relative}
+.avcircle{width:64px;height:64px;border-radius:50%;border:2px dashed #ddd;background:#fafafa;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;flex-shrink:0;position:relative;-webkit-tap-highlight-color:transparent}
 .avcircle img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
-.tip{border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:13px;display:flex;align-items:flex-start;gap:8px}
-.tip.fem{background:#FBEAF0;color:#72243E}
-.tip.sim{background:#F1EFE8;color:#444441}
-.tip.pop{background:#EEEDFE;color:#3C3489}
-.tip .ticon{font-size:18px;flex-shrink:0}
 .abtn{width:100%;padding:14px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;border:none;color:#fff;margin-top:12px;-webkit-tap-highlight-color:transparent}
 .sbtn{width:100%;padding:12px;border-radius:10px;font-size:14px;cursor:pointer;border:1px solid #ddd;background:#fff;color:#444;margin-top:8px;-webkit-tap-highlight-color:transparent}
 .page{display:none}
 .page.active{display:block}
-#cv{display:none;width:100%;height:auto;border-radius:14px;border:1px solid #eee;margin-top:8px}
-#generating{text-align:center;padding:40px 20px;color:#888;font-size:14px}
+.nm-input{margin-top:4px;padding:7px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px;width:100%;background:#fff;outline:none}
+.nm-input:focus{border-color:#D4537E}
+.acc-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#fafafa;border-radius:10px;cursor:pointer;margin-bottom:8px;-webkit-tap-highlight-color:transparent;border:1px solid #eee}
+.acc-head .acc-title{font-size:14px;font-weight:600;color:#2C2C2A}
+.acc-arrow{font-size:14px;transition:transform 0.2s;color:#aaa}
+.acc-body{display:none;padding:4px 0 8px}
+.acc-body.open{display:block}
+.cat-section{margin-bottom:10px}
+.slots-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:6px}
+.slot{border:1.5px dashed #ddd;border-radius:10px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:#fafafa;overflow:hidden;position:relative;-webkit-tap-highlight-color:transparent}
+.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.slot .ico{font-size:22px;color:#ccc}
+.slot .st{font-size:10px;color:#aaa;margin-top:2px;text-align:center}
+.slot-wrap{position:relative}
+.del-btn{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:#ff4d6d;color:#fff;border:none;font-size:13px;cursor:pointer;display:none;align-items:center;justify-content:center;z-index:2;line-height:1}
+.slot-wrap.has-img .del-btn{display:flex}
+.add-slot-btn{border:1.5px dashed #ddd;border-radius:10px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fafafa;font-size:22px;color:#ccc;-webkit-tap-highlight-color:transparent}
+canvas{display:none;width:100%;height:auto;border-radius:14px;border:1px solid #eee;margin-top:8px}
+.page-indicator{display:flex;gap:6px;justify-content:center;margin:10px 0;display:none}
+.pi{width:8px;height:8px;border-radius:50%;background:#ddd;cursor:pointer}
+.pi.on{background:#D4537E}
 .nav2{display:flex;gap:8px;margin-top:12px}
 .nav2 .sbtn{margin-top:0;flex:1}
-.nm-input{margin-top:6px;padding:8px 10px;border:1px solid #e0e0e0;border-radius:6px;font-size:12px;width:100%;background:#fff;outline:none}
-.nm-input:focus{border-color:#D4537E}
+.tip-box{border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:13px;display:flex;align-items:flex-start;gap:8px}
+.tip-box.fem{background:#FBEAF0;color:#72243E}
+.tip-box.sim{background:#F1EFE8;color:#444441}
+.tip-box.pop{background:#EEEDFE;color:#3C3489}
+#generating{text-align:center;padding:40px 20px;color:#888;font-size:14px;display:none}
 </style>
 </head>
 <body>
 
 <h1>Glowコスメプロフカードメーカー</h1>
-<p class="sub">デザインを選んで入力するだけ — スマホ完結</p>
+<p class="sub">スマホ完結 — 入力するだけで3枚のカードが完成</p>
 
-<div class="theme-row">
+<div class="theme-row" id="theme-top">
   <button class="tbtn fem active" onclick="setT('fem',this)">A. フェミニン</button>
   <button class="tbtn sim" onclick="setT('sim',this)">B. シンプル</button>
   <button class="tbtn pop" onclick="setT('pop',this)">C. ポップ</button>
 </div>
 
 <div class="stepbar">
-  <div class="sp on" id="sp1"></div>
+  <div class="sp" id="sp1"></div>
   <div class="sp" id="sp2"></div>
   <div class="sp" id="sp3"></div>
+  <div class="sp" id="sp4"></div>
 </div>
 
 <!-- PAGE 1 -->
-<div class="page active" id="pg1">
+<div class="page" id="pg1">
   <div class="card">
-    <div class="shead">👤 プロフィール</div>
+    <div class="shead">プロフィール</div>
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
       <div class="avcircle" onclick="document.getElementById('avinput').click()">
         <img id="avimg">
@@ -84,9 +97,9 @@ textarea{height:54px;resize:none}
       </div>
     </div>
     <div class="g2">
-      <div class="fwrap"><div class="flabel">年齢</div><input type="text" id="page" placeholder="20"></div>
+      <div class="fwrap"><div class="flabel">年齢</div><input type="text" id="page" placeholder="20代"></div>
       <div class="fwrap"><div class="flabel">肌質</div>
-        <select id="pskin"><option value="">選択</option><option>乾燥肌</option><option>脂性肌</option><option>混合肌</option><option>敏感肌</option><option>薄肌乾燥肌</option><option>普通肌</option><option>その他</option></select>
+        <select id="pskin"><option value="">選択</option><option>乾燥肌</option><option>脂性肌</option><option>混合肌</option><option>敏感肌</option><option>敏感×混合肌</option><option>普通肌</option><option>その他</option></select>
       </div>
     </div>
     <div class="g2">
@@ -95,120 +108,74 @@ textarea{height:54px;resize:none}
         <select id="ppc" onchange="toggleOther('ppc','ppc-other')">
           <option value="">選択</option><option>イエベ春</option><option>イエベ秋</option><option>ブルベ夏</option><option>ブルベ冬</option><option>未診断</option><option>その他</option>
         </select>
-        <input type="text" id="ppc-other" class="nm-input" placeholder="自由入力" style="display:none">
+        <input type="text" id="ppc-other" class="nm-input" placeholder="自由入力" style="display:none;margin-top:6px">
       </div>
       <div class="fwrap">
         <div class="flabel">骨格タイプ</div>
         <select id="pbone" onchange="toggleOther('pbone','pbone-other')">
           <option value="">選択</option><option>ストレート</option><option>ウェーブ</option><option>ナチュラル</option><option>未診断</option><option>その他</option>
         </select>
-        <input type="text" id="pbone-other" class="nm-input" placeholder="自由入力" style="display:none">
+        <input type="text" id="pbone-other" class="nm-input" placeholder="自由入力" style="display:none;margin-top:6px">
       </div>
     </div>
-    <div class="fwrap"><div class="flabel">好きなブランド</div><input type="text" id="pbrands" placeholder="例：anua, VT, d'Alba"></div>
-    <div class="fwrap"><div class="flabel">自己紹介</div><textarea id="pintro" placeholder="例：美容勉強中の大学生です"></textarea></div>
+    <div class="fwrap"><div class="flabel">好きなブランド</div><input type="text" id="pbrands" placeholder="例：anua, VT, JILLSTUART"></div>
+    <div class="fwrap"><div class="flabel">MBTI（任意）</div><input type="text" id="pmbti" placeholder="例：INFP"></div>
+    <div class="fwrap"><div class="flabel">自己紹介・コメント</div><textarea id="pintro" placeholder="例：コスメオタクです♡ タメ口大歓迎！"></textarea></div>
   </div>
-  <button class="abtn" id="abtn1" style="background:#D4537E" onclick="goP(2)">次へ → コスメを入力 ›</button>
+  <button class="abtn" id="abtn1" onclick="goP(2)">次へ → スキンケアを入力 ›</button>
 </div>
 
 <!-- PAGE 2 -->
 <div class="page" id="pg2">
-  <div class="tip fem" id="photo-tip">
-    <span class="ticon">📸</span>
-    <div>
-      <strong>写真を撮るときのコツ</strong><br>
-      スマホは<strong>縦向き</strong>で撮影すると綺麗に収まります。<br>商品を平置きして真上から撮るのがおすすめです。
-    </div>
+  <div class="tip-box fem" id="photo-tip">
+    <span style="font-size:18px;flex-shrink:0">📸</span>
+    <div>スマホは<strong>縦向き</strong>で撮影すると綺麗に収まります。平置きして真上から撮るのがおすすめ。</div>
   </div>
-
   <div class="card">
-    <div class="shead">💧 スキンケア</div>
-    <div class="g2">
-      <div>
-        <div class="flabel">クレンジング・洗顔</div>
-        <div class="slot" onclick="document.getElementById('fi-cl').click()">
-          <img id="img-cl"><span class="ico">📷</span><div class="st">縦向き撮影推奨</div>
-        </div>
-        <input type="file" id="fi-cl" accept="image/*" style="display:none" onchange="loadSlot(this,'cl')">
-        <input type="text" id="nm-cl" class="nm-input" placeholder="商品名">
-      </div>
-      <div>
-        <div class="flabel">化粧水</div>
-        <div class="slot" onclick="document.getElementById('fi-to').click()">
-          <img id="img-to"><span class="ico">📷</span><div class="st">縦向き撮影推奨</div>
-        </div>
-        <input type="file" id="fi-to" accept="image/*" style="display:none" onchange="loadSlot(this,'to')">
-        <input type="text" id="nm-to" class="nm-input" placeholder="商品名">
-      </div>
-      <div>
-        <div class="flabel">乳液</div>
-        <div class="slot" onclick="document.getElementById('fi-em').click()">
-          <img id="img-em"><span class="ico">📷</span><div class="st">縦向き撮影推奨</div>
-        </div>
-        <input type="file" id="fi-em" accept="image/*" style="display:none" onchange="loadSlot(this,'em')">
-        <input type="text" id="nm-em" class="nm-input" placeholder="商品名">
-      </div>
-      <div>
-        <div class="flabel">美容液・クリーム</div>
-        <div class="slot" onclick="document.getElementById('fi-se').click()">
-          <img id="img-se"><span class="ico">📷</span><div class="st">縦向き撮影推奨</div>
-        </div>
-        <input type="file" id="fi-se" accept="image/*" style="display:none" onchange="loadSlot(this,'se')">
-        <input type="text" id="nm-se" class="nm-input" placeholder="商品名">
-      </div>
-    </div>
+    <div class="shead">💧 スキンケア ♡</div>
+    <div id="sc-cats"></div>
   </div>
-
-  <div class="card">
-    <div class="shead">✨ メイク</div>
-    <div class="g2">
-      <div>
-        <div class="flabel">ベースメイク</div>
-        <div class="slot" onclick="document.getElementById('fi-ba').click()">
-          <img id="img-ba"><span class="ico">📷</span><div class="st">縦向き撮影推奨</div>
-        </div>
-        <input type="file" id="fi-ba" accept="image/*" style="display:none" onchange="loadSlot(this,'ba')">
-        <input type="text" id="nm-ba" class="nm-input" placeholder="商品名">
-      </div>
-      <div>
-        <div class="flabel">アイメイク</div>
-        <div class="slot" onclick="document.getElementById('fi-ey').click()">
-          <img id="img-ey"><span class="ico">📷</span><div class="st">縦向き撮影推奨</div>
-        </div>
-        <input type="file" id="fi-ey" accept="image/*" style="display:none" onchange="loadSlot(this,'ey')">
-        <input type="text" id="nm-ey" class="nm-input" placeholder="商品名">
-      </div>
-      <div>
-        <div class="flabel">リップ</div>
-        <div class="slot" onclick="document.getElementById('fi-li').click()">
-          <img id="img-li"><span class="ico">📷</span><div class="st">縦向き撮影推奨</div>
-        </div>
-        <input type="file" id="fi-li" accept="image/*" style="display:none" onchange="loadSlot(this,'li')">
-        <input type="text" id="nm-li" class="nm-input" placeholder="商品名">
-      </div>
-      <div>
-        <div class="flabel">チーク・ハイライト</div>
-        <div class="slot" onclick="document.getElementById('fi-ch').click()">
-          <img id="img-ch"><span class="ico">📷</span><div class="st">縦向き撮影推奨</div>
-        </div>
-        <input type="file" id="fi-ch" accept="image/*" style="display:none" onchange="loadSlot(this,'ch')">
-        <input type="text" id="nm-ch" class="nm-input" placeholder="商品名">
-      </div>
-    </div>
-  </div>
-
   <div class="nav2">
     <button class="sbtn" onclick="goP(1)">‹ 戻る</button>
-    <button class="abtn" id="abtn2" style="background:#D4537E;flex:2;margin-top:0" onclick="goP(3)">カードを生成 ›</button>
+    <button class="abtn" id="abtn2" style="flex:2;margin-top:0" onclick="goP(3)">次へ → メイクを入力 ›</button>
   </div>
 </div>
 
 <!-- PAGE 3 -->
 <div class="page" id="pg3">
-  <div id="generating" style="text-align:center;padding:40px;color:#888">🎨 生成中...</div>
-  <canvas id="cv"></canvas>
-  <button class="sbtn" id="dlbtn" style="display:none" onclick="dlCard()">⬇️ 画像を保存してXに投稿</button>
-  <button class="sbtn" onclick="goP(2)">✏️ 編集に戻る</button>
+  <div class="card">
+    <div class="shead">✨ メイク ♡</div>
+    <div id="mk-cats"></div>
+  </div>
+  <div class="nav2">
+    <button class="sbtn" onclick="goP(2)">‹ 戻る</button>
+    <button class="abtn" id="abtn3" style="flex:2;margin-top:0" onclick="goP(4)">カードを生成 ›</button>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="pg4">
+  <div style="margin-bottom:12px">
+    <div style="font-size:12px;color:#aaa;text-align:center;margin-bottom:8px">テーマをここでも変更できます</div>
+    <div class="theme-row" id="theme-gen" style="justify-content:center">
+      <button class="tbtn fem" id="th2-fem" onclick="setT2('fem',this)">A. フェミニン</button>
+      <button class="tbtn sim" id="th2-sim" onclick="setT2('sim',this)">B. シンプル</button>
+      <button class="tbtn pop" id="th2-pop" onclick="setT2('pop',this)">C. ポップ</button>
+    </div>
+  </div>
+  <div id="generating">🎨 カードを生成中...</div>
+  <div class="page-indicator" id="pi-wrap">
+    <div class="pi" id="pi0" onclick="showCv(0)"></div>
+    <div class="pi" id="pi1" onclick="showCv(1)"></div>
+    <div class="pi" id="pi2" onclick="showCv(2)"></div>
+  </div>
+  <canvas id="cv0"></canvas>
+  <canvas id="cv1"></canvas>
+  <canvas id="cv2"></canvas>
+  <div id="cv-label" style="text-align:center;font-size:13px;color:#aaa;margin-top:6px"></div>
+  <button class="sbtn" id="dlbtn" style="display:none" onclick="dlCard()">⬇️ 表示中の画像を保存</button>
+  <button class="sbtn" id="dlall" style="display:none" onclick="dlAll()">⬇️ 3枚まとめて保存</button>
+  <button class="sbtn" onclick="goP(3)">✏️ 編集に戻る</button>
 </div>
 
 <script>
@@ -219,38 +186,141 @@ const TH={
 };
 let cur='fem';
 let avDataUrl=null;
-const imgs={};
+let currentCv=0;
+const slotData={};
+
+const SC_CATS=[
+  {key:'cl',label:'クレンジング・洗顔'},
+  {key:'to',label:'化粧水'},
+  {key:'em',label:'乳液'},
+  {key:'se',label:'美容液・クリーム'},
+];
+const MK_CATS=[
+  {key:'ba',label:'ベースメイク'},
+  {key:'ey',label:'アイメイク'},
+  {key:'li',label:'リップ'},
+  {key:'ch',label:'チーク・ハイライト'},
+];
+
+function initCats(cats,containerId){
+  const cont=document.getElementById(containerId);
+  cont.innerHTML='';
+  cats.forEach(cat=>{
+    const sec=document.createElement('div');
+    sec.className='cat-section';
+    sec.innerHTML=`<div class="acc-head" onclick="toggleAcc('${cat.key}')"><span class="acc-title">♡ ${cat.label}</span><span class="acc-arrow" id="arr-${cat.key}">▼</span></div><div class="acc-body" id="body-${cat.key}"><div class="slots-grid" id="grid-${cat.key}"></div></div>`;
+    cont.appendChild(sec);
+    renderSlots(cat.key,1);
+  });
+}
+
+function toggleAcc(key){
+  const body=document.getElementById('body-'+key);
+  const arr=document.getElementById('arr-'+key);
+  const open=body.classList.toggle('open');
+  arr.style.transform=open?'rotate(180deg)':'';
+}
+
+function renderSlots(key,minCount){
+  const grid=document.getElementById('grid-'+key);
+  grid.innerHTML='';
+  let filled=0;
+  for(let i=0;i<6;i++) if(slotData[key+'_'+i]) filled=i+1;
+  const show=Math.min(Math.max(minCount,filled+1,1),6);
+  for(let i=0;i<show;i++){
+    const k=key+'_'+i;
+    const d=slotData[k];
+    const wrap=document.createElement('div');
+    wrap.className='slot-wrap'+(d?' has-img':'');
+    wrap.id='wrap-'+k;
+    const imgSrc=d&&d.img?d.img:'';
+    const imgDisp=d&&d.img?'block':'none';
+    const showPlus=d&&d.img?'none':'flex';
+    wrap.innerHTML=`<div class="slot" onclick="document.getElementById('fi-${k}').click()"><img id="img-${k}" src="${imgSrc}" style="display:${imgDisp};position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="display:${showPlus};flex-direction:column;align-items:center"><span class="ico">📷</span><div class="st">タップで追加</div></div></div><input type="file" id="fi-${k}" accept="image/*" style="display:none" onchange="loadSlot(this,'${key}',${i})"><input class="nm-input" id="nm-${k}" placeholder="商品名（任意）" value="${d&&d.name?d.name:''}" oninput="slotNameChange('${key}',${i},this.value)"><button class="del-btn" onclick="delSlot('${key}',${i})">×</button>`;
+    grid.appendChild(wrap);
+  }
+  if(show<6){
+    const addBtn=document.createElement('div');
+    addBtn.className='add-slot-btn';
+    addBtn.setAttribute('role','button');
+    addBtn.innerHTML='＋';
+    addBtn.onclick=()=>addSlot(key);
+    grid.appendChild(addBtn);
+  }
+}
+
+function loadSlot(input,key,idx){
+  if(!input.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const k=key+'_'+idx;
+    const name=document.getElementById('nm-'+k)?document.getElementById('nm-'+k).value:'';
+    slotData[k]={img:e.target.result,name};
+    renderSlots(key,idx+2);
+  };
+  r.readAsDataURL(input.files[0]);
+}
+
+function slotNameChange(key,idx,val){
+  const k=key+'_'+idx;
+  if(!slotData[k]) slotData[k]={img:null,name:''};
+  slotData[k].name=val;
+}
+
+function delSlot(key,idx){
+  const k=key+'_'+idx;
+  delete slotData[k];
+  let i=idx;
+  while(slotData[key+'_'+(i+1)]!==undefined){slotData[key+'_'+i]=slotData[key+'_'+(i+1)];i++;}
+  delete slotData[key+'_'+i];
+  renderSlots(key,1);
+}
+
+function addSlot(key){
+  let count=0;
+  for(let i=0;i<6;i++) if(slotData[key+'_'+i]) count=i+1;
+  renderSlots(key,count+2);
+}
 
 function setT(t,btn){
   cur=t;
-  document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#theme-top .tbtn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  const c=TH[t];
-  document.getElementById('abtn1').style.background=c.a;
-  document.getElementById('abtn2').style.background=c.a;
-  const tip=document.getElementById('photo-tip');
-  tip.className='tip '+t;
-  updateSteps(c.a);
+  applyTheme(t);
 }
 
-function updateSteps(col){
-  ['sp1','sp2','sp3'].forEach(id=>{
-    const s=document.getElementById(id);
-    if(s.classList.contains('on')) s.style.background=col;
-  });
+function setT2(t,btn){
+  cur=t;
+  document.querySelectorAll('#theme-gen .tbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  applyTheme(t);
+  buildAllCards();
+}
+
+function applyTheme(t){
+  const c=TH[t];
+  ['abtn1','abtn2','abtn3'].forEach(id=>{const el=document.getElementById(id);if(el) el.style.background=c.a;});
+  const tip=document.getElementById('photo-tip');
+  if(tip) tip.className='tip-box '+t;
+  ['sp1','sp2','sp3','sp4'].forEach(id=>{const s=document.getElementById(id);if(s&&s.classList.contains('on')) s.style.background=c.a;});
+  document.querySelectorAll('.pi.on').forEach(p=>p.style.background=c.a);
 }
 
 function goP(n){
   document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i+1===n));
-  const c=TH[cur];
-  ['sp1','sp2','sp3'].forEach((id,i)=>{
-    const s=document.getElementById(id);
-    const on=i<n;
-    s.classList.toggle('on',on);
-    s.style.background=on?c.a:'#ddd';
+  ['sp1','sp2','sp3','sp4'].forEach((id,i)=>{
+    const s=document.getElementById(id);if(!s)return;
+    const on=i<n;s.classList.toggle('on',on);s.style.background=on?TH[cur].a:'#ddd';
   });
-  if(n===3) setTimeout(buildCard,80);
+  if(n===4){syncTheme4();setTimeout(buildAllCards,80);}
   window.scrollTo(0,0);
+}
+
+function syncTheme4(){
+  document.querySelectorAll('#theme-gen .tbtn').forEach(b=>{
+    b.classList.remove('active');
+    if(b.id==='th2-'+cur) b.classList.add('active');
+  });
 }
 
 function toggleOther(selId,inpId){
@@ -269,42 +339,21 @@ function loadAv(input){
   r.readAsDataURL(input.files[0]);
 }
 
-function loadSlot(input,k){
-  if(!input.files[0])return;
-  const r=new FileReader();
-  r.onload=e=>{
-    imgs[k]=e.target.result;
-    const img=document.getElementById('img-'+k);
-    img.src=e.target.result;img.style.display='block';
-    const slot=img.closest('.slot');
-    slot.querySelector('.ico').style.display='none';
-    slot.querySelector('.st').style.display='none';
-  };
-  r.readAsDataURL(input.files[0]);
-}
-
 function getV(id){
-  const el=document.getElementById(id);
-  if(!el)return'';
-  if(el.tagName==='SELECT'){
-    const v=el.value;
-    if(v==='その他'){const o=document.getElementById(id+'-other');return o?o.value||'その他':'その他';}
-    return v||'—';
-  }
+  const el=document.getElementById(id);if(!el)return'';
+  if(el.tagName==='SELECT'){const v=el.value;if(v==='その他'){const o=document.getElementById(id+'-other');return o?o.value||'その他':'その他';}return v||'—';}
   return el.value||'';
 }
 
 function loadImgAsync(src){
   return new Promise(res=>{
     if(!src){res(null);return;}
-    const i=new Image();
-    i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src;
+    const i=new Image();i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src;
   });
 }
 
 function drawCover(ctx,img,dx,dy,dw,dh){
-  const iw=img.naturalWidth||img.width;
-  const ih=img.naturalHeight||img.height;
+  const iw=img.naturalWidth||img.width,ih=img.naturalHeight||img.height;
   const dr=dw/dh,ir=iw/ih;
   let sx,sy,sw,sh;
   if(ir>dr){sh=ih;sw=ih*dr;sx=(iw-sw)/2;sy=0;}
@@ -312,117 +361,214 @@ function drawCover(ctx,img,dx,dy,dw,dh){
   ctx.drawImage(img,sx,sy,sw,sh,dx,dy,dw,dh);
 }
 
-async function buildCard(){
-  document.getElementById('generating').style.display='block';
-  document.getElementById('cv').style.display='none';
-  document.getElementById('dlbtn').style.display='none';
+function rrPath(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
+}
 
-  const c=TH[cur];
-  const W=750,H=1520;
-  const cv=document.getElementById('cv');
+function drawCardBg(ctx,x,y,w,h,c){
+  rrPath(ctx,x,y,w,h,12);ctx.fillStyle='#fff';ctx.fill();
+  ctx.strokeStyle=c.m;ctx.lineWidth=0.8;rrPath(ctx,x,y,w,h,12);ctx.stroke();
+}
+
+function drawHeart(ctx,cx,cy,size,color,alpha){
+  ctx.save();
+  ctx.globalAlpha=alpha!=null?alpha:1;
+  ctx.fillStyle=color;ctx.beginPath();
+  ctx.moveTo(cx,cy+size*0.3);
+  ctx.bezierCurveTo(cx,cy-size*0.3,cx-size,cy-size*0.3,cx-size,cy+size*0.1);
+  ctx.bezierCurveTo(cx-size,cy+size*0.6,cx,cy+size,cx,cy+size);
+  ctx.bezierCurveTo(cx,cy+size,cx+size,cy+size*0.6,cx+size,cy+size*0.1);
+  ctx.bezierCurveTo(cx+size,cy-size*0.3,cx,cy-size*0.3,cx,cy+size*0.3);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawDecos(ctx,W,H,c){
+  ctx.save();
+  const pts=[[W*0.07,H*0.05,8],[W*0.93,H*0.05,6],[W*0.04,H*0.2,5],[W*0.96,H*0.18,7],[W*0.08,H*0.88,6],[W*0.92,H*0.85,8],[W*0.9,H*0.5,5],[W*0.03,H*0.6,6]];
+  pts.forEach(([x,y,s])=>drawHeart(ctx,x,y,s,c.m,0.22));
+  const stars=[[W*0.14,H*0.08],[W*0.8,H*0.11],[W*0.93,H*0.42],[W*0.05,H*0.73],[W*0.87,H*0.72]];
+  stars.forEach(([x,y])=>{ctx.globalAlpha=0.18;ctx.fillStyle=c.a;ctx.font='14px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('✦',x,y);});
+  ctx.restore();
+}
+
+function drawHeader(ctx,W,title,c){
+  ctx.fillStyle=c.hbg;rrPath(ctx,0,0,W,96,0);ctx.fill();
+  ctx.fillStyle=c.htxt;ctx.font='500 19px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('#コスメオタクプロフ',W/2,28);
+  ctx.font='italic 600 28px serif';ctx.fillText(title,W/2,66);
+}
+
+function drawSecHead(ctx,label,x,y,W,c){
+  ctx.fillStyle=c.a;ctx.font='italic 600 20px serif';ctx.textAlign='left';ctx.textBaseline='alphabetic';
+  ctx.fillText(label,x,y);
+  ctx.strokeStyle=c.m;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,y+8);ctx.lineTo(W-x,y+8);ctx.stroke();
+}
+
+function drawFooter(ctx,W,H,c){
+  const fy=H-52;
+  ctx.fillStyle=c.ft;ctx.fillRect(0,fy,W,52);
+  drawHeart(ctx,26,fy+20,6,c.a,0.4);
+  drawHeart(ctx,W-26,fy+20,6,c.a,0.4);
+  ctx.fillStyle=c.ftxt;ctx.font='500 13px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('無料肌診断 → j-waga.github.io/glow-skin',W/2,fy+26);
+}
+
+async function buildPage1(cv,c){
+  const W=750,H=1400;
   cv.width=W;cv.height=H;
-  cv.style.width='100%';cv.style.height='auto';
   const ctx=cv.getContext('2d');
   ctx.fillStyle=c.bg;ctx.fillRect(0,0,W,H);
+  drawDecos(ctx,W,H,c);
+  drawHeader(ctx,W,'Cosme Profile ♡',c);
 
   const avImg=await loadImgAsync(avDataUrl);
-  const keys=['cl','to','em','se','ba','ey','li','ch'];
-  const sImgs={};
-  for(const k of keys) sImgs[k]=await loadImgAsync(imgs[k]||null);
-
-  function rr(x,y,w,h,r){
-    ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
-    ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
-    ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
-    ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();
-  }
-  function card(x,y,w,h){rr(x,y,w,h,10);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle=c.m;ctx.lineWidth=0.8;rr(x,y,w,h,10);ctx.stroke();}
-
-  ctx.fillStyle=c.hbg;ctx.fillRect(0,0,W,88);
-  ctx.fillStyle=c.htxt;ctx.font='500 22px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.fillText('#コスメオタクプロフ',W/2,30);
-  ctx.font='italic 500 28px serif';ctx.fillText('Cosme Profile',W/2,64);
-
-  const avR=52,avX=W/2,avY=154;
+  const avR=56,avX=W/2,avY=162;
   ctx.save();ctx.beginPath();ctx.arc(avX,avY,avR,0,Math.PI*2);ctx.clip();
   if(avImg){drawCover(ctx,avImg,avX-avR,avY-avR,avR*2,avR*2);}
-  else{ctx.fillStyle=c.l;ctx.fillRect(avX-avR,avY-avR,avR*2,avR*2);ctx.fillStyle=c.a;ctx.font='500 34px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText((getV('pname')||'G').charAt(0),avX,avY);}
+  else{ctx.fillStyle=c.l;ctx.fillRect(avX-avR,avY-avR,avR*2,avR*2);ctx.fillStyle=c.a;ctx.font='700 38px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText((getV('pname')||'G').charAt(0).toUpperCase(),avX,avY);}
   ctx.restore();
-  ctx.strokeStyle=c.m;ctx.lineWidth=2;ctx.beginPath();ctx.arc(avX,avY,avR,0,Math.PI*2);ctx.stroke();
-  ctx.textBaseline='alphabetic';
+  ctx.strokeStyle=c.m;ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(avX,avY,avR,0,Math.PI*2);ctx.stroke();
+  drawHeart(ctx,avX+avR-4,avY+avR-12,6,c.a,1);
 
   const P=24;
-  function lbl(t,x,y){ctx.fillStyle=c.d;ctx.font='400 15px sans-serif';ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillText(t,x,y);}
-  function val(t,x,y,sz){ctx.fillStyle='#2C2C2A';ctx.font='500 '+(sz||20)+'px sans-serif';ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillText((t||'—').slice(0,15),x,y);}
+  function lbl(t,x,y){ctx.fillStyle=c.d;ctx.font='400 13px sans-serif';ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillText(t,x,y);}
+  function val(t,x,y,sz){ctx.fillStyle='#2C2C2A';ctx.font='600 '+(sz||20)+'px sans-serif';ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillText((t||'—').slice(0,14),x,y);}
 
-  const cw=(W-P*3)/2;
-  const rw=(W-P*4-cw*1.3)/2;
-  card(P,222,cw*1.3,92);lbl('名前 name',P+10,242);val(getV('pname'),P+10,278,19);
-  card(P*2+cw*1.3,222,rw,92);lbl('年齢',P*2+cw*1.3+10,242);val(getV('page'),P*2+cw*1.3+10,278,24);
-  card(P*3+cw*1.3+rw,222,rw,92);lbl('肌質',P*3+cw*1.3+rw+10,242);val(getV('pskin'),P*3+cw*1.3+rw+10,278,15);
+  const cw=(W-P*3)/2,rw=(W-P*4-cw*1.3)/2;
+  drawCardBg(ctx,P,232,cw*1.3,90,c);lbl('名前 name',P+10,252);val(getV('pname'),P+10,288,18);
+  drawCardBg(ctx,P*2+cw*1.3,232,rw,90,c);lbl('年齢',P*2+cw*1.3+10,252);val(getV('page'),P*2+cw*1.3+10,288,20);
+  drawCardBg(ctx,P*3+cw*1.3+rw,232,rw,90,c);lbl('肌質',P*3+cw*1.3+rw+10,252);val(getV('pskin'),P*3+cw*1.3+rw+10,288,13);
 
   const tw=(W-P*4)/3;
-  card(P,330,tw,86);lbl('パーソナルカラー',P+10,350);val(getV('ppc'),P+10,384,16);
-  card(P*2+tw,330,tw,86);lbl('骨格タイプ',P*2+tw+10,350);val(getV('pbone'),P*2+tw+10,384,18);
-  card(P*3+tw*2,330,tw,86);lbl('好きなブランド',P*3+tw*2+10,350);
+  drawCardBg(ctx,P,338,tw,84,c);lbl('パーソナルカラー',P+10,358);val(getV('ppc'),P+10,392,14);
+  drawCardBg(ctx,P*2+tw,338,tw,84,c);lbl('骨格タイプ',P*2+tw+10,358);val(getV('pbone'),P*2+tw+10,392,15);
+  drawCardBg(ctx,P*3+tw*2,338,tw,84,c);lbl('好きなブランド',P*3+tw*2+10,358);
   const br=(getV('pbrands')||'—').split(',');
-  ctx.fillStyle='#2C2C2A';ctx.font='500 13px sans-serif';ctx.textAlign='left';
-  br.slice(0,3).forEach((b,i)=>ctx.fillText(b.trim().slice(0,9),P*3+tw*2+10,368+i*22));
+  ctx.fillStyle='#2C2C2A';ctx.font='600 12px sans-serif';ctx.textAlign='left';
+  br.slice(0,3).forEach((b,i)=>ctx.fillText(b.trim().slice(0,10),P*3+tw*2+10,374+i*22));
 
-  card(P,432,W-P*2,74);lbl('自己紹介',P+12,452);val(getV('pintro'),P+12,486,18);
+  const mbtiVal=getV('pmbti');
+  if(mbtiVal){drawCardBg(ctx,P,438,120,52,c);lbl('MBTI',P+10,454);val(mbtiVal,P+10,480,16);}
 
-  function secHead(t,y){
-    ctx.fillStyle=c.a;ctx.font='italic 500 20px serif';ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.fillText(t,P,y);
-    ctx.strokeStyle=c.m;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(P,y+6);ctx.lineTo(W-P,y+6);ctx.stroke();
+  drawCardBg(ctx,P,500,W-P*2,130,c);lbl('自己紹介 ♡',P+12,520);
+  const intro=getV('pintro')||'';
+  ctx.fillStyle='#2C2C2A';ctx.font='400 16px sans-serif';ctx.textAlign='left';
+  const maxTW=W-P*2-24;
+  let line='',lineY=548;
+  for(let ch of intro){
+    const test=line+ch;
+    if(ctx.measureText(test).width>maxTW){ctx.fillText(line,P+12,lineY);line=ch;lineY+=24;if(lineY>610)break;}
+    else line=test;
   }
+  if(line&&lineY<=614) ctx.fillText(line,P+12,lineY);
 
-  secHead('skincare',522);
-  const gw=(W-P*3)/2,gh=155;
+  drawFooter(ctx,W,H,c);
+}
 
-  const sc=[{k:'cl',n:'nm-cl',def:'クレンジング・洗顔'},{k:'to',n:'nm-to',def:'化粧水'},{k:'em',n:'nm-em',def:'乳液'},{k:'se',n:'nm-se',def:'美容液・クリーム'}];
-  sc.forEach((s,i)=>{
-    const col=i%2,row=Math.floor(i/2);
-    const sx=P+col*(gw+P),sy=536+row*(gh+32);
-    card(sx,sy,gw,gh);
-    if(sImgs[s.k]){ctx.save();rr(sx+2,sy+2,gw-4,gh-26,8);ctx.clip();drawCover(ctx,sImgs[s.k],sx+2,sy+2,gw-4,gh-26);ctx.restore();}
-    else{ctx.fillStyle=c.l;rr(sx+6,sy+6,gw-12,gh-32,7);ctx.fill();ctx.fillStyle=c.m;ctx.font='400 22px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('+',sx+gw/2,sy+(gh-26)/2);}
-    const nm=getV(s.n)||s.def;
-    ctx.fillStyle='#2C2C2A';ctx.font='400 13px sans-serif';ctx.textAlign='center';ctx.textBaseline='alphabetic';
-    ctx.fillText(nm.length>13?nm.slice(0,12)+'…':nm,sx+gw/2,sy+gh-5);
+async function buildCosmePage(cv,catDefs,title,c){
+  const W=750,P=24,ITEM_H=230,COLS=3;
+  const gw=(W-P*2-(COLS-1)*12)/COLS;
+  let totalH=116;
+  const catData=catDefs.map((cat,ci)=>{
+    const items=[];
+    for(let i=0;i<6;i++){const d=slotData[cat.key+'_'+i];if(d) items.push(d);}
+    if(items.length>0) totalH+=46+Math.ceil(items.length/COLS)*(ITEM_H+10)+16;
+    return{label:cat.label,items};
   });
+  totalH=Math.max(totalH+60,900);
+  const H=totalH;
+  cv.width=W;cv.height=H;
+  const ctx=cv.getContext('2d');
+  ctx.fillStyle=c.bg;ctx.fillRect(0,0,W,H);
+  drawDecos(ctx,W,H,c);
+  drawHeader(ctx,W,title,c);
 
-  const my=536+2*(gh+32)+14;
-  secHead('makeup',my);
+  const allImgs={};
+  for(const cat of catData) for(const item of cat.items) if(item.img&&!allImgs[item.img]) allImgs[item.img]=await loadImgAsync(item.img);
 
-  const mk=[{k:'ba',n:'nm-ba',def:'ベースメイク'},{k:'ey',n:'nm-ey',def:'アイメイク'},{k:'li',n:'nm-li',def:'リップ'},{k:'ch',n:'nm-ch',def:'チーク・ハイライト'}];
-  mk.forEach((s,i)=>{
-    const col=i%2,row=Math.floor(i/2);
-    const sx=P+col*(gw+P),sy=my+16+row*(gh+32);
-    card(sx,sy,gw,gh);
-    if(sImgs[s.k]){ctx.save();rr(sx+2,sy+2,gw-4,gh-26,8);ctx.clip();drawCover(ctx,sImgs[s.k],sx+2,sy+2,gw-4,gh-26);ctx.restore();}
-    else{ctx.fillStyle=c.l;rr(sx+6,sy+6,gw-12,gh-32,7);ctx.fill();ctx.fillStyle=c.m;ctx.font='400 22px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('+',sx+gw/2,sy+(gh-26)/2);}
-    const nm=getV(s.n)||s.def;
-    ctx.fillStyle='#2C2C2A';ctx.font='400 13px sans-serif';ctx.textAlign='center';ctx.textBaseline='alphabetic';
-    ctx.fillText(nm.length>13?nm.slice(0,12)+'…':nm,sx+gw/2,sy+gh-5);
-  });
+  let curY=116;
+  for(const cat of catData){
+    if(cat.items.length===0) continue;
+    drawSecHead(ctx,'♡ '+cat.label,P,curY+22,W,c);
+    curY+=40;
+    const rows=Math.ceil(cat.items.length/COLS);
+    for(let r=0;r<rows;r++){
+      for(let col=0;col<COLS;col++){
+        const idx=r*COLS+col;
+        if(idx>=cat.items.length) break;
+        const item=cat.items[idx];
+        const sx=P+col*(gw+12),sy=curY;
+        drawCardBg(ctx,sx,sy,gw,ITEM_H,c);
+        const iimg=item.img?allImgs[item.img]:null;
+        if(iimg){ctx.save();rrPath(ctx,sx+4,sy+4,gw-8,ITEM_H-34,10);ctx.clip();drawCover(ctx,iimg,sx+4,sy+4,gw-8,ITEM_H-34);ctx.restore();}
+        else{ctx.fillStyle=c.l;rrPath(ctx,sx+4,sy+4,gw-8,ITEM_H-34,10);ctx.fill();ctx.fillStyle=c.m;ctx.font='600 26px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('+',sx+gw/2,sy+(ITEM_H-34)/2+4);}
+        const nm=(item.name||'').slice(0,14);
+        ctx.fillStyle='#2C2C2A';ctx.font='400 12px sans-serif';ctx.textAlign='center';ctx.textBaseline='alphabetic';
+        ctx.fillText(nm,sx+gw/2,sy+ITEM_H-7);
+      }
+      curY+=ITEM_H+10;
+    }
+    curY+=16;
+  }
+  drawFooter(ctx,W,H,c);
+}
 
-  const fy=H-54;
-  ctx.fillStyle=c.ft;ctx.fillRect(0,fy,W,54);
-  ctx.fillStyle=c.ftxt;ctx.font='500 14px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.fillText('無料肌診断 → j-waga.github.io/glow-skin',W/2,fy+27);
+async function buildAllCards(){
+  document.getElementById('generating').style.display='block';
+  ['cv0','cv1','cv2'].forEach(id=>{document.getElementById(id).style.display='none';document.getElementById(id).width=0;});
+  document.getElementById('dlbtn').style.display='none';
+  document.getElementById('dlall').style.display='none';
+  document.getElementById('pi-wrap').style.display='none';
+
+  const c=TH[cur];
+  await buildPage1(document.getElementById('cv0'),c);
+  await buildCosmePage(document.getElementById('cv1'),SC_CATS,'Skincare ♡',c);
+  await buildCosmePage(document.getElementById('cv2'),MK_CATS,'Makeup ♡',c);
 
   document.getElementById('generating').style.display='none';
-  cv.style.display='block';
+  document.getElementById('pi-wrap').style.display='flex';
   document.getElementById('dlbtn').style.display='block';
+  document.getElementById('dlall').style.display='block';
+  showCv(0);
+}
+
+function showCv(n){
+  currentCv=n;
+  ['cv0','cv1','cv2'].forEach((id,i)=>document.getElementById(id).style.display=i===n?'block':'none');
+  ['pi0','pi1','pi2'].forEach((id,i)=>{const el=document.getElementById(id);el.classList.toggle('on',i===n);el.style.background=i===n?TH[cur].a:'#ddd';});
+  document.getElementById('cv-label').textContent=['① プロフィール','② スキンケア','③ メイク'][n];
 }
 
 function dlCard(){
-  const cv=document.getElementById('cv');
+  const cv=document.getElementById('cv'+currentCv);
   const a=document.createElement('a');
-  a.download='glow_cosme_profile.png';
-  a.href=cv.toDataURL('image/png');
-  a.click();
+  a.download='glow_cosme_'+['profile','skincare','makeup'][currentCv]+'.png';
+  a.href=cv.toDataURL('image/png');a.click();
 }
+
+function dlAll(){
+  ['cv0','cv1','cv2'].forEach((id,i)=>{
+    const cv=document.getElementById(id);
+    if(!cv.width) return;
+    const a=document.createElement('a');
+    a.download='glow_cosme_'+['profile','skincare','makeup'][i]+'.png';
+    a.href=cv.toDataURL('image/png');
+    setTimeout(()=>a.click(),(i+1)*400);
+  });
+}
+
+window.onload=()=>{
+  initCats(SC_CATS,'sc-cats');
+  initCats(MK_CATS,'mk-cats');
+  SC_CATS.forEach(c=>toggleAcc(c.key));
+  MK_CATS.forEach(c=>toggleAcc(c.key));
+  setT('fem',document.querySelector('#theme-top .tbtn.fem'));
+  goP(1);
+};
 </script>
 </body>
 </html>
