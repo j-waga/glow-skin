@@ -492,6 +492,9 @@ function nextStep(n) {
   const ranking = document.getElementById('rankingSection');
   if (ranking) ranking.style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (n === 2) {
+    gtag('event', 'diagnosis_start', { event_category: 'skindiag', event_label: '診断開始' });
+  }
 }
 
 const DB = {
@@ -634,6 +637,15 @@ function showResult() {
   const sg = DB.steps[skin] || DB.steps['dry'];
   document.getElementById('stepGuide').innerHTML = sg.map(([num,name,desc,req]) => '<div class="step-item"><div class="step-num-circle">S' + num + '</div><div class="step-item-content"><div class="step-item-name">' + name + '&nbsp;<span class="' + (req==='必須'?'step-required':'step-optional') + '">' + req + '</span></div><div class="step-item-desc">' + desc + '</div></div></div>').join('');
 
+  gtag('event', 'diagnosis_complete', {
+    event_category: 'skindiag',
+    event_label: skin + '_' + concern,
+    skin_type: skin,
+    concern: concern,
+    preference: pref,
+    budget: budget
+  });
+
   document.getElementById('result').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -650,6 +662,7 @@ function resetDiagnosis() {
   document.getElementById('step1').classList.add('active');
   const ranking = document.getElementById('rankingSection');
   if (ranking) ranking.style.display = 'block';
+  gtag('event', 'diagnosis_retry', { event_category: 'skindiag', event_label: 'もう一度診断' });
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
