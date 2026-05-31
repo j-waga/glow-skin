@@ -451,6 +451,30 @@ function showResult() {
     skin_type: skin, concern: concern, preference: pref, budget: budget
   });
 
+  // ===== 診断ログ送信（Googleスプレッドシートへ） =====
+  (function() {
+    try {
+      var GAS_URL = 'https://script.google.com/macros/s/AKfycbyQgb7Tk5oj7rU9gv0a0gAFETTvbkEOE6gmwuCpRYmDftBhqABwYiyLGgvYeKCqQaCF/exec'; // ← デプロイ後にURLを貼る
+      var payload = {
+        skin:    skin,
+        concern: concern,
+        pref:    pref,
+        budget:  budget,
+        result1: top3[0] || '',
+        result2: top3[1] || '',
+        result3: top3[2] || '',
+        ua:      navigator.userAgent.substring(0, 80)
+      };
+      fetch(GAS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch(e) { /* 送信失敗しても診断には影響しない */ }
+  })();
+  // ===================================================
+
   document.getElementById('result').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
