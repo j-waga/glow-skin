@@ -668,6 +668,49 @@ async function buildPage1(cv,c){
   }
   if(line&&lineY<=by4+132) ctx.fillText(line,P+16,lineY);
 
+  // ③ プロフカード下部余白の装飾
+  const decoStartY=by4+160;
+  const decoEndY=H-80;
+  if(decoEndY-decoStartY>80){
+    const midDY=decoStartY+(decoEndY-decoStartY)*0.4;
+    // ドット装飾ライン
+    ctx.save();
+    ctx.globalAlpha=0.25;
+    const dotColors=c.decoColors;
+    const dotSpacing=28;
+    const dotCount=Math.floor((W-P*2)/dotSpacing);
+    for(let di=0;di<dotCount;di++){
+      ctx.beginPath();
+      ctx.arc(P+di*dotSpacing+(dotSpacing/2),midDY-28,3.5,0,Math.PI*2);
+      ctx.fillStyle=dotColors[di%dotColors.length];ctx.fill();
+    }
+    ctx.restore();
+    // 装飾テキスト
+    const deco=cur==='pop'
+      ?{t:'✨ Let your beauty shine ✨',s:'#コスメオタクプロフ  by Glow'}
+      :cur==='sim'
+      ?{t:'✦ your beauty, your story ✦',s:'#コスメオタクプロフ  by Glow'}
+      :{t:'♡ コスメで、自分を表現する ♡',s:'#コスメオタクプロフ  by Glow'};
+    ctx.save();
+    ctx.globalAlpha=0.5;
+    ctx.fillStyle=c.accent;ctx.font=`italic 500 20px 'Shippori Mincho',serif`;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(deco.t,W/2,midDY+4);
+    ctx.globalAlpha=0.35;
+    ctx.fillStyle=c.label;ctx.font=`400 13px ${getFontFamily()}`;
+    ctx.fillText(deco.s,W/2,midDY+32);
+    ctx.restore();
+    // ドット装飾ライン（下）
+    ctx.save();
+    ctx.globalAlpha=0.25;
+    for(let di=0;di<dotCount;di++){
+      ctx.beginPath();
+      ctx.arc(P+di*dotSpacing+(dotSpacing/2),midDY+56,3.5,0,Math.PI*2);
+      ctx.fillStyle=dotColors[(di+2)%dotColors.length];ctx.fill();
+    }
+    ctx.restore();
+  }
+
   drawFooter(ctx,W,H,c);
 }
 
@@ -738,22 +781,21 @@ async function buildCosmePageText(cv,catDefs,titleEn,titleJa,c){
   }
 
   for(const cat of catDataArr){
-    // ② セクション見出し：英語と日本語を完全に独立して描画（重なり防止）
+    // セクション見出し：英語（大）＋日本語（小・改行）の2行構成で重なりゼロ
     ctx.save();
-    ctx.font=`italic 700 22px 'Shippori Mincho',serif`;
-    const enW=ctx.measureText(cat.en).width;
+    ctx.font=`italic 700 20px 'Shippori Mincho',serif`;
     ctx.fillStyle=c.secEn;ctx.textAlign='left';ctx.textBaseline='alphabetic';
-    ctx.fillText(cat.en,P,curY+20);
+    ctx.fillText(cat.en,P,curY+16);
     ctx.restore();
 
     ctx.save();
-    ctx.font=`400 13px ${getFontFamily()}`;
+    ctx.font=`400 12px ${getFontFamily()}`;
     ctx.fillStyle=c.secJa;ctx.textAlign='left';ctx.textBaseline='alphabetic';
-    ctx.fillText('　'+cat.ja,P+enW+2,curY+20);
+    ctx.fillText(cat.ja,P,curY+32);
     ctx.restore();
 
-    ctx.strokeStyle=c.cardBorder+'88';ctx.lineWidth=1;
-    ctx.beginPath();ctx.moveTo(P,curY+28);ctx.lineTo(W-P,curY+28);ctx.stroke();
+    ctx.strokeStyle=c.cardBorder+'66';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(P,curY+40);ctx.lineTo(W-P,curY+40);ctx.stroke();
     curY+=SEC_H;
 
     // ③ タグ折り返し描画（事前計算済みlinesを使用）
