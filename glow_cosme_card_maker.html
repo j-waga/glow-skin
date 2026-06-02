@@ -668,48 +668,92 @@ async function buildPage1(cv,c){
   }
   if(line&&lineY<=by4+132) ctx.fillText(line,P+16,lineY);
 
-  // ③ プロフカード下部余白の装飾
-  const decoStartY=by4+160;
-  const decoEndY=H-80;
-  if(decoEndY-decoStartY>80){
-    const midDY=decoStartY+(decoEndY-decoStartY)*0.4;
-    // ドット装飾ライン
-    ctx.save();
-    ctx.globalAlpha=0.25;
-    const dotColors=c.decoColors;
-    const dotSpacing=28;
-    const dotCount=Math.floor((W-P*2)/dotSpacing);
-    for(let di=0;di<dotCount;di++){
-      ctx.beginPath();
-      ctx.arc(P+di*dotSpacing+(dotSpacing/2),midDY-28,3.5,0,Math.PI*2);
-      ctx.fillStyle=dotColors[di%dotColors.length];ctx.fill();
-    }
-    ctx.restore();
-    // 装飾テキスト
-    const deco=cur==='pop'
-      ?{t:'✨ Let your beauty shine ✨',s:'#コスメオタクプロフ  by Glow'}
-      :cur==='sim'
-      ?{t:'✦ your beauty, your story ✦',s:'#コスメオタクプロフ  by Glow'}
-      :{t:'♡ コスメで、自分を表現する ♡',s:'#コスメオタクプロフ  by Glow'};
-    ctx.save();
-    ctx.globalAlpha=0.5;
-    ctx.fillStyle=c.accent;ctx.font=`italic 500 20px 'Shippori Mincho',serif`;
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(deco.t,W/2,midDY+4);
-    ctx.globalAlpha=0.35;
-    ctx.fillStyle=c.label;ctx.font=`400 13px ${getFontFamily()}`;
-    ctx.fillText(deco.s,W/2,midDY+32);
-    ctx.restore();
-    // ドット装飾ライン（下）
-    ctx.save();
-    ctx.globalAlpha=0.25;
-    for(let di=0;di<dotCount;di++){
-      ctx.beginPath();
-      ctx.arc(P+di*dotSpacing+(dotSpacing/2),midDY+56,3.5,0,Math.PI*2);
-      ctx.fillStyle=dotColors[(di+2)%dotColors.length];ctx.fill();
-    }
-    ctx.restore();
+  // ─── 下部デコレーションパネル ───
+  // 自己紹介終端802px〜フッター上端1414px = 約612pxを活用
+  const dY0=by4+150; // デコ開始Y
+  const dY1=H-70;    // デコ終了Y（フッター直上）
+  const dMid=(dY0+dY1)/2;
+
+  const deco=cur==='pop'
+    ?{main:'✨ Let your beauty shine ✨',sub:'推しコスメ、全部紹介',tag:'#コスメオタクプロフ  #Glow美容輝き',icon:'💄'}
+    :cur==='sim'
+    ?{main:'✦ your beauty, your story ✦',sub:'自分らしいコスメライフを',tag:'#コスメオタクプロフ  #Glow美容輝き',icon:'🌿'}
+    :{main:'♡ コスメで、自分を表現する ♡',sub:'推しコスメを広めよう',tag:'#コスメオタクプロフ  #Glow美容輝き',icon:'🌸'};
+
+  // 背景パネル（角丸ボックス）
+  ctx.save();
+  ctx.globalAlpha=0.13;
+  rrPath(ctx,P,dY0,W-P*2,dY1-dY0,20);
+  ctx.fillStyle=c.accent;ctx.fill();
+  ctx.restore();
+
+  // 上部ドット列
+  ctx.save();
+  ctx.globalAlpha=0.3;
+  const dc=c.decoColors||[c.accent,c.accent2,c.label];
+  const dspc=22,dnum=Math.floor((W-P*2)/dspc);
+  for(let i=0;i<dnum;i++){
+    ctx.beginPath();ctx.arc(P+i*dspc+dspc/2,dY0+18,3,0,Math.PI*2);
+    ctx.fillStyle=dc[i%dc.length];ctx.fill();
   }
+  ctx.restore();
+
+  // アイコン大（中央上）
+  ctx.save();
+  ctx.font=`52px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(deco.icon,W/2,dY0+80);
+  ctx.restore();
+
+  // メインキャッチコピー
+  ctx.save();
+  ctx.globalAlpha=0.75;
+  ctx.fillStyle=c.accent;ctx.font=`italic 700 26px 'Shippori Mincho',serif`;
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(deco.main,W/2,dY0+152);
+  ctx.restore();
+
+  // サブコピー
+  ctx.save();
+  ctx.globalAlpha=0.6;
+  ctx.fillStyle=c.val;ctx.font=`500 17px ${getFontFamily()}`;
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(deco.sub,W/2,dY0+194);
+  ctx.restore();
+
+  // 区切りライン（ダイヤ付き）
+  const decoLineY=dY0+228;
+  ctx.save();
+  ctx.globalAlpha=0.25;
+  ctx.strokeStyle=c.accent;ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(P+40,decoLineY);ctx.lineTo(W/2-20,decoLineY);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(W/2+20,decoLineY);ctx.lineTo(W-P-40,decoLineY);ctx.stroke();
+  ctx.fillStyle=c.accent;ctx.font=`14px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.globalAlpha=0.4;
+  ctx.fillText('✦',W/2,decoLineY);
+  ctx.restore();
+
+  // ハッシュタグ
+  ctx.save();
+  ctx.globalAlpha=0.5;
+  ctx.fillStyle=c.label;ctx.font=`400 14px ${getFontFamily()}`;
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(deco.tag,W/2,dY0+264);
+  ctx.restore();
+
+  // 小アイコン3つ横並び
+  ctx.save();
+  ctx.font=`28px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+  ['💋','✨','🪞'].forEach((ic,i)=>ctx.fillText(ic,W/2+(i-1)*52,dY0+310));
+  ctx.restore();
+
+  // 下部ドット列
+  ctx.save();
+  ctx.globalAlpha=0.3;
+  for(let i=0;i<dnum;i++){
+    ctx.beginPath();ctx.arc(P+i*dspc+dspc/2,dY1-16,3,0,Math.PI*2);
+    ctx.fillStyle=dc[(i+1)%dc.length];ctx.fill();
+  }
+  ctx.restore();
 
   drawFooter(ctx,W,H,c);
 }
