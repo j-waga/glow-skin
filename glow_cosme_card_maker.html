@@ -623,7 +623,7 @@ async function buildPage1(cv,c){
 
   // 3カラム：PC・骨格・MBTI
   const by2=cy+202;
-  [['personal color PC',getV('ppc')],['frame type 骨格',getV('pbone')],['MBTI',getV('pmbti')]].forEach(([lbl,val],i)=>{
+  [['personal color PC',getV('ppc')],['body frame 骨格',getV('pbone')],['MBTI',getV('pmbti')]].forEach(([lbl,val],i)=>{
     const bx=P+i*(tw3+8);
     drawCardBox(ctx,bx,by2,tw3,80,c);
     drawLabel(ctx,lbl,bx+10,by2+18,c);
@@ -672,24 +672,54 @@ async function buildPage1(cv,c){
 }
 
 // ====== テキストのみレイアウト ======
-async function buildCosmePageText(cv,catDefs,titleEn,titleJa,c){
-  const W=750,P=24;
+// タグの折り返しレイアウトを事前計算するヘルパー
+function calcTagLayout(ctx,items,P,W,tagH,tagPad,tagGap){
+  ctx.font=`500 15px ${getFontFamily()}`;
+  const lines=[];
+  let row=[],rowX=P;
+  items.forEach(name=>{
+    const tw=ctx.measureText(name).width;
+    const tagW=tw+tagPad*2;
+    if(row.length>0 && rowX+tagW>W-P){
+      lines.push(row);row=[];rowX=P;
+    }
+    row.push({name,tagW,x:rowX});
+    rowX+=tagW+tagGap;
+  });
+  if(row.length>0) lines.push(row);
+  return lines; // [{name,tagW,x}] の行配列
+}
 
-  // アイテム収集
+async function buildCosmePageText(cv,catDefs,titleEn,titleJa,c){
+  const W=750,P=28,tagH=36,tagPad=14,tagGap=10;
+
+  // ダミーcanvasで文字幅計算用context確保
+  const tmpCv=document.createElement('canvas');
+  tmpCv.width=W;tmpCv.height=10;
+  const tmpCtx=tmpCv.getContext('2d');
+
+  // アイテム収集＋タグレイアウト事前計算
   const catDataArr=catDefs.map(cat=>{
     const items=[];
     for(let i=0;i<6;i++){const d=slotData[cat.key+'_'+i];if(d&&d.name)items.push(d.name);}
-    return{...cat,items};
+    const tagLines=calcTagLayout(tmpCtx,items,P,W,tagH,tagPad,tagGap);
+    return{...cat,items,tagLines};
   }).filter(cat=>cat.items.length>0);
 
-  // 高さ計算：カテゴリーヘッダー + タグ行
-  let totalH=130;
+  // 正確な高さ計算
+  const HEADER_H=128, FOOTER_H=66, SEC_H=52, SEC_GAP=28;
+  let contentH=0;
   catDataArr.forEach(cat=>{
-    totalH+=56; // セクション見出し
-    totalH+=Math.ceil(cat.items.length/3)*40+16; // タグ行（3列想定、1行40px）
-    totalH+=16;
+    contentH+=SEC_H; // セクション見出し
+    contentH+=cat.tagLines.length*(tagH+tagGap)-tagGap+SEC_GAP; // タグ行
   });
-  const H=Math.max(totalH+80,900);
+  // 最小900px確保、余白を上下均等に分配
+  const minH=900;
+  const rawH=HEADER_H+contentH+FOOTER_H+40;
+  const H=Math.max(rawH,minH);
+  // コンテンツを縦方向に中央寄せ気味にするための開始Y
+  const extraSpace=H-rawH;
+  const startY=HEADER_H+Math.floor(extraSpace*0.3)+20;
 
   cv.width=W;cv.height=H;
   const ctx=cv.getContext('2d');
@@ -697,42 +727,70 @@ async function buildCosmePageText(cv,catDefs,titleEn,titleJa,c){
   drawDecos(ctx,W,H,c);
   drawHeader(ctx,W,titleEn,titleJa,c);
 
-  let curY=128;
-  for(const cat of catDataArr){
-    // セクション見出し
-    ctx.fillStyle=c.secEn;ctx.font=`italic 700 24px 'Shippori Mincho',serif`;ctx.textAlign='left';ctx.textBaseline='alphabetic';
-    ctx.fillText(cat.en,P,curY+22);
-    ctx.fillStyle=c.secJa;ctx.font=`400 14px ${getFontFamily()}`;
-    ctx.fillText(' '+cat.ja,P+ctx.measureText(cat.en).width+4,curY+22);
-    ctx.strokeStyle=c.cardBorder;ctx.lineWidth=1.5;
-    ctx.beginPath();ctx.moveTo(P,curY+30);ctx.lineTo(W-P,curY+30);ctx.stroke();
-    curY+=46;
+  let curY=startY;
 
-    // アイテムをタグ形式で横並び＋折り返し表示
-    let tx=P,ty=curY;
-    cat.items.forEach(name=>{
-      const pad=14,h=34;
-      ctx.font=`500 15px ${getFontFamily()}`;
-      const tw=ctx.measureText(name).width;
-      const tagW=tw+pad*2;
-      if(tx+tagW>W-P){tx=P;ty+=h+8;}
-      // タグ背景
-      rrPath(ctx,tx,ty,tagW,h,17);
-      ctx.fillStyle=c.tag;ctx.fill();
-      ctx.strokeStyle=c.accent;ctx.lineWidth=1.2;
-      rrPath(ctx,tx,ty,tagW,h,17);ctx.stroke();
-      // テキスト
-      ctx.fillStyle=c.val;ctx.textAlign='left';ctx.textBaseline='middle';
-      ctx.fillText(name,tx+pad,ty+h/2);
-      tx+=tagW+8;
-    });
-    curY=ty+42+10;
+  if(catDataArr.length===0){
+    // 空の場合：中央にメッセージ
+    ctx.fillStyle=c.label;ctx.font=`400 18px ${getFontFamily()}`;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('商品名を入力するとここに表示されます',W/2,H/2-30);
+    drawFooter(ctx,W,H,c);
+    return;
   }
 
-  // 画像なし時のメッセージ（全カテゴリーが空の場合）
-  if(catDataArr.length===0){
-    ctx.fillStyle=c.label;ctx.font=`400 18px ${getFontFamily()}`;ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText('商品名を入力するとここに表示されます',W/2,H/2);
+  for(const cat of catDataArr){
+    // ② セクション見出し：英語と日本語を完全に独立して描画（重なり防止）
+    ctx.save();
+    ctx.font=`italic 700 22px 'Shippori Mincho',serif`;
+    const enW=ctx.measureText(cat.en).width;
+    ctx.fillStyle=c.secEn;ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    ctx.fillText(cat.en,P,curY+20);
+    ctx.restore();
+
+    ctx.save();
+    ctx.font=`400 13px ${getFontFamily()}`;
+    ctx.fillStyle=c.secJa;ctx.textAlign='left';ctx.textBaseline='alphabetic';
+    ctx.fillText('　'+cat.ja,P+enW+2,curY+20);
+    ctx.restore();
+
+    ctx.strokeStyle=c.cardBorder+'88';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(P,curY+28);ctx.lineTo(W-P,curY+28);ctx.stroke();
+    curY+=SEC_H;
+
+    // ③ タグ折り返し描画（事前計算済みlinesを使用）
+    for(const row of cat.tagLines){
+      for(const {name,tagW,x} of row){
+        rrPath(ctx,x,curY,tagW,tagH,18);
+        ctx.fillStyle=c.tag;ctx.fill();
+        ctx.strokeStyle=c.accent+'99';ctx.lineWidth=1.2;
+        rrPath(ctx,x,curY,tagW,tagH,18);ctx.stroke();
+        ctx.fillStyle=c.val;ctx.font=`500 14px ${getFontFamily()}`;
+        ctx.textAlign='left';ctx.textBaseline='middle';
+        ctx.fillText(name,x+tagPad,curY+tagH/2);
+      }
+      curY+=tagH+tagGap;
+    }
+    curY+=SEC_GAP;
+  }
+
+  // ① 下部余白に装飾を追加
+  const remainY=curY;
+  const bottomSpace=H-FOOTER_H-remainY;
+  if(bottomSpace>60){
+    const midY=remainY+bottomSpace*0.45;
+    const decoTexts=cur==='pop'
+      ?['✨ 推しコスメを広めよう ✨','⭐ by Glow ⭐']
+      :cur==='sim'
+      ?['✦ your beauty, your story ✦','— by Glow —']
+      :['♡ 推しコスメ、全部紹介 ♡','✦ by Glow ✦'];
+    ctx.save();
+    ctx.globalAlpha=0.45;
+    ctx.fillStyle=c.accent;ctx.font=`italic 500 18px 'Shippori Mincho',serif`;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(decoTexts[0],W/2,midY);
+    ctx.font=`400 13px ${getFontFamily()}`;
+    ctx.fillStyle=c.label;
+    ctx.fillText(decoTexts[1],W/2,midY+30);
+    ctx.restore();
   }
 
   drawFooter(ctx,W,H,c);
