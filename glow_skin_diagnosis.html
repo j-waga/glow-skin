@@ -136,6 +136,17 @@
   .retry-btn:hover { background: var(--rose-pale); border-color: var(--rose); }
   .stars { color: var(--gold); font-size: 0.82rem; }
 
+  /* ── RANKING ── */
+  .ranking-card { background: var(--white); border-radius: 14px; padding: 16px 18px; margin-bottom: 10px; box-shadow: var(--shadow); border: 1px solid rgba(201,104,122,0.08); display: flex; align-items: flex-start; gap: 12px; }
+  .ranking-num { font-family: 'Shippori Mincho', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); min-width: 28px; }
+  .ranking-info { flex: 1; }
+  .ranking-name { font-weight: 700; font-size: 0.92rem; color: var(--plum-dark); }
+  .ranking-source { font-size: 0.70rem; color: var(--rose); font-weight: 700; margin-top: 2px; }
+  .ranking-fit { font-size: 0.78rem; margin-top: 6px; padding: 6px 10px; border-radius: 8px; line-height: 1.5; }
+  .fit-good { background: var(--sage-light); color: #1e4a30; }
+  .fit-caution { background: #fff8e1; color: #7a5800; }
+  .fit-avoid { background: #ffeae8; color: #8b1a1a; }
+
   @media (max-width: 500px) { .options-grid.cols2 { grid-template-columns: 1fr; } .step-card { padding: 28px 20px; } }
 </style>
 </head>
@@ -237,6 +248,7 @@
 
     <!-- ランキング商品との相性 -->
     <div class="section-title">✨ あなたの肌とランキング商品の相性</div>
+    <div id="rankingCards"></div>
 
     <div class="section-title">🏆 おすすめブランド TOP3</div>
     <div id="brandCards"></div>
@@ -259,6 +271,60 @@
 
 <script>
 const answers = { skin: '', concern: '', pref: '', budget: '' };
+
+// ── ランキング商品データ（@cosme・Lips最新版） ──
+const RANKING_PRODUCTS = [
+  {
+    name: 'd プログラム バランスケアローション',
+    source: '@cosme 2026上半期総合大賞',
+    fit: { dry:'good', oily:'good', combo:'good', sensitive:'good', innerdry:'good', aging:'good' },
+    fitReason: {
+      good: '敏感肌特化の医薬部外品。全肌タイプに対応する低刺激処方で@cosme2026上半期総合大賞を受賞。',
+      caution: '',
+      avoid: ''
+    }
+  },
+  {
+    name: 'SOFINA iP 角層トリートメント基礎化粧液',
+    source: 'LIPSベストコスメ2025 化粧水部門1位',
+    fit: { dry:'good', oily:'good', combo:'good', sensitive:'caution', innerdry:'good', aging:'good' },
+    fitReason: {
+      good: '花王の角層科学技術を結集。使うたびに変化する角層に合わせたインタラクティブ処方で長時間うるおいをキープ。',
+      caution: '敏感肌の方は成分をご確認の上パッチテストをおすすめします。',
+      avoid: ''
+    }
+  },
+  {
+    name: 'SK-II フェイシャルトリートメントセラム',
+    source: '@cosme 美容液2位（2026年7月20日発売）',
+    fit: { dry:'good', oily:'caution', combo:'good', sensitive:'caution', innerdry:'good', aging:'good' },
+    fitReason: {
+      good: '伝説のピテラ×最新技術の美容液。透明感・ハリ改善に定評があり発売前から@cosme美容液2位に急浮上。',
+      caution: '脂性肌・敏感肌の方はパッチテストを推奨。',
+      avoid: ''
+    }
+  },
+  {
+    name: 'DECORTÉ リポソームアドバンストリペアセラム',
+    source: '@cosme 美容液4位（継続ランクイン）',
+    fit: { dry:'good', oily:'caution', combo:'good', sensitive:'good', innerdry:'good', aging:'good' },
+    fitReason: {
+      good: '独自リポソーム技術で成分を肌深部まで浸透。植物幹細胞エキスによるエイジングケアが百貨店層に絶大な人気。',
+      caution: 'テカリが強い脂性肌の方は使用量を調整してください。',
+      avoid: ''
+    }
+  },
+  {
+    name: 'キュレル 定着保湿オイル美容液',
+    source: '2026年7月1日新発売・注目スキンケア',
+    fit: { dry:'good', oily:'avoid', combo:'caution', sensitive:'good', innerdry:'good', aging:'good' },
+    fitReason: {
+      good: 'ブランド初のオイル美容液。セラミドケアにオイルの保護膜を加えた新設計で乾燥肌・敏感肌に最適。',
+      caution: '混合肌の方はUゾーンのみに使用するのがおすすめ。',
+      avoid: '脂性肌の方はテカリが増す可能性があるため他のアイテムをご検討ください。'
+    }
+  },
+];
 
 // ── タブ切り替え ──
 function scrollToDiagnosis() {
@@ -465,7 +531,7 @@ function showResult() {
   const budgetFilter = {
     under1500: ['hadalabo','biore','muji','muji_clear','muji_white','cosrx','anua','somebymi','theordinary','keshimin','curel','naturie','canmake','dejavu','opera','melanocc','chifure','nivea','etude'],
     '1500to5000': ['hadalabo','curel','minon','lrp','cerave','theordinary','cosrx','anua','laneige','somebymi','transino','iope','missha','tonymoly','fancl','orbis','muji','muji_clear','muji_white','muji_age','adryS','hifmid','nov','locobace','arouge','obagi','innisfree','dhc','etvos','opera','canmake','naturie','dejavu','melanocc','dermalaser','vtcosmetics','mediheal','ihada','lits','bcl_kansosan','detclear','torriden','byur','neutrogena','nivea','loreal','chifure','skinaqua','etude'],
-    '5000to15000': ['obagi','pola','shiseido','esteelauder','decorte','clinique','lrp','cerave','iope','sulwhasoo','fancl','orbis','mac','nars','adryS','drcilabo','mimc','johnmasters','aesop','etvos','decencia','ayura','domohrun','dprogram','ipsa','yunth','medicube','astalift','kose','kanebo','eucerin','loreal','lancome','sofina_ip','dalba','takami','tarte','rare_beauty','huda_beauty','bobbi_b','charlotte_t'],
+    '5000to15000': ['obagi','pola','shiseido','esteelauder','decorte','clinique','lrp','iope','sulwhasoo','fancl','orbis','mac','nars','adryS','drcilabo','mimc','johnmasters','aesop','etvos','decencia','ayura','domohrun','dprogram','ipsa','yunth','medicube','astalift','kose','kanebo','eucerin','loreal','lancome','sofina_ip','dalba','takami','tarte','rare_beauty','huda_beauty','bobbi_b','charlotte_t'],
     over15000: ['pola','shiseido','esteelauder','decorte','clinique','sk2','albion','sulwhasoo','nars','mac','aesop','haku','cledepeau','lancome','chanel_b','dior_b','kanebo'],
   };
   const allowed = budgetFilter[budget] || Object.keys(DB.profiles);
@@ -475,6 +541,23 @@ function showResult() {
     ordered = [...ordered, ...extras];
   }
   const top3 = ordered.slice(0, 3).filter(id => DB.profiles[id]);
+
+  // ランキング商品との相性表示
+  const rc = document.getElementById('rankingCards');
+  rc.innerHTML = RANKING_PRODUCTS.map((p, idx) => {
+    const fitLevel = p.fit[skin] || 'caution';
+    const fitText = p.fitReason[fitLevel] || '';
+    const fitClass = fitLevel === 'good' ? 'fit-good' : fitLevel === 'avoid' ? 'fit-avoid' : 'fit-caution';
+    const fitIcon = fitLevel === 'good' ? '✅ 相性◎' : fitLevel === 'avoid' ? '❌ 注意' : '⚠️ 要確認';
+    return `<div class="ranking-card">
+      <div class="ranking-num">${idx+1}</div>
+      <div class="ranking-info">
+        <div class="ranking-name">${p.name}</div>
+        <div class="ranking-source">📊 ${p.source}</div>
+        <div class="ranking-fit ${fitClass}">${fitIcon}　${fitText}</div>
+      </div>
+    </div>`;
+  }).join('');
 
   document.getElementById('resultTitle').textContent = `${DB.skinLabel[skin]} × ${DB.concernLabel[concern]} の処方箋`;
   document.getElementById('resultDesc').textContent = `${DB.prefLabel[pref]}・予算${DB.budgetLabel[budget]}に合わせて、AlgoBeautyデータベースから最適なブランドをTop3選定しました。`;
