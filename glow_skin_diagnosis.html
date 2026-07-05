@@ -260,50 +260,6 @@
 <script>
 const answers = { skin: '', concern: '', pref: '', budget: '' };
 
-// ── ランキング商品データ ──
-const RANKING_PRODUCTS = [
-  {
-    name: 'セザンヌ パールグロウハイライト',
-    price: '¥660',
-    category: 'プチプラ1位',
-    fit: { dry:'good', oily:'caution', combo:'good', sensitive:'good', innerdry:'good', aging:'good' },
-    buyUrl: 'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E3%82%BB%E3%82%B6%E3%83%B3%E3%83%8C+%E3%83%91%E3%83%BC%E3%83%AB%E3%82%B0%E3%83%AD%E3%82%A6%E3%83%8F%E3%82%A4%E3%83%A9%E3%82%A4%E3%83%88/',
-    fitReason: { good:'繊細なパールが肌に溶け込み自然なツヤを演出。低刺激で使いやすい。', caution:'テカリが強い方は使う範囲を絞るのがおすすめ。', avoid:'' }
-  },
-  {
-    name: 'セザンヌ トーンフィルターハイライト',
-    price: '¥693',
-    category: 'プチプラ2位',
-    fit: { dry:'good', oily:'caution', combo:'caution', sensitive:'good', innerdry:'good', aging:'good' },
-    buyUrl: 'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E3%82%BB%E3%82%B6%E3%83%B3%E3%83%8C+%E3%83%88%E3%83%BC%E3%83%B3%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC%E3%83%8F%E3%82%A4%E3%83%A9%E3%82%A4%E3%83%88/',
-    fitReason: { good:'柔らかいパールで肌馴染みが良く、乾燥肌・敏感肌に特におすすめ。', caution:'Tゾーンのテカリが気になる方は使用量に注意を。', avoid:'' }
-  },
-  {
-    name: 'キャンメイク むにゅっとハイライター',
-    price: '¥638',
-    category: 'プチプラ3位',
-    fit: { dry:'caution', oily:'good', combo:'good', sensitive:'avoid', innerdry:'caution', aging:'caution' },
-    buyUrl: 'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/CANMAKE+%E3%82%80%E3%81%AB%E3%82%85%E3%81%A3%E3%81%A8%E3%83%8F%E3%82%A4%E3%83%A9%E3%82%A4%E3%82%BF%E3%83%BC/',
-    fitReason: { good:'ぷにっとした質感でのせやすく、皮脂が気になる方の日中のツヤ出しに最適。', caution:'保湿成分が少ないので乾燥肌の方は下地の保湿をしっかりと。', avoid:'成分的に刺激になる可能性があるため敏感肌の方は注意。' }
-  },
-  {
-    name: 'SUQQU ブラーリング カラー ブラッシュ',
-    price: '¥6,600',
-    category: 'デパコス1位',
-    fit: { dry:'good', oily:'caution', combo:'good', sensitive:'good', innerdry:'good', aging:'good' },
-    buyUrl: 'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/SUQQU+%E3%83%96%E3%83%A9%E3%83%BC%E3%83%AA%E3%83%B3%E3%82%B0/',
-    fitReason: { good:'圧倒的な輝きと上品な仕上がり。2025年ベストコスメ受賞。敏感肌にも配慮した処方が◎', caution:'テカリが強い脂性肌の方はハイライト部分のみ少量使用で。', avoid:'' }
-  },
-  {
-    name: 'Dior グロウ マキシマイザー パレット',
-    price: '¥6,930',
-    category: 'デパコス2位',
-    fit: { dry:'good', oily:'avoid', combo:'good', sensitive:'caution', innerdry:'good', aging:'good' },
-    buyUrl: 'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/Dior+%E3%82%B0%E3%83%AD%E3%82%A6+%E3%83%9E%E3%82%AD%E3%82%B7%E3%83%9E%E3%82%A4%E3%82%B6%E3%83%BC/',
-    fitReason: { good:'LIPSとアットコスメ両方でTOP3入り。複数カラーを使い分けられるパレットタイプ。', caution:'香料が含まれる場合があるため敏感肌の方はパッチテストを。', avoid:'油分が多く脂性肌の方は崩れやすいため他のアイテムを検討。' }
-  }
-];
-
 // ── タブ切り替え ──
 function scrollToDiagnosis() {
   document.getElementById('step1').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -507,10 +463,10 @@ function showResult() {
   let brandIds = [];
   try { brandIds = DB.brands[skin][concern][pref]; } catch(e) { brandIds = ['hadalabo','cosrx','theordinary']; }
   const budgetFilter = {
-    under1500: ['hadalabo','biore','muji','muji_clear','muji_white','cosrx','anua','somebymi','theordinary','keshimin','curel','naturie','canmake','dejavu'],
-    '1500to5000': ['hadalabo','curel','minon','lrp','cerave','theordinary','cosrx','anua','laneige','somebymi','transino','iope','missha','tonymoly','fancl','orbis','muji','muji_clear','muji_white','muji_age','adryS','hifmid','nov','locobace','arouge','obagi','innisfree','dhc','etvos','opera','canmake','naturie','dejavu'],
-    '5000to15000': ['obagi','pola','shiseido','esteelauder','decorte','clinique','lrp','cerave','iope','sulwhasoo','fancl','orbis','mac','nars','adryS','drcilabo','mimc','johnmasters','aesop','etvos'],
-    over15000: ['pola','shiseido','esteelauder','decorte','clinique','sk2','albion','sulwhasoo','nars','mac','aesop'],
+    under1500: ['hadalabo','biore','muji','muji_clear','muji_white','cosrx','anua','somebymi','theordinary','keshimin','curel','naturie','canmake','dejavu','opera','melanocc','chifure','nivea','etude'],
+    '1500to5000': ['hadalabo','curel','minon','lrp','cerave','theordinary','cosrx','anua','laneige','somebymi','transino','iope','missha','tonymoly','fancl','orbis','muji','muji_clear','muji_white','muji_age','adryS','hifmid','nov','locobace','arouge','obagi','innisfree','dhc','etvos','opera','canmake','naturie','dejavu','melanocc','dermalaser','vtcosmetics','mediheal','ihada','lits','bcl_kansosan','detclear','torriden','byur','neutrogena','nivea','loreal','chifure','skinaqua','etude'],
+    '5000to15000': ['obagi','pola','shiseido','esteelauder','decorte','clinique','lrp','cerave','iope','sulwhasoo','fancl','orbis','mac','nars','adryS','drcilabo','mimc','johnmasters','aesop','etvos','decencia','ayura','domohrun','dprogram','ipsa','yunth','medicube','astalift','kose','kanebo','eucerin','loreal','lancome','sofina_ip','dalba','takami','tarte','rare_beauty','huda_beauty','bobbi_b','charlotte_t'],
+    over15000: ['pola','shiseido','esteelauder','decorte','clinique','sk2','albion','sulwhasoo','nars','mac','aesop','haku','cledepeau','lancome','chanel_b','dior_b','kanebo'],
   };
   const allowed = budgetFilter[budget] || Object.keys(DB.profiles);
   let ordered = [...brandIds].sort((a, b) => (allowed.includes(a)?0:1) - (allowed.includes(b)?0:1));
