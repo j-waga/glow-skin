@@ -14,13 +14,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Glow 無料肌診断 | あなたに最適なスキンケアを提案</title>
 <meta property="og:title" content="【無料・30秒】肌タイプ診断 | 乾燥・脂性・混合・敏感肌を診断" />
-<meta property="og:description" content="質問に答えるだけで30秒で肌タイプ診断。89ブランド対応・楽天購入リンク付き・完全無料。登録不要・全デバイス対応。" />
+<meta property="og:description" content="質問に答えるだけで30秒で肌タイプ診断。96ブランド対応・楽天購入リンク付き・完全無料。登録不要・全デバイス対応。" />
 <meta property="og:image" content="https://j-waga.github.io/glow-skin/ogp_skin_diagnosis.png" />
 <meta property="og:url" content="https://j-waga.github.io/glow-skin/glow_skin_diagnosis.html" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="【無料・30秒】肌タイプ診断 | 乾燥・脂性・混合・敏感肌を診断" />
-<meta name="twitter:description" content="質問に答えるだけで30秒で肌タイプ診断。89ブランド対応・楽天購入リンク付き・完全無料。" />
+<meta name="twitter:description" content="質問に答えるだけで30秒で肌タイプ診断。96ブランド対応・楽天購入リンク付き・完全無料。" />
 <meta name="twitter:image" content="https://j-waga.github.io/glow-skin/ogp_skin_diagnosis.png" />
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
@@ -165,13 +165,12 @@
   <div class="badge">✨ 無料・30秒診断</div>
   <div class="logo">G<span>low</span></div>
   <p>肌タイプ × 悩み × こだわり × 予算から<br>あなただけの最適スキンケアを提案</p>
-  <p style="font-size:0.80rem; color:#ff6b6b; margin-top:8px; letter-spacing:0.05em; font-weight:700;"><strong>2026年7月4日更新 ： 89ブランド・最新版</strong></p>
+  <p style="font-size:0.80rem; color:#ff6b6b; margin-top:8px; letter-spacing:0.05em; font-weight:700;"><strong>2026年7月11日更新 ： 96ブランド・最新版</strong></p>
 
   <div style="background:rgba(255,255,255,0.10);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.22);border-radius:14px;padding:14px 18px;margin:18px auto 0;max-width:560px;text-align:left;">
-    <div style="font-size:0.72rem;color:#c9a86c;font-weight:700;letter-spacing:0.12em;margin-bottom:8px;">📊 今回の更新内容(7月4日版)― Lips・@cosme・ミイダス・WWDJAPAN最新データ分析</div>
+    <div style="font-size:0.72rem;color:#c9a86c;font-weight:700;letter-spacing:0.12em;margin-bottom:8px;">📊 今回の更新内容(7月11日版)― スプレッドシートDB整合性チェックにより反映漏れを解消</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;">
-      <span style="font-size:0.70rem;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(201,168,108,0.25);color:#f5e0a0;border:1px solid rgba(201,168,108,0.4);">＋ メラノCC・SOFINA iP・タカミ・TAKAMI 4件追加(計89ブランド)</span>
-      <span style="font-size:0.70rem;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(138,171,154,0.25);color:#b8e4cc;border:1px solid rgba(138,171,154,0.4);">↑ ミシャ新作・anua・SK-II新作・コスデコルテ・AYURA 最新情報更新</span>
+      <span style="font-size:0.70rem;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(201,168,108,0.25);color:#f5e0a0;border:1px solid rgba(201,168,108,0.4);">＋ YSL・セザンヌ 他5件追加(計96ブランド)</span>
     </div>
   </div>
 </header>
@@ -271,7 +270,7 @@
     <div class="cta-box">
       <h3>✨ もっと詳しく知りたい方へ</h3>
       <p>Glowの公式Xでは毎日最新の美容成分情報・コスメニュースを発信中。<br>診断結果をもとにした具体的なアドバイスを受け取れます。</p>
-      <a href="https://x.com/stats_log_net" target="_blank" class="cta-btn">Glow 公式X をフォローする →</a>
+      <a href="https://x.com/stats_log_net" target="_blank" id="ctaXFollowBtn" onclick="trackEvent('x_follow_click', {event_category:'skindiag'})" class="cta-btn">Glow 公式X をフォローする →</a>
     </div>
 
     <button class="retry-btn" onclick="resetDiagnosis()">🔄 もう一度診断する</button>
@@ -280,6 +279,15 @@
 
 <script>
 const answers = { skin: '', concern: '', pref: '', budget: '' };
+
+// ── 共通計測関数 ──
+function trackEvent(name, params) {
+  try { gtag('event', name, params || {}); } catch(e) { /* 計測失敗しても診断には影響しない */ }
+}
+
+// ページ初期表示時（STEP1到達）を計測
+trackEvent('step_view', { event_category: 'skindiag', step: 1 });
+
 
 // ── ランキング商品データ(@cosme・Lips最新版) ──
 const RANKING_PRODUCTS = [
@@ -356,6 +364,7 @@ function nextStep(n) {
   document.getElementById('progressFill').style.width = pct + '%';
   document.getElementById('progressLabel').textContent = `STEP ${n} / 4`;
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  trackEvent('step_view', { event_category: 'skindiag', step: n });
   if (n === 2) {
     gtag('event', 'diagnosis_start', { event_category: 'skindiag', event_label: '診断開始' });
   }
@@ -371,19 +380,19 @@ const DB = {
       acne:    { ingredient: ['theordinary','cosrx','dejavu'],        brand: ['minon','curel','ipsa'],              korea: ['cosrx','somebymi','anua'],         natural: ['muji_clear','dhc','etvos'],        pharma: ['minon','nov','melanocc'],         luxury: ['clinique','ipsa','esteelauder'] },
       spot:    { ingredient: ['theordinary','transino','haku'],       brand: ['transino','haku','cledepeau'],       korea: ['cosrx','missha','somebymi'],       natural: ['muji_white','drcilabo','yunth'],   pharma: ['transino','keshimin','haku'],     luxury: ['sk2','cledepeau','pola'] },
       wrinkle: { ingredient: ['theordinary','obagi','domohrun'],      brand: ['pola','domohrun','esteelauder'],     korea: ['iope','laneige','sulwhasoo'],      natural: ['muji_age','aesop','bobbi_b'],      pharma: ['adryS','hifmid','domohrun'],      luxury: ['pola','decorte','loreal'] },
-      dry:     { ingredient: ['cerave','hadalabo','lits'],            brand: ['hadalabo','lits','bcl_kansosan'],    korea: ['laneige','cosrx','torriden'],      natural: ['muji','dhc','nivea'],              pharma: ['hadalabo','minon','bcl_kansosan'],luxury: ['decorte','albion','dermalaser'] },
+      dry:     { ingredient: ['cerave','hadalabo','lits'],            brand: ['hadalabo','lits','bcl_kansosan','duocosme'],    korea: ['laneige','cosrx','torriden'],      natural: ['muji','dhc','nivea'],              pharma: ['hadalabo','minon','bcl_kansosan'],luxury: ['decorte','albion','dermalaser'] },
       redness: { ingredient: ['cerave','lrp','ayura'],                brand: ['curel','ayura','dprogram'],          korea: ['cosrx','anua','byur'],             natural: ['etvos','johnmasters','ayura'],     pharma: ['curel','dprogram','ihada'],       luxury: ['lrp','clinique','esteelauder'] },
     },
     oily: {
-      pore:    { ingredient: ['theordinary','cosrx','detclear'],      brand: ['chifure','detclear','medicube'],     korea: ['cosrx','innisfree','somebymi'],    natural: ['muji_clear','naturie','canmake'],  pharma: ['chifure','biore','keshimin'],     luxury: ['clinique','mac','huda_beauty'] },
-      acne:    { ingredient: ['cosrx','theordinary','melanocc'],      brand: ['chifure','melanocc','dprogram'],     korea: ['cosrx','innisfree','somebymi'],    natural: ['muji_clear','etvos','opera'],      pharma: ['melanocc','chifure','dprogram'],  luxury: ['clinique','mac','lrp'] },
+      pore:    { ingredient: ['theordinary','cosrx','detclear','duocosme'], brand: ['chifure','detclear','medicube'],     korea: ['cosrx','innisfree','somebymi'],    natural: ['muji_clear','naturie','canmake','cezanne'],  pharma: ['chifure','biore','keshimin'],     luxury: ['clinique','mac','huda_beauty','nyx','benefit'] },
+      acne:    { ingredient: ['cosrx','theordinary','melanocc'],      brand: ['chifure','melanocc','dprogram'],     korea: ['cosrx','innisfree','somebymi'],    natural: ['muji_clear','etvos','opera'],      pharma: ['melanocc','chifure','dprogram'],  luxury: ['clinique','mac','lrp','urbandecay'] },
       spot:    { ingredient: ['theordinary','cosrx','decencia'],      brand: ['decencia','transino','chifure'],     korea: ['cosrx','tonymoly','missha'],       natural: ['muji_white','drcilabo','tarte'],   pharma: ['decencia','transino','chifure'],  luxury: ['nars','clinique','pola'] },
       wrinkle: { ingredient: ['theordinary','obagi','astalift'],      brand: ['astalift','esteelauder','kose'],     korea: ['iope','laneige','cosrx'],          natural: ['muji_age','aesop','bobbi_b'],      pharma: ['obagi','adryS','astalift'],       luxury: ['pola','loreal','decorte'] },
       dry:     { ingredient: ['theordinary','cosrx','sofina_ip'],     brand: ['sofina_ip','hadalabo','laneige'],    korea: ['laneige','anua','cosrx'],          natural: ['muji','nivea','naturie'],          pharma: ['sofina_ip','hadalabo','adryS'],   luxury: ['laneige','sofina_ip','chanel_b'] },
       redness: { ingredient: ['theordinary','lrp','chifure'],         brand: ['chifure','lrp','dprogram'],          korea: ['cosrx','anua','byur'],             natural: ['muji','etvos','canmake'],          pharma: ['chifure','dprogram','lrp'],       luxury: ['lrp','dior_b','esteelauder'] },
     },
     combo: {
-      pore:    { ingredient: ['takami','theordinary','vtcosmetics'],  brand: ['takami','astalift','detclear'],      korea: ['vtcosmetics','innisfree','cosrx'], natural: ['muji','naturie','canmake'],        pharma: ['biore','chifure','takami'],       luxury: ['clinique','mac','huda_beauty'] },
+      pore:    { ingredient: ['takami','theordinary','vtcosmetics'],  brand: ['takami','astalift','detclear'],      korea: ['vtcosmetics','innisfree','cosrx'], natural: ['muji','naturie','canmake','cezanne'],        pharma: ['biore','chifure','takami'],       luxury: ['clinique','mac','huda_beauty','urbandecay'] },
       acne:    { ingredient: ['cosrx','theordinary','melanocc'],      brand: ['cosrx','ipsa','dprogram'],           korea: ['cosrx','anua','vtcosmetics'],      natural: ['muji_clear','etvos','opera'],      pharma: ['ipsa','dprogram','melanocc'],     luxury: ['clinique','ipsa','rare_beauty'] },
       spot:    { ingredient: ['theordinary','cosrx','yunth'],         brand: ['transino','yunth','kose'],           korea: ['cosrx','missha','anua'],           natural: ['muji_white','drcilabo','tarte'],   pharma: ['transino','keshimin','decencia'], luxury: ['nars','pola','loreal'] },
       wrinkle: { ingredient: ['theordinary','obagi','astalift'],      brand: ['astalift','esteelauder','kanebo'],   korea: ['iope','laneige','sulwhasoo'],      natural: ['muji_age','aesop','bobbi_b'],      pharma: ['obagi','adryS','astalift'],       luxury: ['pola','loreal','decorte'] },
@@ -391,7 +400,7 @@ const DB = {
       redness: { ingredient: ['theordinary','lrp','vtcosmetics'],     brand: ['lrp','ayura','dprogram'],            korea: ['vtcosmetics','anua','byur'],       natural: ['muji','etvos','canmake'],          pharma: ['curel','dprogram','chifure'],     luxury: ['lrp','clinique','rare_beauty'] },
     },
     sensitive: {
-      pore:    { ingredient: ['lrp','cerave','ayura'],                brand: ['curel','ayura','dprogram'],          korea: ['cosrx','anua','etude'],            natural: ['etvos','mimc','opera'],            pharma: ['curel','dprogram','ihada'],       luxury: ['lrp','clinique','bobbi_b'] },
+      pore:    { ingredient: ['lrp','cerave','ayura'],                brand: ['curel','ayura','dprogram'],          korea: ['cosrx','anua','etude'],            natural: ['etvos','mimc','opera'],            pharma: ['curel','dprogram','ihada'],       luxury: ['lrp','clinique','bobbi_b','benefit'] },
       acne:    { ingredient: ['lrp','cosrx','ihada'],                 brand: ['minon','dprogram','ihada'],          korea: ['cosrx','anua','etude'],            natural: ['etvos','dhc','muji_clear'],        pharma: ['minon','nov','ihada'],             luxury: ['lrp','clinique','rare_beauty'] },
       spot:    { ingredient: ['lrp','theordinary','haku'],            brand: ['haku','curel','dprogram'],           korea: ['cosrx','anua','laneige'],          natural: ['etvos','muji_white','tarte'],      pharma: ['haku','curel','keshimin'],        luxury: ['cledepeau','loreal','clinique'] },
       wrinkle: { ingredient: ['theordinary','cerave','lits'],         brand: ['lits','curel','kanebo'],             korea: ['laneige','iope','cosrx'],          natural: ['muji_age','aesop','bobbi_b'],      pharma: ['adryS','hifmid','lits'],          luxury: ['esteelauder','chanel_b','charlotte_t'] },
@@ -403,14 +412,14 @@ const DB = {
       acne:    { ingredient: ['cosrx','theordinary','sofina_ip'],     brand: ['cosrx','sofina_ip','ipsa'],          korea: ['cosrx','anua','laneige'],          natural: ['muji_clear','etvos','opera'],      pharma: ['minon','nov','sofina_ip'],   luxury: ['lrp','clinique','rare_beauty'] },
       spot:    { ingredient: ['theordinary','transino','sofina_ip'],  brand: ['sofina_ip','transino','haku'],       korea: ['cosrx','laneige','missha'],        natural: ['muji_white','drcilabo','tarte'],   pharma: ['sofina_ip','transino','adryS'],   luxury: ['sk2','cledepeau','loreal'] },
       wrinkle: { ingredient: ['theordinary','sofina_ip','domohrun'],  brand: ['sofina_ip','domohrun','pola'],       korea: ['laneige','iope','sulwhasoo'],      natural: ['muji_age','aesop','bobbi_b'],      pharma: ['obagi','adryS','domohrun'],       luxury: ['pola','loreal','chanel_b'] },
-      dry:     { ingredient: ['sofina_ip','hadalabo','dalba'],        brand: ['sofina_ip','dalba','lits'],          korea: ['laneige','dalba','torriden'],      natural: ['muji','nivea','fancl'],            pharma: ['sofina_ip','hadalabo','dermalaser'],luxury: ['sofina_ip','dior_b','laneige'] },
+      dry:     { ingredient: ['sofina_ip','hadalabo','dalba'],        brand: ['sofina_ip','dalba','lits'],          korea: ['laneige','dalba','torriden'],      natural: ['muji','nivea','fancl'],            pharma: ['sofina_ip','hadalabo','dermalaser'],luxury: ['sofina_ip','dior_b','laneige','ysl'] },
       redness: { ingredient: ['cerave','lrp','sofina_ip'],            brand: ['sofina_ip','curel','ayura'],         korea: ['anua','laneige','byur'],           natural: ['muji','nivea','ayura'],            pharma: ['curel','sofina_ip','minon'],      luxury: ['lrp','chanel_b','esteelauder'] },
     },
     aging: {
       pore:    { ingredient: ['theordinary','obagi','takami'],        brand: ['takami','pola','shiseido'],          korea: ['iope','sulwhasoo','astalift'],     natural: ['muji_age','pola','canmake'],       pharma: ['obagi','takami','hifmid'],        luxury: ['pola','decorte','loreal'] },
       acne:    { ingredient: ['theordinary','obagi','yunth'],         brand: ['clinique','domohrun','pola'],        korea: ['iope','cosrx','laneige'],          natural: ['muji_age','fancl','tarte'],        pharma: ['obagi','adryS','domohrun'],       luxury: ['clinique','loreal','pola'] },
-      spot:    { ingredient: ['theordinary','obagi','yunth'],         brand: ['haku','cledepeau','yunth'],          korea: ['sulwhasoo','iope','missha'],       natural: ['muji_white','muji_age','tarte'],   pharma: ['haku','obagi','yunth'],           luxury: ['sk2','cledepeau','loreal'] },
-      wrinkle: { ingredient: ['obagi','theordinary','domohrun'],      brand: ['domohrun','pola','kanebo'],          korea: ['sulwhasoo','iope','laneige'],      natural: ['muji_age','bobbi_b','fancl'],      pharma: ['obagi','domohrun','hifmid'],      luxury: ['lancome','chanel_b','dior_b'] },
+      spot:    { ingredient: ['theordinary','obagi','yunth'],         brand: ['haku','cledepeau','yunth'],          korea: ['sulwhasoo','iope','missha'],       natural: ['muji_white','muji_age','tarte'],   pharma: ['haku','obagi','yunth'],           luxury: ['sk2','cledepeau','loreal','elegance'] },
+      wrinkle: { ingredient: ['obagi','theordinary','domohrun'],      brand: ['domohrun','pola','kanebo'],          korea: ['sulwhasoo','iope','laneige'],      natural: ['muji_age','bobbi_b','fancl'],      pharma: ['obagi','domohrun','hifmid'],      luxury: ['lancome','chanel_b','dior_b','ysl','elegance'] },
       dry:     { ingredient: ['obagi','sofina_ip','domohrun'],        brand: ['domohrun','pola','kanebo'],          korea: ['sulwhasoo','laneige','iope'],      natural: ['muji_age','nivea','orbis'],        pharma: ['obagi','domohrun','hifmid'],      luxury: ['pola','loreal','chanel_b'] },
       redness: { ingredient: ['cerave','lrp','eucerin'],              brand: ['eucerin','curel','neutrogena'],      korea: ['laneige','iope','cosrx'],          natural: ['muji_age','fancl','bobbi_b'],      pharma: ['curel','adryS','eucerin'],        luxury: ['lrp','dior_b','esteelauder'] },
     },
@@ -507,6 +516,14 @@ const DB = {
     dalba: { name:'ダルバ(d\'Alba)', region:'🇰🇷 KR', maker:'d\'Alba Global', price:'¥2,500〜¥5,000', stars:4, tag:'韓国コスメ', isNew:true, key:'ホワイトトリュフエキス・ヒアルロン酸・パンテソール', series:'ホワイトトリュフファーストスプレー・ラム', step:'STEP3化粧水・STEP4美容液', note:'Lips化粧水8位・WWD2026上半期ベストコスメ化粧水部門選出', reason:'韓国発のホワイトトリュフ特化スキンケアブランド。<strong style="color:#c0392b">Lips化粧水ランキング8位にランクイン・WWD2026上半期ベストコスメ化粧水部門に選出。</strong>ホワイトトリュフファーストスプレー・ラムがSNSで爆発的に拡散。スプレー1本で化粧水ステップが完了できる利便性と美容液並みの保湿力が人気の秘密。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E3%83%80%E3%83%AB%E3%83%90%2BdAlba%2B%E3%83%9B%E3%83%AF%E3%82%A4%E3%83%88%E3%83%88%E3%83%AA%E3%83%A5%E3%83%95/' },
     takami: { name:'TAKAMI(タカミ)', region:'🇯🇵 JP', maker:'タカミ', price:'¥4,500〜¥8,000', stars:5, tag:'成分特化', isNew:true, key:'タカミエキス(独自角質ケア成分)・ヒアルロン酸・グリシリン', series:'タカミスキンピール・タカミスキンピールネイビー', step:'STEP2導入液(化粧水前)', note:'ハトムギ毛穴ケア美容液1位・累計3000万本突破の角質ケア定番', reason:'タカミが展開する角質美容水の定番ブランド。<strong style="color:#c0392b">ハトムギ毛穴ケア美容液1位にランクイン。累計3,000万本を突破した大ヒットの「タカミスキンピール」の展開ブランド。</strong>独自成分「タカミエキス」が古い角質を優しく整え毛穴詰まり・黒ずみにアプローチ。皮膚科医推奨の実績を持つ本格角質ケアブランド。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/TAKAMI%2B%E3%82%BF%E3%82%AB%E3%83%9F%2B%E3%82%B9%E3%82%AD%E3%83%B3%E3%83%94%E3%83%BC%E3%83%AB/' },
 
+    nyx: { name:'NYX Professional Makeup', region:'🇺🇸 US', maker:'L\'Oréal', price:'¥1,000〜¥3,000', stars:4, tag:'プチプラ', isNew:true, key:'マットフィニッシュ成分・長持ち色素技術', series:'エピックインクライナー・ソフトマットリップクリーム', step:'STEP5メイク', note:'Z世代・プチプラプロクオリティの代表格', reason:'ロレアル傘下のプチプラメイクブランド。プロ仕様の発色・長持ち処方をドラッグストア価格で提供し、Z世代からSNSでの支持が厚い。トレンドカラーの展開スピードも速い。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/NYX%2B%E3%83%97%E3%83%AD%E3%83%95%E3%82%A7%E3%83%83%E3%82%B7%E3%83%A7%E3%83%8A%E3%83%AB/' },
+    urbandecay: { name:'Urban Decay(アーバンディケイ)', region:'🇺🇸 US', maker:'L\'Oréal', price:'¥3,000〜¥6,000', stars:4, tag:'プレステージ', isNew:true, key:'高発色成分・プライマー技術・長時間持続', series:'オールナイターセッティングスプレー・ネイキッドパレット', step:'STEP5メイク', note:'エッジ系・トレンドカラー訴求のプレステージブランド', reason:'ロレアル傘下のエッジの効いたプレステージメイクブランド。高発色顔料とプライマー技術による長時間持続処方が特徴で、トレンドカラーを大胆に取り入れたい方に支持されている。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/Urban%2BDecay%2B%E3%82%A2%E3%83%BC%E3%83%90%E3%83%B3%E3%83%87%E3%82%A3%E3%82%B1%E3%82%A4/' },
+    benefit: { name:'Benefit Cosmetics(ベネフィット)', region:'🇺🇸 US', maker:'LVMH', price:'¥3,000〜¥6,000', stars:4, tag:'プレステージ', isNew:true, key:'ポアレスプライマー成分・眉用固定成分', series:'ポアフェッショナル・ガイミー ブロウ', step:'STEP5メイク', note:'ユーモア×ポジティブブランド戦略の毛穴・眉メイク定番', reason:'LVMH傘下のプレステージメイクブランド。毛穴カバーのプライマーと眉メイクの分野で高い実績を持ち、ポジティブで遊び心のあるブランド世界観がファンを獲得している。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/Benefit%2B%E3%83%99%E3%83%8D%E3%83%95%E3%82%A3%E3%83%83%E3%83%88/' },
+    elegance: { name:'エレガンス コスメティクス', region:'🇯🇵 JP', maker:'エレガンス コスメティクス', price:'¥5,000〜¥15,000', stars:4, tag:'プレステージ', isNew:true, key:'保湿成分・発色持続成分・UV', series:'ルフレクレアテュール・コフレドールプレステージ', step:'STEP5メイク', note:'百貨店プレステージメイクの定番ブランド', reason:'日本の百貨店チャネルで長年支持されるプレステージメイクブランド。保湿成分配合で崩れにくい発色持続処方が特徴で、上品な仕上がりを求める大人世代に定評がある。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E3%82%A8%E3%83%AC%E3%82%AC%E3%83%B3%E3%82%B9%2B%E3%82%B3%E3%82%B9%E3%83%A1%E3%83%86%E3%82%A3%E3%82%AF%E3%82%B9/' },
+    ysl: { name:'YSL Beauty(イヴ・サンローラン)', region:'🇪🇺 EU', maker:'L\'Oréal', price:'¥5,000〜¥12,000', stars:5, tag:'プレステージ', isNew:true, key:'ラディアントタッチ美容成分・ルージュピュールクチュール処方(スキンケア成分80%)', series:'ラディアントタッチ・ルージュピュールクチュール', step:'STEP5メイク', note:'クチュールビューティ戦略×360度メディア展開のラグジュアリーブランド', reason:'ロレアル傘下のフレンチクチュールブランド。イルミネーター美容液「ラディアントタッチ」は発売以来のロングセラーで、口紅もスキンケア成分を約80%配合するなど美容液的な処方設計が特徴。Instagram公式アカウントは1300万フォロワー超。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E3%82%A4%E3%83%B4%E3%83%BB%E3%82%B5%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%A9%E3%83%B3%2B%E3%83%A9%E3%83%87%E3%82%A3%E3%82%A2%E3%83%B3%E3%83%88%E3%82%BF%E3%83%83%E3%83%81/' },
+    duocosme: { name:'DUO(デュオ)', region:'🇯🇵 JP', maker:'プレミアアンチエイジング', price:'¥3,000〜¥4,000', stars:4, tag:'クレンジング特化', isNew:true, key:'独自うるおいベール技術・スキンケア成分約80%配合クレンジングバーム', series:'ザ クレンジングバーム・ザ クレンジングバームEX', step:'STEP0クレンジング', note:'クレンジング売上上位の常連・15周年リニューアル', reason:'クレンジング・洗顔・角質ケア・マッサージ・トリートメントの5役を1つに凝縮したクレンジングバームが看板商品。スキンケア成分を約80%配合し、落としながら整えるエイジングケア発想でリニューアルを重ねながら支持を継続している。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/DUO%2B%E3%82%B6%2B%E3%82%AF%E3%83%AC%E3%83%B3%E3%82%B8%E3%83%B3%E3%82%B0%E3%83%90%E3%83%BC%E3%83%A0/' },
+    cezanne: { name:'セザンヌ(CEZANNE)', region:'🇯🇵 JP', maker:'セザンヌ化粧品', price:'¥300〜¥1,000', stars:5, tag:'プチプラ', isNew:true, key:'皮脂吸着成分・毛穴レスフィックス技術', series:'皮脂テカリ防止下地・パールグロウハイライト', step:'STEP5ベースメイク', note:'全品750円前後の低価格×SNS・アットコスメ口コミ拡散の国民的プチプラブランド', reason:'1964年創業、雑貨を除く全品が日本製の老舗プチプラブランド。皮脂吸着・毛穴レスフィックス処方の下地やハイライトがSNS・アットコスメで繰り返し話題になり、世代を問わず定番として定着している。', buyUrl:'https://hb.afl.rakuten.co.jp/hgc/50e535ae.92c750d3.50e535af.a2fe53a8/?pc=https://search.rakuten.co.jp/search/mall/%E3%82%BB%E3%82%B6%E3%83%B3%E3%83%8C%2BCEZANNE%2B%E5%8C%96%E7%B2%A7%E4%B8%8B%E5%9C%B0/' },
+
   },
   ingredients: {
     dry:       { good: ['セラミド','ヒアルロン酸','グリシリン','スクワラン','シアバター','プロテオグリカン酸'], avoid: ['アルコール','サリチル酸','強いピーリング'], trend: ['プロテオグリカン酸','ペプチド','エクソソーム'] },
@@ -541,9 +558,9 @@ function showResult() {
   let brandIds = [];
   try { brandIds = DB.brands[skin][concern][pref]; } catch(e) { brandIds = ['hadalabo','cosrx','theordinary']; }
   const budgetFilter = {
-    under1500: ['hadalabo','biore','muji','muji_clear','muji_white','cosrx','anua','somebymi','theordinary','keshimin','curel','naturie','canmake','dejavu','opera','melanocc','chifure','nivea','etude'],
-    '1500to5000': ['hadalabo','curel','minon','lrp','cerave','theordinary','cosrx','anua','laneige','somebymi','transino','iope','missha','tonymoly','fancl','orbis','muji','muji_clear','muji_white','muji_age','adryS','hifmid','nov','locobace','arouge','obagi','innisfree','dhc','etvos','opera','canmake','naturie','dejavu','melanocc','dermalaser','vtcosmetics','mediheal','ihada','lits','bcl_kansosan','detclear','torriden','byur','neutrogena','nivea','loreal','chifure','skinaqua','etude'],
-    '5000to15000': ['obagi','pola','shiseido','esteelauder','decorte','clinique','lrp','iope','sulwhasoo','fancl','orbis','mac','nars','adryS','drcilabo','mimc','johnmasters','aesop','etvos','decencia','ayura','domohrun','dprogram','ipsa','yunth','medicube','astalift','kose','kanebo','eucerin','loreal','lancome','sofina_ip','dalba','takami','tarte','rare_beauty','huda_beauty','bobbi_b','charlotte_t'],
+    under1500: ['hadalabo','biore','muji','muji_clear','muji_white','cosrx','anua','somebymi','theordinary','keshimin','curel','naturie','canmake','dejavu','opera','melanocc','chifure','nivea','etude','cezanne','nyx'],
+    '1500to5000': ['hadalabo','curel','minon','lrp','cerave','theordinary','cosrx','anua','laneige','somebymi','transino','iope','missha','tonymoly','fancl','orbis','muji','muji_clear','muji_white','muji_age','adryS','hifmid','nov','locobace','arouge','obagi','innisfree','dhc','etvos','opera','canmake','naturie','dejavu','melanocc','dermalaser','vtcosmetics','mediheal','ihada','lits','bcl_kansosan','detclear','torriden','byur','neutrogena','nivea','loreal','chifure','skinaqua','etude','nyx','duocosme'],
+    '5000to15000': ['obagi','pola','shiseido','esteelauder','decorte','clinique','lrp','iope','sulwhasoo','fancl','orbis','mac','nars','adryS','drcilabo','mimc','johnmasters','aesop','etvos','decencia','ayura','domohrun','dprogram','ipsa','yunth','medicube','astalift','kose','kanebo','eucerin','loreal','lancome','sofina_ip','dalba','takami','tarte','rare_beauty','huda_beauty','bobbi_b','charlotte_t','urbandecay','benefit','ysl','elegance'],
     over15000: ['pola','shiseido','esteelauder','decorte','clinique','sk2','albion','sulwhasoo','nars','mac','aesop','haku','cledepeau','lancome','chanel_b','dior_b','kanebo'],
   };
   const allowed = budgetFilter[budget] || Object.keys(DB.profiles);
@@ -598,7 +615,7 @@ function showResult() {
         ${b.tag?`<span class="chip chip-pharma">${b.tag}</span>`:''}
       </div>
       <div class="brand-note"><span class="stars">${'★'.repeat(b.stars)+'☆'.repeat(5-b.stars)}</span>&nbsp;${b.note}</div>
-      ${b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`:''}
+      ${b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:${idx+1},skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`:''}
     </div>`;
   }).join('');
 
