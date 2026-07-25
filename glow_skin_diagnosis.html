@@ -147,6 +147,22 @@
   .retry-btn:hover { background: var(--rose-pale); border-color: var(--rose); }
   .stars { color: var(--gold); font-size: 0.82rem; }
 
+  /* ── SHARE ── */
+  .share-box { background: var(--white); border-radius: 20px; padding: 26px 24px; box-shadow: var(--shadow); border: 1px solid rgba(201,104,122,0.10); margin-top: 24px; text-align: center; }
+  .share-box h3 { font-family: 'Shippori Mincho', serif; font-size: 1.12rem; color: var(--plum-dark); margin-bottom: 6px; }
+  .share-box p { font-size: 0.80rem; color: #877; margin-bottom: 18px; line-height: 1.6; }
+  .share-btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .share-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 14px 6px; border: none; border-radius: 14px; cursor: pointer; text-decoration: none; font-family: 'Zen Kaku Gothic New', sans-serif; font-size: 0.72rem; font-weight: 700; color: #fff; transition: all 0.2s ease; }
+  .share-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(42,31,45,0.18); }
+  .share-btn .share-ic { font-size: 1.25rem; line-height: 1; }
+  .share-x { background: #000; }
+  .share-line { background: #06c755; }
+  .share-pin { background: #e60023; }
+  .share-copy { background: linear-gradient(135deg, var(--plum), var(--rose)); }
+  .share-toast { position: fixed; left: 50%; bottom: 32px; transform: translateX(-50%) translateY(20px); background: var(--plum-dark); color: #fff; padding: 12px 22px; border-radius: 24px; font-size: 0.82rem; font-weight: 700; box-shadow: var(--shadow-lg); opacity: 0; pointer-events: none; transition: all 0.3s ease; z-index: 9999; }
+  .share-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  @media (max-width: 400px) { .share-btn { font-size: 0.68rem; padding: 12px 4px; } }
+
   /* ── RANKING ── */
   .ranking-card { background: var(--white); border-radius: 14px; padding: 16px 18px; margin-bottom: 10px; box-shadow: var(--shadow); border: 1px solid rgba(201,104,122,0.08); display: flex; align-items: flex-start; gap: 12px; }
   .ranking-num { font-family: 'Shippori Mincho', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); min-width: 28px; }
@@ -270,6 +286,18 @@
 
     <div class="section-title">📋 あなたに必要なスキンケアステップ</div>
     <div class="step-guide" id="stepGuide"></div>
+
+    <!-- SHARE BLOCK -->
+    <div class="share-box">
+      <h3>📣 診断結果をシェアする</h3>
+      <p>あなたの結果を友だちにも。<br>この無料AI肌診断を広めてくれると嬉しいです🌸</p>
+      <div class="share-btns">
+        <a href="#" id="shareX" class="share-btn share-x" target="_blank" rel="noopener" onclick="trackEvent('share_click',{method:'x'})"><span class="share-ic">𝕏</span><span>ポスト</span></a>
+        <a href="#" id="shareLine" class="share-btn share-line" target="_blank" rel="noopener" onclick="trackEvent('share_click',{method:'line'})"><span class="share-ic">💬</span><span>LINE</span></a>
+        <a href="#" id="sharePin" class="share-btn share-pin" target="_blank" rel="noopener" onclick="trackEvent('share_click',{method:'pinterest'})"><span class="share-ic">📌</span><span>Pinterest</span></a>
+        <button type="button" class="share-btn share-copy" onclick="copyShareLink()"><span class="share-ic">🔗</span><span>コピー</span></button>
+      </div>
+    </div>
 
     <div class="cta-box">
       <h3>✨ もっと詳しく知りたい方へ</h3>
@@ -562,8 +590,52 @@ bpTitle.style.display = 'none';
 bpCards.innerHTML = '';
 }
 
-document.getElementById('result').classList.add('active');
+// ===== シェア用リンク生成(結果連動) =====
+  (function() {
+    var diagUrl = 'https://j-waga.github.io/glow-skin/glow_skin_diagnosis.html';
+    var skinName = DB.skinLabel[skin] || '';
+    var top1 = (top5[0] && DB.profiles[top5[0]]) ? DB.profiles[top5[0]].name : '';
+    var shareText = '私の肌診断結果は『' + skinName + '』タイプ🌸' + (top1 ? ' イチ推しは『' + top1 + '』！' : '') + ' あなたに合うスキンケアも30秒でわかる無料AI肌診断👇';
+    var tags = 'Glow肌診断,スキンケア';
+    window.__glowShare = { url: diagUrl, text: shareText };
+    var xEl = document.getElementById('shareX');
+    if (xEl) xEl.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(diagUrl) + '&hashtags=' + encodeURIComponent(tags);
+    var lineEl = document.getElementById('shareLine');
+    if (lineEl) lineEl.href = 'https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(diagUrl) + '&text=' + encodeURIComponent(shareText);
+    var pinEl = document.getElementById('sharePin');
+    if (pinEl) pinEl.href = 'https://www.pinterest.com/pin/create/button/?url=' + encodeURIComponent(diagUrl) + '&description=' + encodeURIComponent(shareText);
+  })();
+
+  document.getElementById('result').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== リンクコピー＋トースト =====
+function showShareToast(msg) {
+  var t = document.getElementById('shareToast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2200);
+}
+function copyShareLink() {
+  var data = window.__glowShare || { url: 'https://j-waga.github.io/glow-skin/glow_skin_diagnosis.html', text: '' };
+  var payload = (data.text ? data.text + '\n' : '') + data.url;
+  trackEvent('share_click', { method: 'copy' });
+  function fallback() {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = payload; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      showShareToast('🔗 リンクをコピーしました');
+    } catch(e) { showShareToast('コピーに失敗しました'); }
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(payload).then(function() {
+      showShareToast('🔗 リンクをコピーしました');
+    }).catch(fallback);
+  } else { fallback(); }
 }
 
 function resetDiagnosis() {
@@ -580,5 +652,6 @@ function resetDiagnosis() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
+<div class="share-toast" id="shareToast"></div>
 </body>
 </html>
