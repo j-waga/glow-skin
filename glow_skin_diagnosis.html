@@ -15,18 +15,18 @@
 <title>無料肌診断｜メーカーを問わず、あなたの肌に合うコスメが見つかる - Glow</title>
 <meta property="og:title" content="【無料・30秒】肌タイプ診断 | 乾燥・脂性・混合・敏感肌を診断" />
 <meta property="og:description" content="質問に答えるだけで30秒で肌タイプ診断。112ブランド対応・楽天購入リンク付き・完全無料。登録不要・全デバイス対応。" />
-<meta property="og:image" content="https://j-waga.github.io/glow-skin/ogp_skin_diagnosis.png" />
-<meta property="og:url" content="https://j-waga.github.io/glow-skin/glow_skin_diagnosis.html" />
+<meta property="og:image" content="https://glow.stats-log.net/ogp_skin_diagnosis.png" />
+<meta property="og:url" content="https://glow.stats-log.net/glow_skin_diagnosis.html" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="【無料・30秒】肌タイプ診断 | 乾燥・脂性・混合・敏感肌を診断" />
 <meta name="twitter:description" content="質問に答えるだけで30秒で肌タイプ診断。112ブランド対応・楽天購入リンク付き・完全無料。" />
-<meta name="twitter:image" content="https://j-waga.github.io/glow-skin/ogp_skin_diagnosis.png" />
+<meta name="twitter:image" content="https://glow.stats-log.net/ogp_skin_diagnosis.png" />
 <!-- SEO -->
 <meta name="description" content="メーカーを問わず、あなたの肌に合うコスメが見つかる無料肌診断。乾燥・脂性・混合・敏感肌・インナードライ・エイジングの6タイプを30秒で判定し、日本・韓国・米国・欧州の112ブランドから成分と肌科学のデータで最適な5つを提案します。登録不要・完全無料。" />
 <meta name="robots" content="index,follow" />
 <meta name="keywords" content="肌診断,スキンケア診断,肌タイプ診断,無料診断,乾燥肌,脂性肌,混合肌,敏感肌,インナードライ,エイジングケア,韓国コスメ,プチプラ,デパコス" />
-<link rel="canonical" href="https://j-waga.github.io/glow-skin/glow_skin_diagnosis.html" />
+<link rel="canonical" href="https://glow.stats-log.net/glow_skin_diagnosis.html" />
 <meta name="format-detection" content="telephone=no" />
 <!-- 構造化データ: WebApplication -->
 <script type="application/ld+json">
@@ -34,13 +34,13 @@
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "Glow 無料肌診断",
-  "url": "https://j-waga.github.io/glow-skin/glow_skin_diagnosis.html",
+  "url": "https://glow.stats-log.net/glow_skin_diagnosis.html",
   "description": "乾燥・脂性・混合・敏感肌など6つの肌タイプを30秒で無料診断。肌悩み・こだわり・予算に合わせて112ブランドから最適なスキンケアを提案する無料AI肌診断ツール。",
   "applicationCategory": "LifestyleApplication",
   "operatingSystem": "All",
   "inLanguage": "ja",
   "browserRequirements": "Requires JavaScript",
-  "image": "https://j-waga.github.io/glow-skin/ogp_skin_diagnosis.png",
+  "image": "https://glow.stats-log.net/ogp_skin_diagnosis.png",
   "isAccessibleForFree": true,
   "offers": {
     "@type": "Offer",
@@ -776,7 +776,7 @@ bpCards.innerHTML = '';
 
 // ===== シェア用リンク生成(結果連動) =====
   (function() {
-    var diagUrl = 'https://j-waga.github.io/glow-skin/glow_skin_diagnosis.html';
+    var diagUrl = 'https://glow.stats-log.net/glow_skin_diagnosis.html';
     var skinName = DB.skinLabel[skin] || '';
     var top1 = (top5[0] && DB.profiles[top5[0]]) ? DB.profiles[top5[0]].name : '';
     var shareText = '私の肌診断結果は『' + skinName + '』タイプ🌸' + (top1 ? ' イチ推しは『' + top1 + '』！' : '') + ' あなたに合うスキンケアも30秒でわかる無料AI肌診断👇';
@@ -803,7 +803,7 @@ function showShareToast(msg) {
   setTimeout(function() { t.classList.remove('show'); }, 2200);
 }
 function copyShareLink() {
-  var data = window.__glowShare || { url: 'https://j-waga.github.io/glow-skin/glow_skin_diagnosis.html', text: '' };
+  var data = window.__glowShare || { url: 'https://glow.stats-log.net/glow_skin_diagnosis.html', text: '' };
   var payload = (data.text ? data.text + '\n' : '') + data.url;
   trackEvent('share_click', { method: 'copy' });
   function fallback() {
