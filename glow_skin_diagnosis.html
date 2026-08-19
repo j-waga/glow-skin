@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23c0392b'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23fff' font-family='serif'%3EG%3C/text%3E%3C/svg%3E" />
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WZ12Z2ZD7D"></script>
   <script>
@@ -273,9 +274,44 @@
   .site-footer .disc { max-width: 620px; margin: 0 auto; font-size: 0.71rem; line-height: 1.85; opacity: 0.72; }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
+
+<style id="glow-global-css">
+.gnav-bar{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);width:100vw;position:sticky;top:0;z-index:9999;background:rgba(255,255,255,.96);
+ -webkit-backdrop-filter:saturate(180%) blur(8px);backdrop-filter:saturate(180%) blur(8px);
+ border-bottom:1px solid #ece7e2;font-family:'Zen Kaku Gothic New',-apple-system,BlinkMacSystemFont,'Hiragino Sans',sans-serif}
+.gnav-in{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:4px;padding:0 12px;height:52px}
+.gnav-logo{font-family:'Shippori Mincho',serif;font-size:17px;font-weight:600;color:#c0392b;
+ text-decoration:none;letter-spacing:.06em;margin-right:auto;white-space:nowrap;padding:6px 2px}
+.gnav-logo span{color:#c9a86c;margin-right:3px}
+.gnav-links{display:flex;gap:2px;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none}
+.gnav-links::-webkit-scrollbar{display:none}
+.gnav-links a{font-size:12.5px;color:#5a544e;text-decoration:none;padding:8px 10px;border-radius:8px;
+ white-space:nowrap;transition:background .18s,color .18s}
+.gnav-links a:hover{background:#faf3f2;color:#c0392b}
+.gnav-links a[aria-current="page"]{color:#c0392b;font-weight:700;background:#fdf2f0}
+@media(max-width:600px){
+ .gnav-in{height:48px;padding:0 8px}
+ .gnav-logo{font-size:15px}
+ .gnav-links a{font-size:11.5px;padding:7px 7px}
+}
+.gfoot{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);width:100vw;background:#faf8f6;border-top:1px solid #ece7e2;margin-top:48px;padding:34px 18px 30px;
+ font-family:'Zen Kaku Gothic New',-apple-system,BlinkMacSystemFont,'Hiragino Sans',sans-serif;
+ font-size:12px;line-height:1.9;color:#6b645d;text-align:center}
+.gfoot-in{max-width:760px;margin:0 auto}
+.gfoot-brand{font-family:'Shippori Mincho',serif;font-size:16px;color:#c0392b;letter-spacing:.06em;margin-bottom:4px}
+.gfoot-tag{font-size:11.5px;color:#8a827a;margin-bottom:16px}
+.gfoot-links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;margin-bottom:16px}
+.gfoot-links a{color:#5a544e;text-decoration:none;border-bottom:1px solid #ded7d0;padding-bottom:1px}
+.gfoot-links a:hover{color:#c0392b;border-color:#c0392b}
+.gfoot-note{font-size:11px;line-height:1.85;color:#8a827a;text-align:left;
+ background:#fff;border:1px solid #ece7e2;border-radius:10px;padding:13px 15px;margin-bottom:16px}
+.gfoot-note b{color:#6b645d}
+.gfoot-cr{font-size:11px;color:#a29a92}
+</style>
 </head>
 
 <body>
+<header class="gnav-bar"><div class="gnav-in"><a class="gnav-logo" href="/"><span>&#10022;</span>Glow</a><nav class="gnav-links" aria-label="サイト内メニュー"><a href="/">ホーム</a><a href="/glow_skin_diagnosis.html" aria-current="page">無料肌診断</a><a href="/glow_ranking.html">特集ランキング</a><a href="/glow_cosme_card_maker_v8.html">カードメーカー</a><a href="/about.html">運営者情報</a></nav></div></header>
 
 <header>
   <div class="badge">✨ 無料・30秒診断</div>
@@ -465,16 +501,6 @@
     </div>
   </section>
 </main>
-
-<footer class="site-footer">
-  <nav>
-    <a href="about.html">運営者情報・免責事項</a>
-    <a href="privacy.html">プライバシーポリシー</a>
-    <a href="https://x.com/stats_log_net" target="_blank" rel="noopener">公式X</a>
-  </nav>
-  <p class="disc">本サイトの診断結果は、公開されている成分情報と一般的な皮膚科学の考え方にもとづく参考情報であり、医学的な診断・治療を目的としたものではありません。肌トラブルが続く場合は皮膚科専門医にご相談ください。<br>本サイトは楽天アフィリエイトプログラムに参加しており、商品リンクの一部から収益を得ています（PR）。</p>
-  <p style="margin-top:14px;opacity:0.5;">&copy; 2026 Glow 無料肌診断</p>
-</footer>
 
 <script>
 const answers = { skin: '', concern: '', pref: '', budget: '' };
@@ -837,5 +863,21 @@ function resetDiagnosis() {
 }
 </script>
 <div class="share-toast" id="shareToast"></div>
+<footer class="gfoot"><div class="gfoot-in">
+<div class="gfoot-brand">&#10022; Glow</div>
+<div class="gfoot-tag">国内外115ブランドを横断集計する無料の肌診断サイト</div>
+<div class="gfoot-links">
+<a href="/">ホーム</a>
+<a href="/glow_skin_diagnosis.html">無料肌診断</a>
+<a href="/glow_ranking.html">特集ランキング</a>
+<a href="/glow_cosme_card_maker_v8.html">カードメーカー</a>
+<a href="/about.html">運営者情報・免責事項</a>
+<a href="/privacy.html">プライバシーポリシー</a>
+<a href="https://x.com/stats_log_net" target="_blank" rel="me noopener">X：@stats_log_net</a>
+</div>
+<p class="gfoot-note"><b>&#9642; 広告について</b>／本サイトは楽天アフィリエイトプログラム等に参加しており、商品リンクの一部から収益を得ています（PR）。報酬の有無は掲載順位・評価に影響していません。<br>
+<b>&#9642; 免責事項</b>／掲載内容は公開されている成分情報と一般的な皮膚科学の考え方にもとづく参考情報であり、医学的な診断・治療を目的としたものではありません。肌トラブルが続く場合は皮膚科専門医にご相談ください。価格・ランキングは各ページに記載の調査日時点のものです。</p>
+<div class="gfoot-cr">&copy; 2026 Glow</div>
+</div></footer>
 </body>
 </html>
