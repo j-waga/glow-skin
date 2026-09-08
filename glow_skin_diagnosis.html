@@ -726,7 +726,7 @@ budgetPicks = brandIds.filter(id => DB.profiles[id] && cheaperAllowed.has(id) &&
         ${b.tag?`<span class="chip chip-pharma">${b.tag}</span>`:''}
       </div>
       <div class="brand-note"><span class="stars">${'★'.repeat(b.stars)+'☆'.repeat(5-b.stars)}</span>&nbsp;${b.note}</div>
-      ${b.comingSoon?`<div style="display:inline-block;margin-top:10px;padding:8px 18px;background:linear-gradient(90deg,#c9a86c,#8a6d3b);color:#fff;border-radius:20px;font-size:0.80rem;font-weight:700;">🔜 ${b.comingSoon}｜発売後に購入リンクをご案内します</div>`:(b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:${idx+1},skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`:'')}
+      ${b.comingSoon?`<div style="display:inline-block;margin-top:10px;padding:8px 18px;background:linear-gradient(90deg,#c9a86c,#8a6d3b);color:#fff;border-radius:20px;font-size:0.80rem;font-weight:700;">🔜 ${b.comingSoon}｜発売後に購入リンクをご案内します</div>`:(b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="sponsored nofollow noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:${idx+1},skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`:'')}
     </div>`;
   }).join('');
 
@@ -798,7 +798,7 @@ return `<div class="brand-card" style="border-left:3px solid var(--sage);">
 </div>
 <div class="brand-reason">${b.reason}</div>
 <div class="brand-note">💡 今回選んだ予算帯より手頃な価格で、同じ好みの方に人気の一品です</div>
-${b.comingSoon?`<div style="display:inline-block;margin-top:10px;padding:8px 18px;background:linear-gradient(90deg,#c9a86c,#8a6d3b);color:#fff;border-radius:20px;font-size:0.80rem;font-weight:700;">🔜 ${b.comingSoon}｜発売後に購入リンクをご案内します</div>`:(b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:'budget_pick',skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`:'')}
+${b.comingSoon?`<div style="display:inline-block;margin-top:10px;padding:8px 18px;background:linear-gradient(90deg,#c9a86c,#8a6d3b);color:#fff;border-radius:20px;font-size:0.80rem;font-weight:700;">🔜 ${b.comingSoon}｜発売後に購入リンクをご案内します</div>`:(b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="sponsored nofollow noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:'budget_pick',skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`:'')}
 </div>`;
 }).join('');
 } else {
