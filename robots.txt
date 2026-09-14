@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /sync_brand_count.py
 
 Sitemap: https://glow.stats-log.net/sitemap.xml
