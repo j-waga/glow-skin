@@ -1,0 +1,42 @@
+# ブランド数を DB.profiles から全ページへ流し込む
+# ⛔️人が書き換えるのは glow_skin_diagnosis.html の profiles だけ。他は触らない。
+name: sync-brand-count
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'glow_skin_diagnosis.html'
+      - 'sync_brand_count.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-brand-count
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ブランド数を数え直して全ページへ反映
+        run: python3 sync_brand_count.py
+
+      - name: 差分があればコミット
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "★ 変更なし（既に一致）"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Sync brand count from DB.profiles"
+          git push
+          echo "★ 反映した差分:"
+          git show --stat --oneline HEAD
