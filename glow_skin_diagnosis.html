@@ -868,6 +868,67 @@ function resetDiagnosis() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
+<!-- GG-PRICES v1: prices.json があれば価格帯の下に実売1点を足す。無い・壊れている・古い場合は何もしない -->
+<style>.brand-header:has(.gg-live){flex-wrap:wrap}.brand-price:has(.gg-live){flex-basis:100%;margin-top:8px;white-space:normal}.brand-price .gg-live{display:block;margin-top:4px;padding-top:4px;border-top:1px dashed currentColor;font-size:.74rem;font-weight:500;line-height:1.45}
+.brand-price .gg-live b{font-weight:700}.brand-price .gg-live small{display:block;font-size:.66rem;opacity:.8}.brand-price .gg-live a{color:inherit}.brand-price .gg-note{display:inline-block;margin-right:6px;padding:0 6px;border:1px solid currentColor;border-radius:6px;font-style:normal;font-size:.64rem;font-weight:700}</style>
+<script>
+(function () {
+  'use strict';
+  var MAX_AGE_MS = 14 * 864e5, MAX_FUTURE_MS = 864e5;
+  function esc(v) {
+    return String(v).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function txt(v, max) {
+    return (typeof v === 'string' && v.trim() && v.length <= max) ? v.trim() : null;
+  }
+  function apply(data) {
+    if (typeof DB === 'undefined' || !DB || !DB.profiles) return 0;                 // [6]
+    if (!data || typeof data !== 'object' || data.schema !== 1) return 0;           // [2]
+    var items = data.items;
+    if (!items || typeof items !== 'object' || Array.isArray(items)) return 0;
+    var t = (typeof data.generated_at === 'string') ? Date.parse(data.generated_at) : NaN;
+    if (!isFinite(t)) return 0;                                                     // [3]
+    var now = Date.now();
+    if (now - t > MAX_AGE_MS) return 0;                                             // [4]
+    if (t - now > MAX_FUTURE_MS) return 0;                                          // [5]
+    var n = 0;
+    Object.keys(items).forEach(function (id) {
+      try {
+        if (!Object.prototype.hasOwnProperty.call(DB.profiles, id)) return;
+        var p = DB.profiles[id], live = items[id] && items[id].live;
+        if (!p || !live || typeof p.price !== 'string') return;
+        var product = txt(live.product, 80), media = txt(live.media, 12), at = txt(live.at_label, 24);
+        var total = live.total;
+        if (!product || !media || !at) return;
+        if (typeof total !== 'number' || !isFinite(total) || total <= 0 || total >= 1e7) return;
+        if (p.__ggBand === undefined) p.__ggBand = p.price;                        // 帯は残す
+        var yen = Math.round(total).toLocaleString('ja-JP') + '円';
+        var head = esc(media) + ' <b>' + yen + '</b>（送料込）';
+        var url = (typeof live.url === 'string' && /^https:\/\/[^\s"'<>]+$/.test(live.url)) ? live.url : '';
+        if (url) head = '<a href="' + esc(url) + '" target="_blank" rel="sponsored nofollow noopener">' + head + '</a>';
+        // 備考：詰め替え等は除外せず明記する。商品名に詰め替えの語があれば note が空でも自動で付ける
+        var note = txt(live.note, 20);
+        if (!note && /詰め?替え?|つめかえ|レフィル|リフィル|refill/i.test(product)) note = '詰め替え用';
+        if (note) head = '<i class="gg-note">' + esc(note) + '</i>' + head;
+        p.price = p.__ggBand + '<span class="gg-live">' + head +
+          '<small>' + esc(product) + '／' + esc(at) + '時点</small></span>';
+        n++;
+      } catch (e) { /* その1件だけ捨てる */ }
+    });
+    return n;
+  }
+  window.__ggPricesApply = apply;
+  try {
+    if (!window.fetch) return;
+    fetch('/prices.json', { cache: 'no-cache' })
+      .then(function (r) { return r.ok ? r.json() : null; })                      // [1]
+      .then(function (d) { window.__ggPricesApplied = apply(d); })
+      .catch(function () { window.__ggPricesApplied = 0; });
+  } catch (e) {}
+})();
+</script>
 <div class="share-toast" id="shareToast"></div>
 <footer class="gfoot"><div class="gfoot-in">
 <div class="gfoot-brand">✦ Glow</div>
