@@ -264,6 +264,12 @@
   .guide { margin-top: 56px; }
   .guide > h2 { font-family: 'Shippori Mincho', serif; font-size: 1.28rem; color: var(--plum-dark); letter-spacing: 0.04em; padding-bottom: 12px; border-bottom: 2px solid var(--rose-light); margin-bottom: 8px; }
   .guide > .lede { font-size: 0.84rem; line-height: 1.9; color: #5b4a5c; margin: 14px 0 24px; }
+
+  /* ── よくある質問（FAQPage構造化データと対になる本文） ── */
+  .guide .faq { background: var(--white); border-radius: 14px; padding: 20px 22px; margin: 0; box-shadow: var(--shadow); border-left: 3px solid var(--rose); }
+  .guide .faq dt { font-family: 'Shippori Mincho', serif; font-size: 0.95rem; font-weight: 700; color: var(--plum-dark); margin-top: 18px; }
+  .guide .faq dt:first-child { margin-top: 0; }
+  .guide .faq dd { margin: 8px 0 0; font-size: 0.84rem; line-height: 1.9; color: #5b4a5c; }
   .guide-item { background: var(--white); border-radius: 14px; padding: 20px 22px; margin-bottom: 12px; box-shadow: var(--shadow); border-left: 3px solid var(--rose); }
   .guide-item h3 { font-family: 'Shippori Mincho', serif; font-size: 1.02rem; color: var(--plum-dark); margin-bottom: 4px; }
   .guide-item .tagline { font-size: 0.72rem; font-weight: 700; color: var(--rose); letter-spacing: 0.05em; margin-bottom: 10px; }
@@ -505,6 +511,24 @@
       <p>加齢による変化は保湿だけでは戻せないため、目的別に有効成分を足していく考え方になります。ただし攻めの成分（レチノール、高濃度ビタミンC、AHA）を同時に重ねると、かえって肌荒れを起こします。1つずつ、低濃度から、夜だけ、という段階的な導入が安全です。そして紫外線対策をしないままのエイジングケアは、穴の空いたバケツに水を注ぐようなものです。</p>
       <p class="ing"><b>向く成分：</b>レチノール／レチナール、ナイアシンアミド、ビタミンC誘導体、ペプチド、ニールワン<br><b>必須：</b>日焼け止め（曇りでも／室内の窓際でも）</p>
     </div>
+  </section>
+
+  <!-- FAQ：構造化データ(FAQPage)と対になる本文。ここを変えたらJSON-LDも作り直す -->
+  <section class="guide" id="faq">
+    <h2>よくある質問</h2>
+    <dl class="faq">
+      <dt>この肌診断は無料ですか？</dt>
+      <dd>はい、完全無料でご利用いただけます。会員登録やメールアドレスの入力は不要で、30秒・全デバイス対応です。</dd>
+
+      <dt>どんな肌タイプを診断できますか？</dt>
+      <dd>乾燥肌・脂性肌・混合肌・敏感肌・インナードライ・エイジング肌の6タイプに対応。肌悩み・こだわり・予算と組み合わせて、国内外のブランドから最適なスキンケアを提案します。</dd>
+
+      <dt>診断結果でおすすめされた商品は購入できますか？</dt>
+      <dd>各ブランドに楽天市場の検索リンクが付いており、そこから購入できます（一部アフィリエイトリンクを含むPRです）。</dd>
+
+      <dt>個人情報の登録は必要ですか？</dt>
+      <dd>不要です。アカウント作成やメール登録なしで、その場ですぐに診断できます。</dd>
+    </dl>
   </section>
 </main>
 
