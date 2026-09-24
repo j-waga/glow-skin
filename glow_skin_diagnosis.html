@@ -938,12 +938,13 @@ function resetDiagnosis() {
         if (typeof total !== 'number' || !isFinite(total) || total <= 0 || total >= 1e7) return;
         if (p.__ggBand === undefined) p.__ggBand = p.price;                        // 帯は残す
         var yen = Math.round(total).toLocaleString('ja-JP') + '円';
-        var head = esc(media) + ' <b>' + yen + '</b>（送料込）';
-        var url = (typeof live.url === 'string' && /^https:\/\/[^\s"'<>]+$/.test(live.url)) ? live.url : '';
-        if (url) head = '<a href="' + esc(url) + '" target="_blank" rel="sponsored nofollow noopener">' + head + '</a>';
         // 備考：詰め替え等は除外せず明記する。商品名に詰め替えの語があれば note が空でも自動で付ける
         var note = txt(live.note, 20);
         if (!note && /詰め?替え?|つめかえ|レフィル|リフィル|refill/i.test(product)) note = '詰め替え用';
+        // note に「送料別」を含む場合は（送料込）を付けない（送料別のはずが送料込と出る矛盾を防ぐ）
+        var head = esc(media) + ' <b>' + yen + '</b>' + (note && /送料別/.test(note) ? '' : '（送料込）');
+        var url = (typeof live.url === 'string' && /^https:\/\/[^\s"'<>]+$/.test(live.url)) ? live.url : '';
+        if (url) head = '<a href="' + esc(url) + '" target="_blank" rel="sponsored nofollow noopener">' + head + '</a>';
         if (note) head = '<i class="gg-note">' + esc(note) + '</i>' + head;
         p.price = p.__ggBand + '<span class="gg-live">' + head +
           '<small>' + esc(product) + '／' + esc(at) + '時点</small></span>';
