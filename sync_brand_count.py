@@ -22,7 +22,7 @@
 import argparse, collections, datetime, json, re, sys, pathlib
 
 SRC = "glow_skin_diagnosis.html"
-TARGETS = ["index.html", "about.html", "glow_skin_diagnosis.html", "glow_type_dry.html"]
+TARGETS = ["index.html", "about.html", "glow_skin_diagnosis.html", "glow_type_dry.html", "glow_type_dry_sensitive.html"]
 
 REGION_JA = {"JP": "日本", "KR": "韓国", "US": "アメリカ", "EU": "ヨーロッパ", "AU": "オーストラリア"}
 REGION_ORDER = ["JP", "KR", "US", "EU", "AU"]
