@@ -915,9 +915,11 @@ function resetDiagnosis() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
-<!-- GG-PRICES v1: prices.json があれば価格帯の下に実売1点を足す。無い・壊れている・古い場合は何もしない -->
+<!-- GG-PRICES v2: prices.json があれば価格帯の下に実売1点を足す。無い・壊れている・古い場合は何もしない
+     v2 追加：shop（店名）／prev（先週の総額）／prev_note（先週比の但し書き）。いずれも任意で、無ければ出さない -->
 <style>.brand-header:has(.gg-live){flex-wrap:wrap}.brand-price:has(.gg-live){flex-basis:100%;margin-top:8px;white-space:normal}.brand-price .gg-live{display:block;margin-top:4px;padding-top:4px;border-top:1px dashed currentColor;font-size:.74rem;font-weight:500;line-height:1.45}
-.brand-price .gg-live b{font-weight:700}.brand-price .gg-live small{display:block;font-size:.66rem;opacity:.8}.brand-price .gg-live a{color:inherit}.brand-price .gg-note{display:inline-block;margin-right:6px;padding:0 6px;border:1px solid currentColor;border-radius:6px;font-style:normal;font-size:.64rem;font-weight:700}</style>
+.brand-price .gg-live b{font-weight:700}.brand-price .gg-live small{display:block;font-size:.66rem;opacity:.8}.brand-price .gg-live a{color:inherit}.brand-price .gg-note{display:inline-block;margin-right:6px;padding:0 6px;border:1px solid currentColor;border-radius:6px;font-style:normal;font-size:.64rem;font-weight:700}
+.brand-price .gg-shop{display:block;font-size:.7rem;font-weight:700}.brand-price .gg-diff{display:inline-block;margin-top:2px;padding:1px 7px;border:1px solid currentColor;border-radius:6px;font-size:.64rem;font-weight:700;opacity:.9}</style>
 <script>
 (function () {
   'use strict';
@@ -956,12 +958,31 @@ function resetDiagnosis() {
         var note = txt(live.note, 20);
         if (!note && /詰め?替え?|つめかえ|レフィル|リフィル|refill/i.test(product)) note = '詰め替え用';
         // note に「送料別」を含む場合は（送料込）を付けない（送料別のはずが送料込と出る矛盾を防ぐ）
-        var head = esc(media) + ' <b>' + yen + '</b>' + (note && /送料別/.test(note) ? '' : '（送料込）');
+        var head = 'いま最安は ' + esc(media) + ' <b>' + yen + '</b>' + (note && /送料別/.test(note) ? '' : '（送料込）');
         var url = (typeof live.url === 'string' && /^https:\/\/[^\s"'<>]+$/.test(live.url)) ? live.url : '';
         if (url) head = '<a href="' + esc(url) + '" target="_blank" rel="sponsored nofollow noopener">' + head + '</a>';
         if (note) head = '<i class="gg-note">' + esc(note) + '</i>' + head;
+        // v2-a 店名。これが無いと「どの店で買うのか」が分からない。無ければ出さないだけ
+        var shop = txt(live.shop, 30);
+        if (shop) {
+          var shopTxt = '<span class="gg-shop">' + esc(shop) + (url ? ' →' : '') + '</span>';
+          head += url ? '<a href="' + esc(url) + '" target="_blank" rel="sponsored nofollow noopener">' + shopTxt + '</a>' : shopTxt;
+        }
+        // v2-b 先週比。⛔️値上げ/値下げの「理由」は機械で判定しない。事実（先週いくらだったか）だけ出す
+        var prev = live.prev, diff = '';
+        if (typeof prev === 'number' && isFinite(prev) && prev > 0 && prev < 1e7) {
+          var d = Math.round(total) - Math.round(prev);
+          var pYen = Math.round(prev).toLocaleString('ja-JP') + '円';
+          var dYen = Math.abs(d).toLocaleString('ja-JP') + '円';
+          diff = (d === 0) ? '先週と同じ値段です'
+               : (d < 0) ? '先週は ' + pYen + '／いまのほうが ' + dYen + '安い'
+                         : '先週は ' + pYen + '／いまのほうが ' + dYen + '高い';
+          var pn = txt(live.prev_note, 24);            // 理由は渡された文面をそのまま出す
+          if (pn) diff += '（' + esc(pn) + '）';
+          diff = '<span class="gg-diff">' + diff + '</span>';
+        }
         p.price = p.__ggBand + '<span class="gg-live">' + head +
-          '<small>' + esc(product) + '／' + esc(at) + '時点</small></span>';
+          '<small>' + esc(product) + '／' + esc(at) + '時点' + diff + '</small></span>';
         n++;
       } catch (e) { /* その1件だけ捨てる */ }
     });
