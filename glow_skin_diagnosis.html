@@ -759,7 +759,7 @@ budgetPicks = brandIds.filter(id => DB.profiles[id] && cheaperAllowed.has(id) &&
         ${b.tag?`<span class="chip chip-pharma">${b.tag}</span>`:''}
       </div>
       <div class="brand-note"><span class="stars">${'★'.repeat(b.stars)+'☆'.repeat(5-b.stars)}</span>&nbsp;${b.note}</div>
-      ${b.comingSoon?`<div style="display:inline-block;margin-top:10px;padding:8px 18px;background:linear-gradient(90deg,#c9a86c,#8a6d3b);color:#fff;border-radius:20px;font-size:0.80rem;font-weight:700;">🔜 ${b.comingSoon}｜発売後に購入リンクをご案内します</div>`:(b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="sponsored nofollow noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:${idx+1},skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`:'')}
+      ${b.comingSoon?`<div style="display:inline-block;margin-top:10px;padding:8px 18px;background:linear-gradient(90deg,#c9a86c,#8a6d3b);color:#fff;border-radius:20px;font-size:0.80rem;font-weight:700;">🔜 ${b.comingSoon}｜発売後に購入リンクをご案内します</div>`:(b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="sponsored nofollow noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:${idx+1},link_type:'buy_button',live:${b.__ggLive?1:0},skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`:'')}
     </div>`;
   }).join('');
 
@@ -845,7 +845,7 @@ return `<div class="brand-card" style="border-left:3px solid var(--sage);">
 </div>
 <div class="brand-reason">${b.reason}</div>
 <div class="brand-note">💡 今回選んだ予算帯より手頃な価格で、同じ好みの方に人気の一品です</div>
-${b.comingSoon?`<div style="display:inline-block;margin-top:10px;padding:8px 18px;background:linear-gradient(90deg,#c9a86c,#8a6d3b);color:#fff;border-radius:20px;font-size:0.80rem;font-weight:700;">🔜 ${b.comingSoon}｜発売後に購入リンクをご案内します</div>`:(b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="sponsored nofollow noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:'budget_pick',skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`:'')}
+${b.comingSoon?`<div style="display:inline-block;margin-top:10px;padding:8px 18px;background:linear-gradient(90deg,#c9a86c,#8a6d3b);color:#fff;border-radius:20px;font-size:0.80rem;font-weight:700;">🔜 ${b.comingSoon}｜発売後に購入リンクをご案内します</div>`:(b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="sponsored nofollow noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:'budget_pick',link_type:'buy_button',live:${b.__ggLive?1:0},skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`:'')}
 </div>`;
 }).join('');
 } else {
@@ -960,13 +960,20 @@ function resetDiagnosis() {
         // note に「送料別」を含む場合は（送料込）を付けない（送料別のはずが送料込と出る矛盾を防ぐ）
         var head = 'いま最安は ' + esc(media) + ' <b>' + yen + '</b>' + (note && /送料別/.test(note) ? '' : '（送料込）');
         var url = (typeof live.url === 'string' && /^https:\/\/[^\s"'<>]+$/.test(live.url)) ? live.url : '';
-        if (url) head = '<a href="' + esc(url) + '" target="_blank" rel="sponsored nofollow noopener">' + head + '</a>';
+        // v3-a 実売リンクは計測する。付けないと「本当の商品ページが踏まれたか」が永久に分からない
+        var trk = ' onclick="trackEvent(\'affiliate_click\',{event_category:\'skindiag\',brand_id:\''
+                  + esc(id) + '\',link_type:\'LT\',live:1})"';
+        function aOpen(kind) {
+          return '<a href="' + esc(url) + '" target="_blank" rel="sponsored nofollow noopener"'
+                 + trk.replace('LT', kind) + '>';
+        }
+        if (url) head = aOpen('live_price') + head + '</a>';
         if (note) head = '<i class="gg-note">' + esc(note) + '</i>' + head;
         // v2-a 店名。これが無いと「どの店で買うのか」が分からない。無ければ出さないだけ
         var shop = txt(live.shop, 30);
         if (shop) {
           var shopTxt = '<span class="gg-shop">' + esc(shop) + (url ? ' →' : '') + '</span>';
-          head += url ? '<a href="' + esc(url) + '" target="_blank" rel="sponsored nofollow noopener">' + shopTxt + '</a>' : shopTxt;
+          head += url ? aOpen('live_shop') + shopTxt + '</a>' : shopTxt;
         }
         // v2-b 先週比。⛔️値上げ/値下げの「理由」は機械で判定しない。事実（先週いくらだったか）だけ出す
         var prev = live.prev, diff = '';
@@ -981,6 +988,8 @@ function resetDiagnosis() {
           if (pn) diff += '（' + esc(pn) + '）';
           diff = '<span class="gg-diff">' + diff + '</span>';
         }
+        // ★v3-b 購入ボタンの行き先を差し替える。従来は134本すべてが楽天の検索結果ページだった
+        if (url) { if (p.__ggBuy === undefined) p.__ggBuy = p.buyUrl || ''; p.buyUrl = url; p.__ggLive = 1; }
         p.price = p.__ggBand + '<span class="gg-live">' + head +
           '<small>' + esc(product) + '／' + esc(at) + '時点' + diff + '</small></span>';
         n++;
