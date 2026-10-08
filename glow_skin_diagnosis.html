@@ -958,7 +958,7 @@ function resetDiagnosis() {
         var note = txt(live.note, 20);
         if (!note && /詰め?替え?|つめかえ|レフィル|リフィル|refill/i.test(product)) note = '詰め替え用';
         // note に「送料別」を含む場合は（送料込）を付けない（送料別のはずが送料込と出る矛盾を防ぐ）
-        var head = 'いま最安は ' + esc(media) + ' <b>' + yen + '</b>' + (note && /送料別/.test(note) ? '' : '（送料込）');
+        var head = 'いま最安は ' + esc(media) + ' <b>' + yen + '</b>' + (note && /送料別/.test(note) ? '（送料は地域によって異なります）' : '（送料込）');
         var url = (typeof live.url === 'string' && /^https:\/\/[^\s"'<>]+$/.test(live.url)) ? live.url : '';
         // v3-a 実売リンクは計測する。付けないと「本当の商品ページが踏まれたか」が永久に分からない
         var trk = ' onclick="trackEvent(\'affiliate_click\',{event_category:\'skindiag\',brand_id:\''
@@ -968,7 +968,7 @@ function resetDiagnosis() {
                  + trk.replace('LT', kind) + '>';
         }
         if (url) head = aOpen('live_price') + head + '</a>';
-        if (note) head = '<i class="gg-note">' + esc(note) + '</i>' + head;
+        if (note && !/送料別/.test(note)) head = '<i class="gg-note">' + esc(note) + '</i>' + head;
         // v2-a 店名。これが無いと「どの店で買うのか」が分からない。無ければ出さないだけ
         var shop = txt(live.shop, 30);
         if (shop) {
