@@ -55,6 +55,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://glow.stats-log.net/glow_sale_amazon_prime.html</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://glow.stats-log.net/glow_ranking.html</loc>
     <lastmod>2026-09-11</lastmod>
     <changefreq>weekly</changefreq>
