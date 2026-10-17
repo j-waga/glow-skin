@@ -696,13 +696,34 @@ function showResult() {
     over15000: ['pola','shiseido','esteelauder','decorte','clinique','sk2','albion','sulwhasoo','nars','mac','aesop','haku','cledepeau','lancome','clarins','chanel_b','dior_b','kanebo','nealsyard'],
   };
   const allowed = budgetFilter[budget] || Object.keys(DB.profiles);
-  let ordered = [...brandIds].sort((a, b) => (allowed.includes(a)?0:1) - (allowed.includes(b)?0:1));
-  if (ordered.filter(id => allowed.includes(id)).length < 2) {
-    const extras = allowed.filter(id => DB.profiles[id] && !ordered.includes(id));
-    ordered = [...ordered, ...extras];
-  }
   const MAIN_DISPLAY_COUNT = 5; // ← ブランド数増加に備え、ここを増やせばTOP表示件数を拡張できる
-const top5 = ordered.slice(0, MAIN_DISPLAY_COUNT).filter(id => DB.profiles[id]);
+  // ── 予算内のブランドだけでTOPを組む（2026-10-17修正）──
+  // ①その回答のランキングのうち予算内 → ②同じ肌タイプ×悩みの他のこだわりのランキング（順位の高い順）
+  // → ③同じ悩みの他の肌タイプのランキング（順位の高い順）。予算外のブランドはTOPに出さない。
+  const inBudgetOk = id => allowed.includes(id) && DB.profiles[id];
+  const pickFrom = (lists, seen) => {
+    const out = [];
+    const maxLen = Math.max(0, ...lists.map(l => l.length));
+    for (let r = 0; r < maxLen; r++) lists.forEach(l => { const id = l[r]; if (id && inBudgetOk(id) && !seen.has(id)) { seen.add(id); out.push(id); } });
+    return out;
+  };
+  const seenIds = new Set();
+  const topSource = {};
+  const tier1 = brandIds.filter(id => inBudgetOk(id) && !seenIds.has(id) && seenIds.add(id));
+  tier1.forEach(id => topSource[id] = 'rank');
+  let ordered = [...tier1];
+  if (ordered.length < MAIN_DISPLAY_COUNT) {
+    let prefLists = []; try { prefLists = Object.keys(DB.brands[skin][concern]).filter(p => p !== pref).map(p => DB.brands[skin][concern][p]); } catch(e) {}
+    const tier2 = pickFrom(prefLists, seenIds); tier2.forEach(id => topSource[id] = 'pref');
+    ordered = [...ordered, ...tier2];
+  }
+  if (ordered.length < MAIN_DISPLAY_COUNT) {
+    const skinLists = [];
+    try { Object.keys(DB.brands).filter(s => s !== skin).forEach(s => { skinLists.push(DB.brands[s][concern][pref]); Object.keys(DB.brands[s][concern]).filter(p => p !== pref).forEach(p => skinLists.push(DB.brands[s][concern][p])); }); } catch(e) {}
+    const tier3 = pickFrom(skinLists, seenIds); tier3.forEach(id => topSource[id] = 'concern');
+    ordered = [...ordered, ...tier3];
+  }
+  const top5 = ordered.slice(0, MAIN_DISPLAY_COUNT).filter(id => DB.profiles[id]);
 
 // ── 予算を抑えたい方向けピックアップ ──
 // 選んだ予算より下の帯域に該当するのに、TOP5に入らなかった候補をこの枠で救済表示する
@@ -733,7 +754,7 @@ budgetPicks = brandIds.filter(id => DB.profiles[id] && cheaperAllowed.has(id) &&
   }).join('');
 
   document.getElementById('resultTitle').textContent = `${DB.skinLabel[skin]} × ${DB.concernLabel[concern]} の処方箋`;
-  document.getElementById('resultDesc').textContent = `${DB.prefLabel[pref]}・予算${DB.budgetLabel[budget]}に合わせて、AlgoBeautyデータベースから最適なブランドをTop3選定しました。`;
+  document.getElementById('resultDesc').textContent = `${DB.prefLabel[pref]}・予算${DB.budgetLabel[budget]}に合わせて、AlgoBeautyデータベースから、予算内で最適なブランドをTop${top5.length}選定しました。`;
 
   const tags = [DB.skinLabel[skin], DB.concernLabel[concern], DB.prefLabel[pref], DB.budgetLabel[budget]];
   document.getElementById('skinProfile').innerHTML = tags.map(t => `<span class="profile-tag">${t}</span>`).join('');
@@ -751,6 +772,7 @@ budgetPicks = brandIds.filter(id => DB.profiles[id] && cheaperAllowed.has(id) &&
         </div>
         <span class="brand-price">${b.price}</span>
       </div>
+      ${topSource[id]==='pref'?`<div style="font-size:0.76rem;color:#8a6d3b;margin:4px 0 6px;">ℹ️ ご予算内で選ぶため、同じ肌タイプ×お悩みの別のこだわり条件のランキングから選びました</div>`:topSource[id]==='concern'?`<div style="font-size:0.76rem;color:#8a6d3b;margin:4px 0 6px;">ℹ️ ご予算内で選ぶため、同じお悩みの上位ランキングから選びました</div>`:''}
       <div class="brand-reason">${b.reason}</div>
       <div class="ingredient-chips">${b.key.split('・').map(k=>`<span class="chip chip-good">✓ ${k}</span>`).join('')}</div>
       <div class="ingredient-chips">
