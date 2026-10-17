@@ -717,7 +717,8 @@ function showResult() {
     const tier2 = pickFrom(prefLists, seenIds); tier2.forEach(id => topSource[id] = 'pref');
     ordered = [...ordered, ...tier2];
   }
-  if (ordered.length < MAIN_DISPLAY_COUNT) {
+  // 敏感肌は、別の肌タイプのランキングから補充しない（刺激への配慮の根拠が無いため・2026-10-17）
+  if (ordered.length < MAIN_DISPLAY_COUNT && skin !== 'sensitive') {
     const skinLists = [];
     try { Object.keys(DB.brands).filter(s => s !== skin).forEach(s => { skinLists.push(DB.brands[s][concern][pref]); Object.keys(DB.brands[s][concern]).filter(p => p !== pref).forEach(p => skinLists.push(DB.brands[s][concern][p])); }); } catch(e) {}
     const tier3 = pickFrom(skinLists, seenIds); tier3.forEach(id => topSource[id] = 'concern');
@@ -754,7 +755,7 @@ budgetPicks = brandIds.filter(id => DB.profiles[id] && cheaperAllowed.has(id) &&
   }).join('');
 
   document.getElementById('resultTitle').textContent = `${DB.skinLabel[skin]} × ${DB.concernLabel[concern]} の処方箋`;
-  document.getElementById('resultDesc').textContent = `${DB.prefLabel[pref]}・予算${DB.budgetLabel[budget]}に合わせて、AlgoBeautyデータベースから、予算内で最適なブランドをTop${top5.length}選定しました。`;
+  document.getElementById('resultDesc').textContent = `${DB.prefLabel[pref]}・予算${DB.budgetLabel[budget]}に合わせて、AlgoBeautyデータベースから、予算内で最適なブランドをTop${top5.length}選定しました。${skin === 'sensitive' && top5.length === 1 ? '敏感肌向けで、このご予算に当てはまるブランドは1件でした。予算帯を変えると候補が増えます。' : ''}`;
 
   const tags = [DB.skinLabel[skin], DB.concernLabel[concern], DB.prefLabel[pref], DB.budgetLabel[budget]];
   document.getElementById('skinProfile').innerHTML = tags.map(t => `<span class="profile-tag">${t}</span>`).join('');
