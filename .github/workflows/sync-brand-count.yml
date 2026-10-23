@@ -6,8 +6,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'glow_skin_diagnosis.html'
+      # 2026-10-23 拡大。以前は診断ページとスクリプトだけを見ていたので、
+      # 他のページに数字を直書きされても気づけなかった（肌タイプ別5枚が5週間ずれた）
+      - '**.html'
       - 'sync_brand_count.py'
+      - 'glow_count_guard.py'
   workflow_dispatch:
 
 permissions:
@@ -26,6 +29,11 @@ jobs:
 
       - name: ブランド数を数え直して全ページへ反映
         run: python3 sync_brand_count.py
+
+      # 印が無いまま直書きされた数字・TARGETS から漏れたファイルをここで落とす。
+      # 落ちたらコミットまで進まないので、古い数字が公開され続けることはない。
+      - name: ブランド数の直書きが残っていないか検査
+        run: python3 glow_count_guard.py
 
       - name: 差分があればコミット
         run: |
