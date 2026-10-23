@@ -22,7 +22,13 @@
 import argparse, collections, datetime, json, re, sys, pathlib
 
 SRC = "glow_skin_diagnosis.html"
-TARGETS = ["index.html", "about.html", "glow_skin_diagnosis.html", "glow_type_dry.html", "glow_type_dry_sensitive.html"]
+TARGETS = ["index.html", "about.html", "glow_skin_diagnosis.html",
+           "glow_type_dry.html", "glow_type_dry_sensitive.html",
+           # 2026-10-23 追加。この5枚は data-bc="n" が入っているのに TARGETS に無く、
+           # 9/18 の 132 のまま取り残されていた（計10箇所）。印のあるファイルは必ずここに入れること。
+           "glow_type_aging.html", "glow_type_combo.html", "glow_type_innerdry.html",
+           "glow_type_oily.html", "glow_type_sensitive.html",
+           "glow_sale_amazon_prime.html"]
 
 REGION_JA = {"JP": "日本", "KR": "韓国", "US": "アメリカ", "EU": "ヨーロッパ", "AU": "オーストラリア"}
 REGION_ORDER = ["JP", "KR", "US", "EU", "AU"]
