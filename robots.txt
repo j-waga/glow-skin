@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /sync_brand_count.py
+Disallow: /build_prices_page.py
+Disallow: /build_prices_ogp.py
 
 Sitemap: https://glow.stats-log.net/sitemap.xml
