@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generated_at": "2026-10-13T19:12:00+09:00",
+ "generated_at": "2026-10-25T19:12:00+09:00",
  "source": "GlowGuide_価格ログ",
  "items": {
   "cosrx": {
@@ -8,7 +8,7 @@
     "product": "アドバンスド スネイル96 エッセンス 100mL",
     "media": "楽天",
     "total": 2380,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "韓国コスメFly ToYou",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00tkm5m.g1h9qbf6.g00tkm5m.g1h9rbf0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fflytoyou%2F1059212634%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fflytoyou%2Fi%2F10001154%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
     "prev": 2380
@@ -19,7 +19,7 @@
     "product": "ナイアシンアミド10%+亜鉛1% 30mL",
     "media": "楽天",
     "total": 1440,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "RoseRoseShop",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00tk9ym.g1h9q54c.g00tk9ym.g1h9r9b1/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Froseroseshop%2Ftheordinary_1810009%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Froseroseshop%2Fi%2F10000933%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
     "prev": 1440
@@ -30,31 +30,30 @@
     "product": "UVイデアXL トーンアップ ローズ 30mL",
     "media": "楽天",
     "total": 3220,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "おしゃれcafe楽天市場店",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00quiom.g1h9qdbd.g00quiom.g1h9r332/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fosharecafe%2F61801204012%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fosharecafe%2Fi%2F10098581%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
-    "prev": 3150,
-    "prev_note": "安い店が入れ替わりました"
+    "prev": 3220
    }
   },
   "sofina_ip": {
    "live": {
     "product": "ベースケアセラム レフィル 90g",
     "media": "楽天",
-    "total": 4186,
-    "at_label": "10月13日 19:01",
+    "total": 4207,
+    "at_label": "10月25日 19:01",
     "shop": "コスメアベニュー",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00ujwtm.g1h9q6f9.g00ujwtm.g1h9rcc4/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fcosmeavenue%2F4901301412867-free%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fcosmeavenue%2Fi%2F10005148%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
-    "note": "詰め替え用",
-    "prev": 4206
+    "prev": 4186,
+    "note": "詰め替え用"
    }
   },
   "muji": {
    "live": {
     "product": "敏感肌用化粧水 高保湿 300mL",
     "media": "Yahoo!",
-    "total": 1452,
-    "at_label": "10月13日 19:12",
+    "total": 1453,
+    "at_label": "10月25日 19:12",
     "shop": "雑貨屋MelloMellow",
     "prev": 1452
    }
@@ -63,8 +62,8 @@
    "live": {
     "product": "エイジングケア化粧水 300mL",
     "media": "Yahoo!",
-    "total": 2973,
-    "at_label": "10月13日 19:12",
+    "total": 2974,
+    "at_label": "10月25日 19:12",
     "shop": "雑貨屋MelloMellow",
     "prev": 2973
    }
@@ -73,8 +72,8 @@
    "live": {
     "product": "薬用クリアケア化粧水 300mL",
     "media": "Yahoo!",
-    "total": 2314,
-    "at_label": "10月13日 19:12",
+    "total": 2316,
+    "at_label": "10月25日 19:12",
     "shop": "雑貨屋MelloMellow",
     "prev": 2314
    }
@@ -84,7 +83,7 @@
     "product": "リップスリーピングマスクEX 20g",
     "media": "楽天",
     "total": 2080,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "コスメリーフ",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00rybkm.g1h9qdcc.g00rybkm.g1h9r1f0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fnet-cosmeleaf%2F8809643053273%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fnet-cosmeleaf%2Fi%2F10012807%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
     "prev": 2080
@@ -93,13 +92,12 @@
   "obagi": {
    "live": {
     "product": "C5セラム 12mL",
-    "media": "楽天",
-    "total": 3495,
-    "at_label": "10月13日 19:01",
-    "shop": "ダイキ楽天市場店",
-    "url": "https://hb.afl.rakuten.co.jp/hgc/g00u1ixm.g1h9q7d6.g00u1ixm.g1h9r081/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdaikisone%2Fobagi9921%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fdaikisone%2Fi%2F10012513%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
-    "prev": 3588,
-    "prev_note": "安い店が入れ替わりました"
+    "media": "Yahoo!",
+    "total": 3069,
+    "at_label": "10月25日 19:12",
+    "shop": "ダイキヤフー店",
+    "prev": 3495,
+    "prev_note": "先週は楽天の価格でした"
    }
   },
   "pola": {
@@ -107,7 +105,7 @@
     "product": "B.A ローション イマース 120mL",
     "media": "楽天",
     "total": 9468,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "ビューティー銀座",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00ri8cm.g1h9q166.g00ri8cm.g1h9rd87/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmiryoku%2F30926%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fmiryoku%2Fi%2F10015887%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
     "prev": 9468
@@ -118,22 +116,22 @@
     "product": "潤浸保湿化粧水III とてもしっとり 150mL",
     "media": "楽天",
     "total": 1923,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "NITIRAKUYA",
-    "prev": 1845,
-    "prev_note": "先週はYahoo!の価格でした",
-    "url": "https://hb.afl.rakuten.co.jp/hgc/g00tlidm.g1h9q3fd.g00tlidm.g1h9r4b9/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsunglow%2F4901301236180%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsunglow%2Fi%2F10006001%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00tlidm.g1h9q3fd.g00tlidm.g1h9r4b9/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsunglow%2F4901301236180%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsunglow%2Fi%2F10006001%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "prev": 1923
    }
   },
   "clinique": {
    "live": {
     "product": "クラリファイング ローション2 200mL",
     "media": "楽天",
-    "total": 2677,
-    "at_label": "10月13日 19:01",
-    "shop": "コスメデネット楽天市場店",
-    "url": "https://hb.afl.rakuten.co.jp/hgc/g00tzf8m.g1h9q17a.g00tzf8m.g1h9r5ce/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fcosmedenet-dx%2F3800523%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fcosmedenet-dx%2Fi%2F10020736%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
-    "prev": 2668
+    "total": 2820,
+    "at_label": "10月25日 19:01",
+    "shop": "おしゃれcafe楽天市場店",
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00quiom.g1h9qdbd.g00quiom.g1h9r332/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fosharecafe%2F61105206038%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fosharecafe%2Fi%2F10116428%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "prev": 2677,
+    "prev_note": "安い店が入れ替わりました"
    }
   },
   "anua": {
@@ -141,7 +139,7 @@
     "product": "ドクダミ77% スージングトナー 250mL",
     "media": "楽天",
     "total": 2280,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "すずや恵比寿堂",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00tx9am.g1h9q0bc.g00tx9am.g1h9r65a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsuzuyaebisudo%2Fr-anua-heartleaf-77%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fsuzuyaebisudo%2Fi%2F10000631%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
     "prev": 2280
@@ -152,7 +150,7 @@
     "product": "バイオコンディショニングエッセンス 168mL",
     "media": "楽天",
     "total": 5800,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "TOWBWORLD",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00toz3m.g1h9q630.g00toz3m.g1h9r5ae/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftowbworld%2Ftowb-0810-3%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Ftowbworld%2Fi%2F10001456%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
     "prev": 5800
@@ -163,11 +161,11 @@
     "product": "デイリーモイスチャライジングローション 87mL",
     "media": "楽天",
     "total": 1629,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "CMG海外トレンドショップ",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00ux1bm.g1h9q5b7.g00ux1bm.g1h9r64f/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fcbbtre%2Fwm-53751%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fcbbtre%2Fi%2F10005481%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
-    "note": "送料別・要確認",
-    "prev": 1629
+    "prev": 1629,
+    "note": "送料別・要確認"
    }
   },
   "etvos": {
@@ -175,7 +173,7 @@
     "product": "モイスチャライジングローション 150mL",
     "media": "楽天",
     "total": 3226,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "ビューティー館楽天市場店",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00ux7bm.g1h9qb41.g00ux7bm.g1h9rfef/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbeauty-kan%2Fetvos-sk-4562256994527-w%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbeauty-kan%2Fi%2F10001366%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
     "prev": 3226
@@ -184,13 +182,13 @@
   "chifure": {
    "live": {
     "product": "保湿化粧水 さっぱりタイプ 180mL",
-    "media": "Yahoo!",
-    "total": 660,
-    "at_label": "10月13日 19:12",
-    "shop": "ベイシア ヤフーショップ",
-    "note": "送料別・要確認",
+    "media": "楽天",
+    "total": 1035,
+    "at_label": "10月25日 19:01",
+    "shop": "LifeForest",
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00uxl2m.g1h9q178.g00uxl2m.g1h9rd2d/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flifeforest%2F20261008015953_187_ec83%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Flifeforest%2Fi%2F10038238%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
     "prev": 660,
-    "prev_note": "先週は楽天の価格でした"
+    "prev_note": "先週は送料別の価格でした"
    }
   },
   "hadalabo": {
@@ -198,32 +196,35 @@
     "product": "極潤ヒアルロン液 つめかえ用 170mL",
     "media": "楽天",
     "total": 798,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "ヘルスケア コヤマ",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00pzczm.g1h9q8cd.g00pzczm.g1h9r2bd/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkoyama-p%2F4987241155729-1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fkoyama-p%2Fi%2F10018720%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
-    "note": "詰め替え用",
-    "prev": 798
+    "prev": 798,
+    "note": "詰め替え用"
    }
   },
   "decorte": {
    "live": {
     "product": "リポソーム アドバンスト リペアセラム 50mL",
     "media": "楽天",
-    "total": 7180,
-    "at_label": "10月13日 19:01",
-    "shop": "ハッピーライフスタイルショップ",
-    "url": "https://hb.afl.rakuten.co.jp/hgc/g00t5ukm.g1h9qfbf.g00t5ukm.g1h9r7d2/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhappylifestyleshop%2Fmic12l-17-1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fhappylifestyleshop%2Fi%2F10132417%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
-    "prev": 7180
+    "total": 7170,
+    "at_label": "10月25日 19:01",
+    "shop": "おしゃれcafe楽天市場店",
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00quiom.g1h9qdbd.g00quiom.g1h9r332/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fosharecafe%2F6047733%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fosharecafe%2Fi%2F10085420%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "prev": 7180,
+    "prev_note": "安い店が入れ替わりました"
    }
   },
   "minon": {
    "live": {
     "product": "アミノモイスト モイストチャージ ローションI 150mL",
-    "media": "Yahoo!",
-    "total": 1800,
-    "at_label": "10月13日 19:12",
-    "shop": "Goodsaniaマック土居店2ndstore",
-    "prev": 1800
+    "media": "楽天",
+    "total": 1862,
+    "at_label": "10月25日 19:01",
+    "shop": "ダイキ楽天市場店",
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00u1ixm.g1h9q7d6.g00u1ixm.g1h9r081/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdaikisone%2Fminon0335%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fdaikisone%2Fi%2F10010901%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "prev": 1800,
+    "prev_note": "先週はYahoo!の価格でした"
    }
   },
   "transino": {
@@ -231,7 +232,7 @@
     "product": "薬用ブライトニングクリアローション 150mL",
     "media": "Yahoo!",
     "total": 2811,
-    "at_label": "10月13日 19:12",
+    "at_label": "10月25日 19:12",
     "shop": "くすりのレデイハートショップnice",
     "prev": 2811
    }
@@ -241,7 +242,7 @@
     "product": "モイスチャーミストローションII 150mL",
     "media": "楽天",
     "total": 2100,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "DS コトブキヤ",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00r22fm.g1h9q6ee.g00r22fm.g1h9r98e/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fds-kotobukiya%2F4987305035257-1-a%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fds-kotobukiya%2Fi%2F10023396%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
     "prev": 2100
@@ -250,13 +251,14 @@
   "astalift": {
    "live": {
     "product": "アドバンスドローション 130mL レフィル",
-    "media": "Yahoo!",
-    "total": 3490,
-    "at_label": "10月13日 19:12",
-    "shop": "アーコムコスメ Yahoo!店",
+    "media": "楽天",
+    "total": 3567,
+    "at_label": "10月25日 19:01",
+    "shop": "ユウアイ国際",
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00umg6m.g1h9q647.g00umg6m.g1h9r7b7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyuaikokusai%2F0436%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fyuaikokusai%2Fi%2F10000894%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "prev": 3490,
     "note": "詰め替え用",
-    "prev": 3585,
-    "prev_note": "先週は楽天の価格でした"
+    "prev_note": "先週はYahoo!の価格でした"
    }
   },
   "sulwhasoo": {
@@ -264,7 +266,7 @@
     "product": "潤燥エッセンス 60mL",
     "media": "楽天",
     "total": 9900,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "韓国コスメFly ToYou",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00tkm5m.g1h9qbf6.g00tkm5m.g1h9rbf0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fflytoyou%2F1143376862%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fflytoyou%2Fi%2F10001555%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
     "prev": 9900
@@ -275,7 +277,7 @@
     "product": "アクティブローション ディープモイスト 120mL",
     "media": "楽天",
     "total": 3850,
-    "at_label": "10月13日 19:01",
+    "at_label": "10月25日 19:01",
     "shop": "大正製薬ダイレクト楽天市場店",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00t7cgm.g1h9q8fa.g00t7cgm.g1h9rcfe/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftaisho-directshop%2F1000411%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Ftaisho-directshop%2Fi%2F10000602%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
     "prev": 3850
@@ -285,8 +287,8 @@
    "live": {
     "product": "薬用しみ対策美白化粧水 170mL",
     "media": "楽天",
-    "total": 1174,
-    "at_label": "10月13日 19:01",
+    "total": 1173,
+    "at_label": "10月25日 19:01",
     "shop": "日楽家",
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00ub73m.g1h9qada.g00ub73m.g1h9rf5b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fnitirakuya%2F4987241198900%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fnitirakuya%2Fi%2F10005430%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
     "prev": 1174
@@ -297,7 +299,7 @@
     "product": "UV アクアリッチ ウォータリーエッセンス 70g",
     "media": "Yahoo!",
     "total": 968,
-    "at_label": "10月13日 19:12",
+    "at_label": "10月25日 19:12",
     "shop": "ナフコオンラインストア",
     "prev": 968
    }
