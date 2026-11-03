@@ -83,14 +83,17 @@ def main():
     P = []
     A = P.append
 
-    A(f'<h1>スキンケア{len(items)}品は、いまどこが安いのか</h1>')
-    A('<p class="lead">このページは、国内外のスキンケア'
-      f'{len(items)}品について、<strong>楽天市場とYahoo!ショッピングで「送料込みの総額」が'
-      'いちばん安かった店</strong>を、毎週ひとつずつ記録したものです。'
-      f'調査は<strong>{asof}</strong>。先週の同じ時間帯に記録した値も並べているので、'
-      '上がったのか下がったのか、そのまま読めます。</p>')
+    A('<h1>売れているスキンケアは、いまどこが安いのか</h1>')
+    A('<p class="lead">楽天市場のスキンケア売れ筋で上位に居続けている商品を<strong>毎日2回</strong>、'
+      f'肌診断で紹介している{len(items)}品を<strong>毎週</strong>、送料込みでいちばん安い店を記録しています。'
+      '買う前に、同じ商品がもっと安い店がないかをここで確かめられます。</p>')
     A('<p class="pr-inline">※本ページには広告（アフィリエイトリンク）を含みます。'
       '報酬の有無は掲載順位に影響していません。</p>')
+    # ★売れ筋の値段帳（build_bestsellers.py がこの印の間を毎回書き換える）
+    A('<!--BESTSELLERS--><!--/BESTSELLERS-->')
+    A(f'<h2 id="diag27">肌診断で紹介している{len(items)}品の値段（毎週更新）</h2>')
+    A('<p>無料肌診断で「あなたの肌に合う」として紹介しているスキンケアです。楽天市場とYahoo!ショッピングの送料込みの総額で、毎週同じ時間帯に記録しています。'
+      f'調査は<strong>{asof}</strong>。先週の値も並べているので、上がったのか下がったのかそのまま読めます。</p>')
 
     A('<div class="glance"><div><span class="g-n">'
       f'{len(items)}</span><span class="g-l">記録した品目</span></div>'
@@ -101,7 +104,7 @@ def main():
       '<span class="g-l">いちばん安い品</span></div></div>')
 
     # ── 調べ方
-    A('<h2 id="howto">このページの調べ方</h2>')
+    A('<h3 id="howto">27品の調べ方</h3>')
     A('<ul class="howto">')
     A('<li><strong>本体価格ではなく、送料込みの総額で比べています。</strong>'
       '本体が安くても送料で逆転することがあるため、支払う金額そのもので並べました。'
@@ -117,7 +120,7 @@ def main():
     A('</ul>')
 
     # ── 今週動いたもの
-    A('<h2 id="moved">今週、先週から動いたもの</h2>')
+    A('<h3 id="moved">今週、先週から動いたもの</h3>')
     if not moved:
         A('<p>今週は、価格・媒体・店のいずれも先週から変わった品目がありませんでした。</p>')
     else:
@@ -151,7 +154,7 @@ def main():
               '安くなった・高くなったと書けるのは、同じ土台どうしのときだけです。</p>')
 
     # ── 全品
-    A(f'<h2 id="list">{len(items)}品の記録（{asof} 調べ）</h2>')
+    A(f'<h3 id="list">{len(items)}品の記録（{asof} 調べ）</h3>')
     for cat, keys in CAT.items():
         keys = sorted(keys, key=lambda k: items[k]["live"]["total"])
         A(f'<h3>{esc(cat)}（{len(keys)}品）</h3>')
@@ -261,10 +264,10 @@ def main():
     fonts = ('<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700'
              '&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet">')
 
-    title = f"スキンケア{len(items)}品の価格を毎週くらべた記録｜楽天・Yahoo!を送料込みの総額で - Glow"
-    desc = (f"国内外のスキンケア{len(items)}品について、楽天市場とYahoo!ショッピングで"
-            f"「送料込みの総額」がいちばん安い店を毎週記録しています。{asof}調べ。"
-            "先週との差、安い店の入れ替わり、同じ商品名・同じ容量にそろえた比べ方まで掲載。")
+    title = "楽天で売れているスキンケアの最安値を毎日記録｜売れ筋の店より安い店を送料込みで - Glow"
+    desc = ("楽天市場のスキンケア売れ筋で上位に居続けている商品を毎日2回、楽天市場全体で送料込みの最安を記録。"
+            "売れ筋ランキングの店との差、値下がりした品が分かります。"
+            f"肌診断で紹介している{len(items)}品の値段（楽天・Yahoo!・毎週）も掲載。")
 
     css = """
 <style>

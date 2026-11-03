@@ -8,8 +8,8 @@
   </url>
   <url>
     <loc>https://glow.stats-log.net/glow_prices.html</loc>
-    <lastmod>2026-10-26</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
@@ -89,5 +89,41 @@
     <lastmod>2026-09-11</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://glow.stats-log.net/glow_item_elixir_retinopower.html</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://glow.stats-log.net/glow_item_elixir_brightening_refill.html</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://glow.stats-log.net/glow_item_attenir_cleanse_oil_350.html</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://glow.stats-log.net/glow_item_aestura_atobarrier365.html</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://glow.stats-log.net/glow_item_fancl_mild_cleansing_oil.html</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://glow.stats-log.net/glow_item_takami_skinpeel.html</loc>
+    <lastmod>2026-11-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

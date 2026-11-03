@@ -1,0 +1,350 @@
+{
+ "at": "2026-11-03 18:45",
+ "items": [
+  {
+   "slug": "elixir_retinopower",
+   "key": "エリクシール レチノパワー",
+   "brand": "エリクシール",
+   "cat": "クリーム",
+   "name": "シュペリエル レチノパワー リンクルクリーム ba L 22g",
+   "amount": 22,
+   "unit": "g",
+   "rank_code": "rakuten24:11354091",
+   "median": 7.0,
+   "rank_now": {
+    "kind": "rank",
+    "shop": "楽天24",
+    "price": 8800,
+    "incl": false,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00r136m.g1h9q84b.g00r136m.g1h9rc89/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F4909978214685%2F&rafcid=wsc_i_ra_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "rank": 4,
+    "reviews": 254,
+    "avg": 4.59
+   },
+   "best": {
+    "kind": "incl",
+    "shop": "MATSUYA COSMETICS 楽天市場店",
+    "price": 6785,
+    "incl": true,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00ss0em.g1h9q9c1.g00ss0em.g1h9rf61/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmatsuya-cosme%2F21468-1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fmatsuya-cosme%2Fi%2F10009925%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+   },
+   "body": {
+    "kind": "rank",
+    "shop": "楽天24",
+    "price": 8800,
+    "incl": false,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00r136m.g1h9q84b.g00r136m.g1h9rc89/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F4909978214685%2F&rafcid=wsc_i_ra_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "rank": 4,
+    "reviews": 254,
+    "avg": 4.59
+   },
+   "hist": [
+    {
+     "at": "2026-11-03 10:45",
+     "price": 6785,
+     "shop": "MATSUYA COSMETICS 楽天市場店"
+    },
+    {
+     "at": "2026-11-03 12:41",
+     "price": 6785,
+     "shop": "MATSUYA COSMETICS 楽天市場店"
+    },
+    {
+     "at": "2026-11-03 18:45",
+     "price": 6785,
+     "shop": "MATSUYA COSMETICS 楽天市場店"
+    }
+   ],
+   "save": 2015,
+   "drop": 0,
+   "prev_price": 6785,
+   "at": "2026-11-03 18:45",
+   "rank_at": "2026-11-03 18:30"
+  },
+  {
+   "slug": "elixir_brightening_refill",
+   "key": "エリクシール ブライトニング",
+   "brand": "エリクシール",
+   "cat": "化粧水",
+   "name": "ブライトニング ローション つめかえ用 150mL",
+   "amount": 150,
+   "unit": "mL",
+   "rank_code": "rakuten24:11386627",
+   "median": 11.0,
+   "rank_now": {
+    "kind": "rank",
+    "shop": "楽天24",
+    "price": 3300,
+    "incl": true,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00r136m.g1h9q84b.g00r136m.g1h9rc89/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F406685%2F&rafcid=wsc_i_ra_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "rank": 11,
+    "reviews": 481,
+    "avg": 4.66
+   },
+   "best": {
+    "kind": "incl",
+    "shop": "MATSUYACOSMETICS 2号店",
+    "price": 2645,
+    "incl": true,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00tokdm.g1h9qbe8.g00tokdm.g1h9reba/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmatsuya-omatome%2F22958-1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fmatsuya-omatome%2Fi%2F10001421%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+   },
+   "body": {
+    "kind": "body",
+    "shop": "MATSUYA COSMETICS 楽天市場店",
+    "price": 2567,
+    "incl": false,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00ss0em.g1h9q9c1.g00ss0em.g1h9rf61/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmatsuya-cosme%2F22957%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fmatsuya-cosme%2Fi%2F10010048%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+   },
+   "hist": [
+    {
+     "at": "2026-11-03 10:45",
+     "price": 2645,
+     "shop": "MATSUYACOSMETICS 2号店"
+    },
+    {
+     "at": "2026-11-03 12:41",
+     "price": 2645,
+     "shop": "MATSUYACOSMETICS 2号店"
+    },
+    {
+     "at": "2026-11-03 18:45",
+     "price": 2645,
+     "shop": "MATSUYACOSMETICS 2号店"
+    }
+   ],
+   "save": 655,
+   "drop": 0,
+   "prev_price": 2645,
+   "at": "2026-11-03 18:45",
+   "rank_at": "2026-11-03 18:30"
+  },
+  {
+   "slug": "attenir_cleanse_oil_350",
+   "key": "アテニア",
+   "brand": "アテニア",
+   "cat": "クレンジング",
+   "name": "スキンクリア クレンズ オイル 350mL",
+   "amount": 350,
+   "unit": "mL",
+   "rank_code": "attenir:10000252",
+   "median": 1.5,
+   "rank_now": {
+    "kind": "rank",
+    "shop": "アテニア公式ショップ 楽天市場店",
+    "price": 3630,
+    "incl": true,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00tna6m.g1h9q4cc.g00tna6m.g1h9r51e/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fattenir%2F166013%2F&rafcid=wsc_i_ra_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "rank": 3,
+    "reviews": 50111,
+    "avg": 4.8
+   },
+   "best": {
+    "kind": "incl",
+    "shop": "ユウアイ国際",
+    "price": 3050,
+    "incl": true,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00umg6m.g1h9q647.g00umg6m.g1h9r7b7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyuaikokusai%2F0995%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fyuaikokusai%2Fi%2F10001133%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+   },
+   "body": null,
+   "hist": [
+    {
+     "at": "2026-11-03 10:45",
+     "price": 3050,
+     "shop": "ユウアイ国際"
+    },
+    {
+     "at": "2026-11-03 12:41",
+     "price": 3050,
+     "shop": "ユウアイ国際"
+    },
+    {
+     "at": "2026-11-03 18:45",
+     "price": 3050,
+     "shop": "ユウアイ国際"
+    }
+   ],
+   "save": 580,
+   "drop": 0,
+   "prev_price": 3050,
+   "at": "2026-11-03 18:45",
+   "rank_at": "2026-11-03 18:30"
+  },
+  {
+   "slug": "aestura_atobarrier365",
+   "key": "AESTURA",
+   "brand": "エストラ",
+   "cat": "クリーム",
+   "name": "アトバリア365 クリーム 80mL",
+   "amount": 80,
+   "unit": "mL",
+   "rank_code": "aestura-japan:10000007",
+   "median": 17.0,
+   "rank_now": {
+    "kind": "rank",
+    "shop": "AESTURA OFFICIAL",
+    "price": 3300,
+    "incl": true,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00ukqim.g1h9qc81.g00ukqim.g1h9r378/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Faestura-japan%2Fatobarrier365cream%2F&rafcid=wsc_i_ra_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "rank": 33,
+    "reviews": 2740,
+    "avg": 4.72
+   },
+   "best": {
+    "kind": "incl",
+    "shop": "ルーナデーア",
+    "price": 2780,
+    "incl": true,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00raz5m.g1h9q065.g00raz5m.g1h9rea8/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flunadea%2F10006694%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Flunadea%2Fi%2F10006732%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+   },
+   "body": {
+    "kind": "body",
+    "shop": "ルーナデーア",
+    "price": 2390,
+    "incl": false,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00raz5m.g1h9q065.g00raz5m.g1h9rea8/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flunadea%2F10006679%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Flunadea%2Fi%2F10006717%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+   },
+   "hist": [
+    {
+     "at": "2026-11-03 10:45",
+     "price": 2780,
+     "shop": "ルーナデーア"
+    },
+    {
+     "at": "2026-11-03 12:41",
+     "price": 2780,
+     "shop": "ルーナデーア"
+    },
+    {
+     "at": "2026-11-03 18:45",
+     "price": 2780,
+     "shop": "ルーナデーア"
+    }
+   ],
+   "save": 520,
+   "drop": 0,
+   "prev_price": 2780,
+   "at": "2026-11-03 18:45",
+   "rank_at": "2026-11-03 18:30"
+  },
+  {
+   "slug": "fancl_mild_cleansing_oil",
+   "key": "ファンケル",
+   "brand": "ファンケル",
+   "cat": "クレンジング",
+   "name": "マイルドクレンジング オイル 120mL",
+   "amount": 120,
+   "unit": "mL",
+   "rank_code": "fancl-shop:10009046",
+   "median": 21.5,
+   "rank_now": {
+    "kind": "rank",
+    "shop": "FANCL公式ショップ 楽天市場店",
+    "price": 1980,
+    "incl": true,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00sms5m.g1h9qdb7.g00sms5m.g1h9r334/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ffancl-shop%2F3670-21%2F&rafcid=wsc_i_ra_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "rank": 44,
+    "reviews": 15059,
+    "avg": 4.8
+   },
+   "best": {
+    "kind": "rank",
+    "shop": "FANCL公式ショップ 楽天市場店",
+    "price": 1980,
+    "incl": true,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00sms5m.g1h9qdb7.g00sms5m.g1h9r334/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ffancl-shop%2F3670-21%2F&rafcid=wsc_i_ra_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "rank": 44,
+    "reviews": 15059,
+    "avg": 4.8
+   },
+   "body": {
+    "kind": "body",
+    "shop": "BOTANIC GARDEN",
+    "price": 1510,
+    "incl": false,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00s4ujm.g1h9q0a3.g00s4ujm.g1h9r556/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbotanic-garden%2F139-013-001%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbotanic-garden%2Fi%2F10043478%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+   },
+   "hist": [
+    {
+     "at": "2026-11-03 10:45",
+     "price": 1980,
+     "shop": "FANCL公式ショップ 楽天市場店"
+    },
+    {
+     "at": "2026-11-03 12:41",
+     "price": 1980,
+     "shop": "FANCL公式ショップ 楽天市場店"
+    },
+    {
+     "at": "2026-11-03 18:45",
+     "price": 1980,
+     "shop": "FANCL公式ショップ 楽天市場店"
+    }
+   ],
+   "save": 0,
+   "drop": 0,
+   "prev_price": 1980,
+   "at": "2026-11-03 18:45",
+   "rank_at": "2026-11-03 18:30"
+  },
+  {
+   "slug": "takami_skinpeel",
+   "key": "タカミ",
+   "brand": "タカミ",
+   "cat": "美容液",
+   "name": "タカミスキンピール 30mL",
+   "amount": 30,
+   "unit": "mL",
+   "rank_code": "takami-labo:10000519",
+   "median": 8.5,
+   "rank_now": {
+    "kind": "rank",
+    "shop": "タカミ 公式ショップ楽天市場店",
+    "price": 5720,
+    "incl": true,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00q04mm.g1h9q190.g00q04mm.g1h9r090/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftakami-labo%2Fr-s009%2F&rafcid=wsc_i_ra_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "rank": 10,
+    "reviews": 6586,
+    "avg": 4.69
+   },
+   "best": {
+    "kind": "rank",
+    "shop": "タカミ 公式ショップ楽天市場店",
+    "price": 5720,
+    "incl": true,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00q04mm.g1h9q190.g00q04mm.g1h9r090/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftakami-labo%2Fr-s009%2F&rafcid=wsc_i_ra_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
+    "rank": 10,
+    "reviews": 6586,
+    "avg": 4.69
+   },
+   "body": {
+    "kind": "body",
+    "shop": "DivaStyle 楽天市場店",
+    "price": 5720,
+    "incl": false,
+    "url": "https://hb.afl.rakuten.co.jp/hgc/g00t9oum.g1h9q089.g00t9oum.g1h9r869/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdivastyle%2F4571205850623%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fdivastyle%2Fi%2F10004314%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+   },
+   "hist": [
+    {
+     "at": "2026-11-03 10:45",
+     "price": 5720,
+     "shop": "タカミ 公式ショップ楽天市場店"
+    },
+    {
+     "at": "2026-11-03 12:41",
+     "price": 5720,
+     "shop": "タカミ 公式ショップ楽天市場店"
+    },
+    {
+     "at": "2026-11-03 18:45",
+     "price": 5720,
+     "shop": "タカミ 公式ショップ楽天市場店"
+    }
+   ],
+   "save": 0,
+   "drop": 0,
+   "prev_price": 5720,
+   "at": "2026-11-03 18:45",
+   "rank_at": "2026-11-03 18:30"
+  }
+ ]
+}

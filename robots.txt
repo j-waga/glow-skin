@@ -3,5 +3,7 @@ Allow: /
 Disallow: /sync_brand_count.py
 Disallow: /build_prices_page.py
 Disallow: /build_prices_ogp.py
+Disallow: /build_bestsellers.py
+Disallow: /bestsellers.json
 
 Sitemap: https://glow.stats-log.net/sitemap.xml
