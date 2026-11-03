@@ -108,7 +108,19 @@ def snapshot(rank_csv, pop_csv, qoo=None):
     return out
 
 
-def collect(rank_csvs, pop_csvs, qoo=None):
+def snapshot_qoo_only(qoo, it, rk):
+    """前回のQoo10（同じ選び方：送料込みを優先し、その中の最安）"""
+    best = None
+    for q in qoo.get("items", {}).get(it["slug"], []):
+        if rk and q["price"] < rk["price"] * 0.8 and q["rev"] < 10:
+            continue
+        c = dict(price=int(q["price"]), incl=bool(q["free"]))
+        if best is None or (not c["incl"], c["price"]) < (not best["incl"], best["price"]):
+            best = c
+    return best
+
+
+def collect(rank_csvs, pop_csvs, qoo=None, qoo_prev=None):
     ranks = sorted(rank_csvs, key=ts_of)
     snaps = []
     for pf in sorted(pop_csvs, key=ts_of):
@@ -129,7 +141,11 @@ def collect(rank_csvs, pop_csvs, qoo=None):
                      shop=sn[it["slug"]]["best"]["shop"]) for t, _, sn in snaps if sn[it["slug"]]["best"]]
         # 値下がりは同じ土台（楽天市場の送料込み最安）どうしでしか比べない
         pb = prev[2][it["slug"]]["best_r"] if prev and prev[2][it["slug"]]["best_r"] else None
+        qp = None
+        if qoo_prev:
+            qp = snapshot_qoo_only(qoo_prev, it, s["rank"])
         items.append(dict(it, rank_now=s["rank"], best=s["best"], body=s["body"], qoo10=s["qoo10"], hist=hist,
+                          r_now=s["best_r"], r_prev=pb, q_prev=qp,
                           save=s["rank"]["price"] - s["best"]["price"],
                           drop=(pb["price"] - s["best_r"]["price"]) if pb and s["best_r"] else 0, prev_price=pb["price"] if pb else None,
                           at=at.strftime("%Y-%m-%d %H:%M"), rank_at=rank_at.strftime("%Y-%m-%d %H:%M")))
@@ -153,8 +169,9 @@ main.wrap a.buybtn:hover{background:#a93226;color:#fff}
 main.wrap a.buybtn.q10{background:#e4004f}main.wrap a.buybtn.amz{background:#232f3e}
 .sm{display:block;font-size:.78rem;color:#777;margin-top:2px}
 .save{color:#c0392b;font-weight:700}
+.dn{display:block;font-size:.8rem;color:#1e7f4f;font-weight:700}.up{display:block;font-size:.8rem;color:#888}
 .drop{display:inline-block;font-size:.72rem;background:#1e7f4f;color:#fff;border-radius:4px;padding:1px 6px;margin-left:4px}
-table.bstbl td.num,table.bstbl th.num{text-align:right;white-space:nowrap}
+table.bstbl td.num,table.bstbl th.num{text-align:right;white-space:nowrap}\ntable.bstbl td.num a.buybtn{margin-top:6px}
 .bs-empty{display:none;color:#777}
 .verdict{background:#fff6f4;border:2px solid #c0392b;border-radius:14px;padding:16px 18px;margin:14px 0}
 .verdict .s{font-size:.85rem;color:#777}
@@ -204,6 +221,23 @@ def amazon_btn(d):
     return f'<a class="buybtn amz" href="{E(u)}" target="_blank" rel="sponsored nofollow noopener">{label}</a>'
 
 
+def chg(now, prev):
+    """前回比（同じ土台どうしだけ）。下がった＝緑、上がった＝灰"""
+    if not now:
+        return ""
+    if not prev:
+        return '<span class="sm">前回の記録なし（今回から記録）</span>'
+    if prev.get("incl") is not None and now.get("incl") is not None and prev["incl"] != now["incl"]:
+        return '<span class="sm">前回と送料の条件が違うため比べていません</span>'
+    d = now["price"] - prev["price"]
+    if d == 0:
+        return '<span class="sm">前回と同じ</span>'
+    pct = d / prev["price"] * 100
+    if d < 0:
+        return f'<span class="dn">▼{yen(-d)}（{pct:.1f}%）</span>'
+    return f'<span class="up">▲{yen(d)}（+{pct:.1f}%）</span>'
+
+
 def keyword(d):
     return f'{d["brand"]} {d["key"]} {d["name"]} {d["cat"]}'
 
@@ -224,15 +258,22 @@ def section(items, at, prev_at, qoo_at=None):
             f'楽天市場 {yen(d["prev_price"])} → <strong>{yen(d["prev_price"] - d["drop"])}</strong>（{yen(d["drop"])}値下がり）</li>' for d in drops) + "</ul>"
     else:
         drop_html = f'<p>{jdt(prev_at) + "の記録から" if prev_at else "前回の記録から"}値下がりした品はありませんでした。</p>'
+    def cell(c, label, prev):
+        if not c:
+            return f'<td data-l="{label}" class="num"><span class="sm">見つかりませんでした</span></td>'
+        ship = "送料込み" if c["incl"] else "送料別"
+        return (f'<td data-l="{label}" class="num"><strong>{yen(c["price"])}</strong><span class="sm">{ship}</span>'
+                f'{chg(c, prev)}{btn(c)}</td>')
     trs = "".join(
         f'<tr data-bs="{E(keyword(d))}" data-cat="{d["cat"]}">'
         f'<td data-l="商品"><a href="/glow_item_{d["slug"]}.html"><strong>{E(d["brand"])}</strong><br>{E(d["name"])}</a>'
-        f'<span class="sm">{d["cat"]}・売れ筋 {d["rank_now"]["rank"]}位</span></td>'
-        f'<td data-l="売れ筋の店" class="num">{yen(d["rank_now"]["price"])}<span class="sm">{E(d["rank_now"]["shop"])}</span></td>'
-        f'<td data-l="送料込みの最安" class="num"><strong>{yen(d["best"]["price"])}</strong>'
-        f'{f"<span class=drop>楽天{yen(d["drop"])}↓</span>" if d["drop"] > 0 else ""}<span class="sm">{E(d["best"]["media"])}{"" if d["best"]["media"] == "Qoo10" else "・" + E(d["best"]["shop"])}</span></td>'
-        f'<td data-l="差" class="num">{f"<span class=save>{yen(d["save"])}安い</span>" if d["save"] > 0 else "売れ筋の店が最安"}</td>'
-        f'<td data-l="">{btn(d["best"])} {amazon_btn(d)}</td></tr>' for d in by_save)
+        f'<span class="sm">{d["cat"]}・売れ筋 {d["rank_now"]["rank"]}位</span>'
+        f'<span class="sm">売れ筋の店 {yen(d["rank_now"]["price"])}（{E(d["rank_now"]["shop"])}）</span>'
+        f'{f"<span class=save>最安は売れ筋の店より{yen(d["save"])}安い（{E(d["best"]["media"])}）</span>" if d["save"] > 0 else "<span class=sm>売れ筋の店がいちばん安い</span>"}</td>'
+        + cell(d["r_now"], "楽天市場（送料込みの最安）", d["r_prev"])
+        + cell(d["qoo10"], "Qoo10", d["q_prev"])
+        + f'<td data-l="Amazon" class="num"><span class="sm">値段は規約により載せていません</span>{amazon_btn(d)}</td></tr>'
+        for d in by_save)
     catbtn = '<button type="button" data-c="" aria-pressed="true">すべて</button>' + "".join(
         f'<button type="button" data-c="{c}" aria-pressed="false">{c}</button>' for c in CATS)
     return f"""<!--BESTSELLERS-->
@@ -243,8 +284,8 @@ def section(items, at, prev_at, qoo_at=None):
 <div class="bs-top">{cards}</div>
 <h3>前回から値下がりした品</h3>
 {drop_html}
-<h3>売れ筋の一覧（差の大きい順）</h3>
-<table class="bstbl"><thead><tr><th>商品</th><th class="num">売れ筋の店</th><th class="num">送料込みの最安</th><th class="num">差</th><th></th></tr></thead>
+<h3>売れ筋の一覧（楽天市場・Qoo10・Amazon）</h3>\n<p class="sm">並びは「いちばん安い店が、売れ筋の店よりいくら安いか」の大きい順です。▼は前回の記録から下がった額と率、▲は上がった額と率です。</p>
+<table class="bstbl"><thead><tr><th>商品</th><th class="num">楽天市場</th><th class="num">Qoo10</th><th class="num">Amazon</th></tr></thead>
 <tbody>{trs}</tbody></table>
 <p id="bs-empty" class="bs-empty">見つかりませんでした。別の言葉で探してみてください。</p>
 <p class="sm">商品名を押すと、その商品の値段の記録と、送料別の店も含めた比較が見られます。Amazonは規約により値段を載せていません。「Amazonで見る」から、Amazonの商品ページで値段をその場で確かめられます。</p>
@@ -343,10 +384,11 @@ def main(argv):
     pops = [a for a in argv if "popular_rakuten_" in a]
     qf = [a for a in argv if "qoo10_" in a and a.endswith(".json")]
     qoo = json.load(open(sorted(qf)[-1], encoding="utf-8")) if qf else None
+    qoo_prev = json.load(open(sorted(qf)[-2], encoding="utf-8")) if len(qf) >= 2 else None
     qoo_at = datetime.strptime(qoo["at"], "%Y-%m-%d %H:%M") if qoo else None
     if not ranks or not pops:
         raise SystemExit(__doc__)
-    items, at, prev_at = collect(ranks, pops, qoo)
+    items, at, prev_at = collect(ranks, pops, qoo, qoo_prev)
     src = open(PAGE, encoding="utf-8").read()
     if src.count("<!--BESTSELLERS-->") != 1 or src.count("<!--/BESTSELLERS-->") != 1:
         raise SystemExit("⛔️glow_prices.html に印がありません（build_prices_page.py を先に流すこと）")
