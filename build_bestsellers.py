@@ -272,7 +272,7 @@ def section(items, at, prev_at, qoo_at=None):
         f'{f"<span class=save>最安は売れ筋の店より{yen(d["save"])}安い（{E(d["best"]["media"])}）</span>" if d["save"] > 0 else "<span class=sm>売れ筋の店がいちばん安い</span>"}</td>'
         + cell(d["r_now"], "楽天市場（送料込みの最安）", d["r_prev"])
         + cell(d["qoo10"], "Qoo10", d["q_prev"])
-        + f'<td data-l="Amazon" class="num"><span class="sm">値段は規約により載せていません</span>{amazon_btn(d)}</td></tr>'
+        + f'<td data-l="Amazon" class="num">{amazon_btn(d)}</td></tr>'
         for d in by_save)
     catbtn = '<button type="button" data-c="" aria-pressed="true">すべて</button>' + "".join(
         f'<button type="button" data-c="{c}" aria-pressed="false">{c}</button>' for c in CATS)
@@ -288,7 +288,7 @@ def section(items, at, prev_at, qoo_at=None):
 <table class="bstbl"><thead><tr><th>商品</th><th class="num">楽天市場</th><th class="num">Qoo10</th><th class="num">Amazon</th></tr></thead>
 <tbody>{trs}</tbody></table>
 <p id="bs-empty" class="bs-empty">見つかりませんでした。別の言葉で探してみてください。</p>
-<p class="sm">商品名を押すと、その商品の値段の記録と、送料別の店も含めた比較が見られます。Amazonは規約により値段を載せていません。「Amazonで見る」から、Amazonの商品ページで値段をその場で確かめられます。</p>
+<p class="sm">商品名を押すと、その商品の値段の記録と、送料別の店も含めた比較が見られます。</p>
 <h3>売れ筋の値段帳の調べ方</h3>
 {HOWTO}
 {JS}
@@ -330,7 +330,7 @@ def item_page(d, items, src):
     q = d.get("qoo10")
     if q and q is not best and q is not body:
         rows.append(row(q, "Qoo10"))
-    rows.append('<div class="buyrow"><div><div class="m">Amazon</div><div class="s">Amazonの商品ページが開きます。値段はAmazonの画面で確かめてください（規約により当サイトには載せていません）</div></div>'
+    rows.append('<div class="buyrow"><div><div class="m">Amazon</div><div class="s">Amazonの商品ページが開きます</div></div>'
                 f'<div class="p"></div>{amazon_btn(d)}</div>')
     if d["save"] > 0:
         verdict = f'売れ筋ランキングに出ている店（{E(rk["shop"])}）の{yen(rk["price"])}より<strong>{yen(d["save"])}安い</strong>店があります。'
