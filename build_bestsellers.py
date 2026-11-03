@@ -195,7 +195,7 @@ def btn(c):
 
 def amazon_btn(d):
     u = "https://www.amazon.co.jp/s?k=" + quote(f'{d["brand"]} {d["name"]}') + "&tag=" + AMAZON_TAG
-    return f'<a class="buybtn amz" href="{E(u)}" target="_blank" rel="sponsored nofollow noopener">Amazonで見る</a>'
+    return f'<a class="buybtn amz" href="{E(u)}" target="_blank" rel="sponsored nofollow noopener">Amazonで探す</a>'
 
 
 def keyword(d):
@@ -241,7 +241,7 @@ def section(items, at, prev_at, qoo_at=None):
 <table class="bstbl"><thead><tr><th>商品</th><th class="num">売れ筋の店</th><th class="num">送料込みの最安</th><th class="num">差</th><th></th></tr></thead>
 <tbody>{trs}</tbody></table>
 <p id="bs-empty" class="bs-empty">見つかりませんでした。別の言葉で探してみてください。</p>
-<p class="sm">商品名を押すと、その商品の値段の記録と、送料別の店も含めた比較が見られます。Amazonは規約により値段を載せていません。「Amazonで見る」からAmazonの表示を確かめてください。</p>
+<p class="sm">商品名を押すと、その商品の値段の記録と、送料別の店も含めた比較が見られます。Amazonは規約により値段を載せていません。「Amazonで探す」から、Amazonでの値段をその場で確かめられます。</p>
 <h3>売れ筋の値段帳の調べ方</h3>
 {HOWTO}
 {JS}
@@ -283,7 +283,7 @@ def item_page(d, items, src):
     q = d.get("qoo10")
     if q and q is not best and q is not body:
         rows.append(row(q, "Qoo10"))
-    rows.append('<div class="buyrow"><div><div class="m">Amazon</div><div class="s">値段はAmazonの規約により載せていません。リンク先で確かめてください</div></div>'
+    rows.append('<div class="buyrow"><div><div class="m">Amazon</div><div class="s">Amazonの検索結果が開きます。値段はAmazonの画面で確かめてください</div></div>'
                 f'<div class="p"></div>{amazon_btn(d)}</div>')
     if d["save"] > 0:
         verdict = f'売れ筋ランキングに出ている店（{E(rk["shop"])}）の{yen(rk["price"])}より<strong>{yen(d["save"])}安い</strong>店があります。'
