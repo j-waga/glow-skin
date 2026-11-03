@@ -3,6 +3,7 @@
  "items": [
   {
    "slug": "elixir_retinopower",
+   "asin": "B0FJXTTPPZ",
    "key": "エリクシール レチノパワー",
    "brand": "エリクシール",
    "cat": "クリーム",
@@ -65,6 +66,7 @@
   },
   {
    "slug": "elixir_brightening_refill",
+   "asin": "B0GC3J1CW7",
    "key": "エリクシール ブライトニング",
    "brand": "エリクシール",
    "cat": "化粧水",
@@ -134,6 +136,7 @@
   },
   {
    "slug": "attenir_cleanse_oil_350",
+   "asin": "B0H29GJK1M",
    "key": "アテニア",
    "brand": "アテニア",
    "cat": "クレンジング",
@@ -197,6 +200,7 @@
   },
   {
    "slug": "aestura_atobarrier365",
+   "asin": "B09YDCCJBJ",
    "key": "AESTURA",
    "brand": "エストラ",
    "cat": "クリーム",
@@ -267,6 +271,7 @@
   },
   {
    "slug": "fancl_mild_cleansing_oil",
+   "asin": "B0GK5RBK1W",
    "key": "ファンケル",
    "brand": "ファンケル",
    "cat": "クレンジング",
@@ -339,6 +344,7 @@
   },
   {
    "slug": "takami_skinpeel",
+   "asin": "B010FZZWY8",
    "key": "タカミ",
    "brand": "タカミ",
    "cat": "美容液",

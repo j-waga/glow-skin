@@ -29,22 +29,22 @@ yen = lambda v: f"{int(v):,}円"
 # rank_code … GlowGuide 05 の itemCode（ランキングの出品を特定する）
 # median    … 10/10〜11/01の売れ筋8回で、8回とも上位。その中央の順位（claude/★実測_楽天スキンケア売れ筋8回分_…_20261101.md）
 ITEMS = [
-    dict(slug="elixir_retinopower", key="エリクシール レチノパワー", brand="エリクシール", cat="クリーム",
+    dict(slug="elixir_retinopower", asin="B0FJXTTPPZ", key="エリクシール レチノパワー", brand="エリクシール", cat="クリーム",
          name="シュペリエル レチノパワー リンクルクリーム ba L 22g", amount=22, unit="g",
          rank_code="rakuten24:11354091", median=7.0, about="シワを改善する医薬部外品のクリーム（資生堂）。"),
-    dict(slug="elixir_brightening_refill", key="エリクシール ブライトニング", brand="エリクシール", cat="化粧水",
+    dict(slug="elixir_brightening_refill", asin="B0GC3J1CW7", key="エリクシール ブライトニング", brand="エリクシール", cat="化粧水",
          name="ブライトニング ローション つめかえ用 150mL", amount=150, unit="mL",
          rank_code="rakuten24:11386627", median=11.0, about="しみ・そばかすを防ぐ医薬部外品の化粧水（資生堂）。つめかえ用。"),
-    dict(slug="attenir_cleanse_oil_350", key="アテニア", brand="アテニア", cat="クレンジング",
+    dict(slug="attenir_cleanse_oil_350", asin="B0H29GJK1M", key="アテニア", brand="アテニア", cat="クレンジング",
          name="スキンクリア クレンズ オイル 350mL", amount=350, unit="mL",
          rank_code="attenir:10000252", median=1.5, about="メイク落としのオイル。350mLの大容量。"),
-    dict(slug="aestura_atobarrier365", key="AESTURA", brand="エストラ", cat="クリーム",
+    dict(slug="aestura_atobarrier365", asin="B09YDCCJBJ", key="AESTURA", brand="エストラ", cat="クリーム",
          name="アトバリア365 クリーム 80mL", amount=80, unit="mL",
          rank_code="aestura-japan:10000007", median=17.0, about="セラミド配合の保湿クリーム（韓国 AESTURA）。"),
-    dict(slug="fancl_mild_cleansing_oil", key="ファンケル", brand="ファンケル", cat="クレンジング",
+    dict(slug="fancl_mild_cleansing_oil", asin="B0GK5RBK1W", key="ファンケル", brand="ファンケル", cat="クレンジング",
          name="マイルドクレンジング オイル 120mL", amount=120, unit="mL",
          rank_code="fancl-shop:10009046", median=21.5, about="メイク落としのオイル。"),
-    dict(slug="takami_skinpeel", key="タカミ", brand="タカミ", cat="美容液",
+    dict(slug="takami_skinpeel", asin="B010FZZWY8", key="タカミ", brand="タカミ", cat="美容液",
          name="タカミスキンピール 30mL", amount=30, unit="mL",
          rank_code="takami-labo:10000519", median=8.5, about="角質ケアの美容液。"),
 ]
@@ -194,8 +194,14 @@ def btn(c):
 
 
 def amazon_btn(d):
-    u = "https://www.amazon.co.jp/s?k=" + quote(f'{d["brand"]} {d["name"]}') + "&tag=" + AMAZON_TAG
-    return f'<a class="buybtn amz" href="{E(u)}" target="_blank" rel="sponsored nofollow noopener">Amazonで探す</a>'
+    # ASINが分かる商品はAmazonの商品ページへ直接（2026-11-03 本人のChromeで商品名・容量を照合済み）。無ければ検索結果へ
+    if d.get("asin"):
+        u = f'https://www.amazon.co.jp/dp/{d["asin"]}?tag={AMAZON_TAG}'
+        label = "Amazonで見る"
+    else:
+        u = "https://www.amazon.co.jp/s?k=" + quote(f'{d["brand"]} {d["name"]}') + "&tag=" + AMAZON_TAG
+        label = "Amazonで探す"
+    return f'<a class="buybtn amz" href="{E(u)}" target="_blank" rel="sponsored nofollow noopener">{label}</a>'
 
 
 def keyword(d):
@@ -241,7 +247,7 @@ def section(items, at, prev_at, qoo_at=None):
 <table class="bstbl"><thead><tr><th>商品</th><th class="num">売れ筋の店</th><th class="num">送料込みの最安</th><th class="num">差</th><th></th></tr></thead>
 <tbody>{trs}</tbody></table>
 <p id="bs-empty" class="bs-empty">見つかりませんでした。別の言葉で探してみてください。</p>
-<p class="sm">商品名を押すと、その商品の値段の記録と、送料別の店も含めた比較が見られます。Amazonは規約により値段を載せていません。「Amazonで探す」から、Amazonでの値段をその場で確かめられます。</p>
+<p class="sm">商品名を押すと、その商品の値段の記録と、送料別の店も含めた比較が見られます。Amazonは規約により値段を載せていません。「Amazonで見る」から、Amazonの商品ページで値段をその場で確かめられます。</p>
 <h3>売れ筋の値段帳の調べ方</h3>
 {HOWTO}
 {JS}
@@ -283,7 +289,7 @@ def item_page(d, items, src):
     q = d.get("qoo10")
     if q and q is not best and q is not body:
         rows.append(row(q, "Qoo10"))
-    rows.append('<div class="buyrow"><div><div class="m">Amazon</div><div class="s">Amazonの検索結果が開きます。値段はAmazonの画面で確かめてください</div></div>'
+    rows.append('<div class="buyrow"><div><div class="m">Amazon</div><div class="s">Amazonの商品ページが開きます。値段はAmazonの画面で確かめてください（規約により当サイトには載せていません）</div></div>'
                 f'<div class="p"></div>{amazon_btn(d)}</div>')
     if d["save"] > 0:
         verdict = f'売れ筋ランキングに出ている店（{E(rk["shop"])}）の{yen(rk["price"])}より<strong>{yen(d["save"])}安い</strong>店があります。'
