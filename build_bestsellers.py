@@ -211,7 +211,7 @@ def section(items, at, prev_at, qoo_at=None):
         f'<div class="n"><a href="/glow_item_{d["slug"]}.html">{E(d["brand"])} {E(d["name"])}</a></div>'
         f'<div class="big">{yen(d["best"]["price"])}</div>'
         f'<div class="sv">{E(d["best"]["media"])}・売れ筋の店（{yen(d["rank_now"]["price"])}）より<span class="save">{yen(d["save"])}安い</span></div>'
-        f'{btn(d["best"])}</div>' for d in top)
+        f'{btn(d["best"])} {amazon_btn(d)}</div>' for d in top)
     if drops:
         drop_html = "<ul>" + "".join(
             f'<li><a href="/glow_item_{d["slug"]}.html">{E(d["brand"])} {E(d["name"])}</a>：'
@@ -226,7 +226,7 @@ def section(items, at, prev_at, qoo_at=None):
         f'<td data-l="送料込みの最安" class="num"><strong>{yen(d["best"]["price"])}</strong>'
         f'{f"<span class=drop>楽天{yen(d["drop"])}↓</span>" if d["drop"] > 0 else ""}<span class="sm">{E(d["best"]["media"])}{"" if d["best"]["media"] == "Qoo10" else "・" + E(d["best"]["shop"])}</span></td>'
         f'<td data-l="差" class="num">{f"<span class=save>{yen(d["save"])}安い</span>" if d["save"] > 0 else "売れ筋の店が最安"}</td>'
-        f'<td data-l="">{btn(d["best"])}</td></tr>' for d in by_save)
+        f'<td data-l="">{btn(d["best"])} {amazon_btn(d)}</td></tr>' for d in by_save)
     catbtn = '<button type="button" data-c="" aria-pressed="true">すべて</button>' + "".join(
         f'<button type="button" data-c="{c}" aria-pressed="false">{c}</button>' for c in CATS)
     return f"""<!--BESTSELLERS-->
@@ -241,7 +241,7 @@ def section(items, at, prev_at, qoo_at=None):
 <table class="bstbl"><thead><tr><th>商品</th><th class="num">売れ筋の店</th><th class="num">送料込みの最安</th><th class="num">差</th><th></th></tr></thead>
 <tbody>{trs}</tbody></table>
 <p id="bs-empty" class="bs-empty">見つかりませんでした。別の言葉で探してみてください。</p>
-<p class="sm">商品名を押すと、その商品の値段の記録と、送料別の店も含めた比較が見られます。</p>
+<p class="sm">商品名を押すと、その商品の値段の記録と、送料別の店も含めた比較が見られます。Amazonは規約により値段を載せていません。「Amazonで見る」からAmazonの表示を確かめてください。</p>
 <h3>売れ筋の値段帳の調べ方</h3>
 {HOWTO}
 {JS}
