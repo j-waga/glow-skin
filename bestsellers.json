@@ -13,6 +13,7 @@
    "median": 7.0,
    "rank_now": {
     "kind": "rank",
+    "media": "楽天市場",
     "shop": "楽天24",
     "price": 8800,
     "incl": false,
@@ -23,20 +24,21 @@
    },
    "best": {
     "kind": "incl",
+    "media": "楽天市場",
     "shop": "MATSUYA COSMETICS 楽天市場店",
     "price": 6785,
     "incl": true,
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00ss0em.g1h9q9c1.g00ss0em.g1h9rf61/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmatsuya-cosme%2F21468-1%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fmatsuya-cosme%2Fi%2F10009925%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
    },
-   "body": {
-    "kind": "rank",
-    "shop": "楽天24",
-    "price": 8800,
-    "incl": false,
-    "url": "https://hb.afl.rakuten.co.jp/hgc/g00r136m.g1h9q84b.g00r136m.g1h9rc89/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F4909978214685%2F&rafcid=wsc_i_ra_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2",
-    "rank": 4,
-    "reviews": 254,
-    "avg": 4.59
+   "body": null,
+   "qoo10": {
+    "kind": "qoo10",
+    "media": "Qoo10",
+    "shop": "Qoo10",
+    "price": 7297,
+    "incl": true,
+    "url": "https://px.a8.net/svt/ejp?a8mat=4AX8OC+BWOVM+4QYG+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.qoo10.jp%2Fg%2F1222259978",
+    "rev": 0
    },
    "hist": [
     {
@@ -73,6 +75,7 @@
    "median": 11.0,
    "rank_now": {
     "kind": "rank",
+    "media": "楽天市場",
     "shop": "楽天24",
     "price": 3300,
     "incl": true,
@@ -83,6 +86,7 @@
    },
    "best": {
     "kind": "incl",
+    "media": "楽天市場",
     "shop": "MATSUYACOSMETICS 2号店",
     "price": 2645,
     "incl": true,
@@ -90,10 +94,20 @@
    },
    "body": {
     "kind": "body",
+    "media": "楽天市場",
     "shop": "MATSUYA COSMETICS 楽天市場店",
     "price": 2567,
     "incl": false,
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00ss0em.g1h9q9c1.g00ss0em.g1h9rf61/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fmatsuya-cosme%2F22957%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fmatsuya-cosme%2Fi%2F10010048%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+   },
+   "qoo10": {
+    "kind": "qoo10",
+    "media": "Qoo10",
+    "shop": "Qoo10",
+    "price": 2800,
+    "incl": false,
+    "url": "https://px.a8.net/svt/ejp?a8mat=4AX8OC+BWOVM+4QYG+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.qoo10.jp%2Fg%2F1196524680",
+    "rev": 2
    },
    "hist": [
     {
@@ -130,6 +144,7 @@
    "median": 1.5,
    "rank_now": {
     "kind": "rank",
+    "media": "楽天市場",
     "shop": "アテニア公式ショップ 楽天市場店",
     "price": 3630,
     "incl": true,
@@ -139,13 +154,24 @@
     "avg": 4.8
    },
    "best": {
-    "kind": "incl",
-    "shop": "ユウアイ国際",
-    "price": 3050,
+    "kind": "qoo10",
+    "media": "Qoo10",
+    "shop": "Qoo10",
+    "price": 2999,
     "incl": true,
-    "url": "https://hb.afl.rakuten.co.jp/hgc/g00umg6m.g1h9q647.g00umg6m.g1h9r7b7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyuaikokusai%2F0995%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fyuaikokusai%2Fi%2F10001133%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+    "url": "https://px.a8.net/svt/ejp?a8mat=4AX8OC+BWOVM+4QYG+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.qoo10.jp%2Fg%2F1215941999",
+    "rev": 13
    },
    "body": null,
+   "qoo10": {
+    "kind": "qoo10",
+    "media": "Qoo10",
+    "shop": "Qoo10",
+    "price": 2999,
+    "incl": true,
+    "url": "https://px.a8.net/svt/ejp?a8mat=4AX8OC+BWOVM+4QYG+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.qoo10.jp%2Fg%2F1215941999",
+    "rev": 13
+   },
    "hist": [
     {
      "at": "2026-11-03 10:45",
@@ -159,11 +185,11 @@
     },
     {
      "at": "2026-11-03 18:45",
-     "price": 3050,
-     "shop": "ユウアイ国際"
+     "price": 2999,
+     "shop": "Qoo10"
     }
    ],
-   "save": 580,
+   "save": 631,
    "drop": 0,
    "prev_price": 3050,
    "at": "2026-11-03 18:45",
@@ -181,6 +207,7 @@
    "median": 17.0,
    "rank_now": {
     "kind": "rank",
+    "media": "楽天市場",
     "shop": "AESTURA OFFICIAL",
     "price": 3300,
     "incl": true,
@@ -191,17 +218,29 @@
    },
    "best": {
     "kind": "incl",
+    "media": "楽天市場",
     "shop": "ルーナデーア",
     "price": 2780,
     "incl": true,
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00raz5m.g1h9q065.g00raz5m.g1h9rea8/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flunadea%2F10006694%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Flunadea%2Fi%2F10006732%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
    },
    "body": {
-    "kind": "body",
-    "shop": "ルーナデーア",
-    "price": 2390,
+    "kind": "qoo10",
+    "media": "Qoo10",
+    "shop": "Qoo10",
+    "price": 2277,
     "incl": false,
-    "url": "https://hb.afl.rakuten.co.jp/hgc/g00raz5m.g1h9q065.g00raz5m.g1h9rea8/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flunadea%2F10006679%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Flunadea%2Fi%2F10006717%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+    "url": "https://px.a8.net/svt/ejp?a8mat=4AX8OC+BWOVM+4QYG+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.qoo10.jp%2Fg%2F964061458",
+    "rev": 21
+   },
+   "qoo10": {
+    "kind": "qoo10",
+    "media": "Qoo10",
+    "shop": "Qoo10",
+    "price": 2800,
+    "incl": true,
+    "url": "https://px.a8.net/svt/ejp?a8mat=4AX8OC+BWOVM+4QYG+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.qoo10.jp%2Fg%2F1137447206",
+    "rev": 314
    },
    "hist": [
     {
@@ -238,6 +277,7 @@
    "median": 21.5,
    "rank_now": {
     "kind": "rank",
+    "media": "楽天市場",
     "shop": "FANCL公式ショップ 楽天市場店",
     "price": 1980,
     "incl": true,
@@ -248,6 +288,7 @@
    },
    "best": {
     "kind": "rank",
+    "media": "楽天市場",
     "shop": "FANCL公式ショップ 楽天市場店",
     "price": 1980,
     "incl": true,
@@ -258,10 +299,20 @@
    },
    "body": {
     "kind": "body",
+    "media": "楽天市場",
     "shop": "BOTANIC GARDEN",
     "price": 1510,
     "incl": false,
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00s4ujm.g1h9q0a3.g00s4ujm.g1h9r556/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbotanic-garden%2F139-013-001%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fbotanic-garden%2Fi%2F10043478%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
+   },
+   "qoo10": {
+    "kind": "qoo10",
+    "media": "Qoo10",
+    "shop": "Qoo10",
+    "price": 2280,
+    "incl": true,
+    "url": "https://px.a8.net/svt/ejp?a8mat=4AX8OC+BWOVM+4QYG+BW8O2&a8ejpredirect=https%3A%2F%2Fwww.qoo10.jp%2Fg%2F1075391111",
+    "rev": 0
    },
    "hist": [
     {
@@ -298,6 +349,7 @@
    "median": 8.5,
    "rank_now": {
     "kind": "rank",
+    "media": "楽天市場",
     "shop": "タカミ 公式ショップ楽天市場店",
     "price": 5720,
     "incl": true,
@@ -308,6 +360,7 @@
    },
    "best": {
     "kind": "rank",
+    "media": "楽天市場",
     "shop": "タカミ 公式ショップ楽天市場店",
     "price": 5720,
     "incl": true,
@@ -318,11 +371,13 @@
    },
    "body": {
     "kind": "body",
+    "media": "楽天市場",
     "shop": "DivaStyle 楽天市場店",
     "price": 5720,
     "incl": false,
     "url": "https://hb.afl.rakuten.co.jp/hgc/g00t9oum.g1h9q089.g00t9oum.g1h9r869/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdivastyle%2F4571205850623%2F&m=http%3A%2F%2Fm.rakuten.co.jp%2Fdivastyle%2Fi%2F10004314%2F&rafcid=wsc_i_is_41e39a6b-2760-4f7f-bf91-697ceeb1a4f2"
    },
+   "qoo10": null,
    "hist": [
     {
      "at": "2026-11-03 10:45",
