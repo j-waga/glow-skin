@@ -6,6 +6,7 @@
     rakuten_rank_*    … n8n GlowGuide 05（楽天スキンケア売れ筋120位）。ランキングに出ている店の値段とリンク
     popular_rakuten_* … n8n GlowGuide 07（売れ筋の定番を楽天全体で検索）。送料込みの最安と、送料別も含めた本体最安
   各 popular には、その時刻以前でいちばん新しい rakuten_rank を組み合わせる。
+  data/qoo10_*.json  … 6品のQoo10（本人のChromeで取得）／ data/qoo10x_*.json … EXTRA（売れ筋に時々入る商品）のQoo10。形は同じ
   → glow_prices.html の <!--BESTSELLERS-->〜<!--/BESTSELLERS--> を書き換え / glow_item_<slug>.html / bestsellers.json
 
 ⛔️楽天のアフィリURLは手で打たない。CSVの affiliateUrl / 商品URL / 本体最安_URL を機械でそのまま入れる。
@@ -49,6 +50,17 @@ ITEMS = [
          rank_code="takami-labo:10000519", median=8.5, about="角質ケアの美容液。"),
 ]
 CATS = ["クレンジング", "化粧水", "美容液", "クリーム"]
+
+# ── 売れ筋に「時々」入る商品（2026-11-04 本人決定：記事の出口として商品ページだけ作る）
+# ⛔️上の6品（上位に居続ける定番）とは選び方が違うので、値段帳の一覧（glow_prices.html）には載せない。
+# ⛔️ページに「上位に居続けている」「8回すべて」と書かない。売れ筋に出た回数を、渡されたランキングから数えて書く。
+# ⭐️値段は GlowGuide 07 が楽天全体を毎日2回検索した結果（popular_rakuten_* の同じ key の行）を使う。
+EXTRA = [
+    dict(slug="lululun_hydra_ex", asin="B0CJN2FRFD", key="ルルルン ハイドラEX", brand="ルルルン", cat="シートマスク",
+         name="ハイドラ EX マスク 7枚入", amount=7, unit="枚",
+         rank_code="lululun-shop:10000875",
+         about="化粧水をふくませたシートマスク（7枚入）。ルルルンのハイドラシリーズの1つです。"),
+]
 
 
 def read(path):
@@ -379,10 +391,153 @@ def item_page(d, items, src):
     return head + main + foot
 
 
+def extra_items(rank_csvs, pop_csvs, qoox=None):
+    """売れ筋に時々入る商品（EXTRA）。ランキングに出た回数・最後に出た日と、最新の楽天全体の検索・Qoo10から最安を出す。"""
+    ranks = sorted(rank_csvs, key=ts_of)
+    pops = sorted(pop_csvs, key=ts_of)
+    out = []
+    for it in EXTRA:
+        seen = []
+        for rf in ranks:
+            r = {x["itemCode"]: x for x in read(rf)}.get(it["rank_code"])
+            if r:
+                seen.append((ts_of(rf), r))
+        hist, last_pop = [], None
+        for pf in pops:
+            p = {x["ブランド"]: x for x in read(pf)}.get(it["key"])
+            if p and p["成否"] == "取得" and p["総額"]:
+                hist.append(dict(at=ts_of(pf).strftime("%Y-%m-%d %H:%M"), price=int(p["総額"]), shop=p["ショップ名"]))
+                last_pop = (ts_of(pf), p)
+        if not last_pop:
+            print(f"⚠️{it['key']} は GlowGuide 07 の記録がまだ無いので、ページを作りません")
+            continue
+        at, p = last_pop
+        cands = [dict(kind="incl", media="楽天市場", shop=p["ショップ名"], price=int(p["総額"]), incl=True, url=aff(p["商品URL"]))]
+        if p.get("本体最安_価格"):
+            cands.append(dict(kind="body", media="楽天市場", shop=p["本体最安_店"], price=int(p["本体最安_価格"]),
+                              incl=p.get("本体最安_送料") == "送料込み", url=aff(p["本体最安_URL"])))
+        q_at = None
+        if qoox:
+            q_at = datetime.strptime(qoox["at"], "%Y-%m-%d %H:%M")
+            for q in qoox.get("items", {}).get(it["slug"], []):
+                cands.append(dict(kind="qoo10", media="Qoo10", shop="Qoo10", price=int(q["price"]), incl=bool(q["free"]),
+                                  url=A8_QOO10 + quote("https://www.qoo10.jp/g/" + q["code"], safe=""), rev=q["rev"]))
+        incl = [c for c in cands if c["incl"]]
+        best = min(incl, key=lambda c: (c["price"], c["media"] != "楽天市場"))
+        body = min([c for c in cands if not c["incl"]], key=lambda c: c["price"], default=None)
+        qoo10 = min([c for c in cands if c["kind"] == "qoo10"], key=lambda c: (not c["incl"], c["price"]), default=None)
+        last = None
+        if seen:
+            t, r = seen[-1]
+            last = dict(at=t, rank=int(r["rank"]), price=int(r["itemPrice"]), shop=r["shopName"].replace("　", " "),
+                        reviews=int(r["reviewCount"] or 0), avg=float(r["reviewAverage"] or 0), url=aff(r["affiliateUrl"]))
+        out.append(dict(it, at=at, best=best, body=body, qoo10=qoo10, q_at=q_at, hist=hist, last=last,
+                        n_seen=len(seen), n_rank=len(ranks), first_rank=ranks[0] and ts_of(ranks[0]),
+                        seen=[(t, int(r["rank"])) for t, r in seen]))
+    return out
+
+
+def extra_page(d, items, src):
+    """EXTRA の商品ページ。⛔️「上位に居続けている」とは書かない。"""
+    head = src.split("<header", 1)[0]
+    hdr = "<header" + src.split("<header", 1)[1].split("</header>", 1)[0] + "</header>"
+    hdr = hdr.replace(' aria-current="page"', "")
+    foot = "<footer" + src.split("<footer", 1)[1]
+    best, body, q, last = d["best"], d["body"], d["qoo10"], d["last"]
+    full = f'{d["brand"]} {d["name"]}'
+    at = d["at"]
+    title = f'{full}の最安値は？楽天市場・Qoo10を送料込みで毎日比較 - Glow'
+    desc = (f'{full}の値段を楽天市場で毎日2回、Qoo10もあわせて記録しています。{jdt(at)}時点の送料込みの最安は'
+            f'{yen(best["price"])}（{best["media"]}・{best["shop"] if best["media"] != "Qoo10" else "Qoo10"}）。')
+    url = f'{BASE}glow_item_{d["slug"]}.html'
+    head = re.sub(r"<title>.*?</title>", f"<title>{E(title)}</title>", head, flags=re.S)
+    head = re.sub(r'(<meta name="description" content=")[^"]*', lambda m: m.group(1) + E(desc), head)
+    head = re.sub(r'(<link rel="canonical" href=")[^"]*', lambda m: m.group(1) + url, head)
+    head = re.sub(r'(<meta property="og:title" content=")[^"]*', lambda m: m.group(1) + E(title), head)
+    head = re.sub(r'(<meta property="og:description" content=")[^"]*', lambda m: m.group(1) + E(desc), head)
+    head = re.sub(r'(<meta property="og:url" content=")[^"]*', lambda m: m.group(1) + url, head)
+    head = re.sub(r'<script type="application/ld\+json">.*?</script>\s*', "", head, flags=re.S)
+    head = head.replace("</head>", CSS + "</head>")
+
+    def row(c, label, is_best=False):
+        ship = "送料込み" if c["incl"] else "送料は店と地域によって異なります"
+        tag = '<span class="tag">送料込みで最安</span>' if is_best else ""
+        sub = (f'{E(c["shop"])}・' if c["media"] != "Qoo10" else "") + ship + (f'・レビュー{c["rev"]}件' if c["media"] == "Qoo10" else "")
+        return (f'<div class="buyrow{" best" if is_best else ""}"><div><div class="m">{E(label)}{tag}</div>'
+                f'<div class="s">{sub}</div></div><div class="p">{yen(c["price"])}</div>{btn(c)}</div>')
+
+    rows = [row(best, f'{best["media"]}で送料込みの最安', True)]
+    if body and body["price"] < best["price"]:
+        rows.append(row(body, f'{body["media"]}で本体の値段がいちばん安い店'))
+    if q and q is not best:
+        rows.append(row(q, "Qoo10"))
+    rows.append('<div class="buyrow"><div><div class="m">Amazon</div><div class="s">Amazonの商品ページが開きます</div></div>'
+                f'<div class="p"></div>{amazon_btn(d)}</div>')
+    if q and best["media"] != "Qoo10" and q["incl"] and q["price"] == best["price"]:
+        verdict = f'楽天市場とQoo10が同じ{yen(best["price"])}（どちらも送料込み）でした。'
+    elif best["media"] == "Qoo10":
+        verdict = f'Qoo10がいちばん安い値段でした（楽天市場の送料込みの最安より安い）。'
+    else:
+        verdict = f'{E(best["shop"])}（{E(best["media"])}）が送料込みでいちばん安い値段でした。'
+    h = d["hist"]
+    if len(h) >= 14:
+        hist_block = ('<h2>値段の記録（楽天市場・送料込みの最安）</h2><table class="bstbl"><thead><tr><th>日時</th><th class="num">値段</th><th>店</th></tr></thead><tbody>'
+                      + "".join(f'<tr><td data-l="日時">{jdt(datetime.strptime(x["at"], "%Y-%m-%d %H:%M"))}</td><td data-l="値段" class="num">{yen(x["price"])}</td><td data-l="店">{E(x["shop"])}</td></tr>' for x in h)
+                      + "</tbody></table>")
+    else:
+        hist_block = (f'<h2>値段の記録</h2><p>この商品の値段の記録は{jdt(datetime.strptime(h[0]["at"], "%Y-%m-%d %H:%M"))}から始めました。'
+                      '1週間分たまったら、ここに値段の動き（今が安い時期かどうか）を載せます。</p>')
+    f0 = d["first_rank"]
+    if last:
+        seen_txt = "・".join(f'{t.month}/{t.day} {r}位' for t, r in d["seen"])
+        rank_block = (f'<ul class="facts">'
+                      f'<li>売れ筋に出た回数<b>{d["n_seen"]}回</b>{f0.month}月{f0.day}日からの記録のうち{d["n_rank"]}回分を調べて</li>'
+                      f'<li>最後に出た日<b>{last["at"].month}月{last["at"].day}日 {last["rank"]}位</b>{E(last["shop"])}・{yen(last["price"])}</li>'
+                      f'<li>レビュー<b>{last["reviews"]:,}件</b>平均{last["avg"]:.2f}（{E(last["shop"])}・{last["at"].month}月{last["at"].day}日時点）</li>'
+                      f'</ul><p class="sm">売れ筋に出た日と順位：{seen_txt}。楽天スキンケア売れ筋（上位120位）に、ずっとではなく時々入る商品です。</p>')
+    else:
+        rank_block = f'<p>{f0.month}月{f0.day}日からの記録では、楽天スキンケア売れ筋（上位120位）には出ていません。</p>'
+    others = "".join(f'<li><a href="/glow_item_{o["slug"]}.html">{E(o["brand"])} {E(o["name"])}</a></li>' for o in items)
+    qnote = f'・Qoo10 {jdt(d["q_at"])}時点' if d["q_at"] else ""
+    main = f"""{hdr}
+<main class="wrap">
+<p class="pr-inline">※本ページには広告（アフィリエイトリンク）を含みます。報酬の有無は掲載順位に影響していません。</p>
+<p class="crumb"><a href="/glow_prices.html#bestsellers">売れ筋の値段帳</a> ＞ {E(d["brand"])}</p>
+<h1>{E(full)}は、どこで買うと安いか</h1>
+<p class="lead">{E(d["about"])}<strong>楽天市場を毎日2回検索し、Qoo10の値段もあわせて、送料込みで記録</strong>しています。同じ商品名・同じ枚数（7枚入）に限って比べています。検索で見つからなかった店は比べられていないことがあります。</p>
+<div class="verdict">
+<div class="s">楽天市場 {jdt(at)}時点{qnote}・送料込みの最安</div>
+<div class="big">{yen(best["price"])}</div>
+<div class="sub">{verdict}</div>
+<div class="sub">1{d["unit"]}あたり {best["price"] / d["amount"]:.0f}円（{d["amount"]}{d["unit"]}）</div>
+</div>
+<h2>今日の値段</h2>
+<div class="buybox">{''.join(rows)}</div>
+<p class="sm">※クーポン・ポイントは含めていません。値段と在庫は変わります。買う前に必ずリンク先の表示を確かめてください。28枚入りや複数個のセットは、このページの比較に入れていません。</p>
+<h2>売れ筋の記録</h2>
+{rank_block}
+{hist_block}
+<h2>このページの調べ方</h2>
+<ul class="howto">
+<li><strong>楽天市場を毎日2回（10時台と18時台）検索</strong>し、見つかった店のうち同じ商品名・同じ枚数のものだけを比べています。セット品・枚数違いは外しています。</li>
+<li><strong>Qoo10も同じ商品名・同じ枚数で調べています</strong>（更新日時は上に表示）。</li>
+<li><strong>送料込みの値段で比べています。</strong>送料が別の店は除外せず、本体の値段に「送料は店と地域によって異なります」と添えて載せています。</li>
+<li>クーポンやポイントは含めていません。<strong>値段と在庫は変わります。</strong>買う前に必ずリンク先の表示を確かめてください。</li>
+</ul>
+<h2>楽天スキンケア売れ筋の定番の値段</h2>
+<ul>{others}</ul>
+<p><a href="/glow_prices.html#bestsellers">売れ筋の値段帳（一覧）へ</a></p>
+</main>
+"""
+    return head + main + foot
+
+
 def main(argv):
     ranks = [a for a in argv if "rakuten_rank_" in a]
     pops = [a for a in argv if "popular_rakuten_" in a]
-    qf = [a for a in argv if "qoo10_" in a and a.endswith(".json")]
+    qf = [a for a in argv if "qoo10_" in a and "qoo10x_" not in a and a.endswith(".json")]
+    qxf = [a for a in argv if "qoo10x_" in a and a.endswith(".json")]
+    qoox = json.load(open(sorted(qxf)[-1], encoding="utf-8")) if qxf else None
     qoo = json.load(open(sorted(qf)[-1], encoding="utf-8")) if qf else None
     qoo_prev = json.load(open(sorted(qf)[-2], encoding="utf-8")) if len(qf) >= 2 else None
     qoo_at = datetime.strptime(qoo["at"], "%Y-%m-%d %H:%M") if qoo else None
@@ -396,6 +551,9 @@ def main(argv):
     open(PAGE, "w", encoding="utf-8").write(new)
     for d in items:
         open(f'glow_item_{d["slug"]}.html', "w", encoding="utf-8").write(item_page(d, items, new))
+    for d in extra_items(ranks, pops, qoox):
+        open(f'glow_item_{d["slug"]}.html', "w", encoding="utf-8").write(extra_page(d, items, new))
+        print(f'{d["slug"]:28} （時々入る）売れ筋{d["n_seen"]}/{d["n_rank"]}回 → 最安 {d["best"]["price"]:>6} {d["best"]["media"]}・{d["best"]["shop"]}')
     json.dump(dict(at=at.strftime("%Y-%m-%d %H:%M"), items=[{k: v for k, v in d.items() if k != "about"} for d in items]),
               open("bestsellers.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     for d in sorted(items, key=lambda d: -d["save"]):
