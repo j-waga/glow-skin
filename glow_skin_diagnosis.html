@@ -293,6 +293,7 @@
 .gnav-bar{margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);width:100vw;position:sticky;top:0;z-index:9999;background:rgba(255,255,255,.96);
  -webkit-backdrop-filter:saturate(180%) blur(8px);backdrop-filter:saturate(180%) blur(8px);
  border-bottom:1px solid #ece7e2;font-family:'Zen Kaku Gothic New',-apple-system,BlinkMacSystemFont,'Hiragino Sans',sans-serif}
+.gnav-bar::before{content:none}/* 2026-11-14 上部ヘッダー用 header::before がナビのリンクを覆っていたため */
 .gnav-in{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:4px;padding:0 12px;height:52px}
 .gnav-logo{font-family:'Shippori Mincho',serif;font-size:17px;font-weight:600;color:#c0392b;
  text-decoration:none;letter-spacing:.06em;margin-right:auto;white-space:nowrap;padding:6px 2px}
