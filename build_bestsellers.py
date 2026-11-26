@@ -22,7 +22,7 @@ from datetime import datetime
 BASE = "https://glow.stats-log.net/"
 PAGE = "glow_prices.html"
 A8_QOO10 = "https://px.a8.net/svt/ejp?a8mat=4AX8OC+BWOVM+4QYG+BW8O2&a8ejpredirect="   # A8.net Qoo10公式（提携済み・2026-08-28）
-AMAZON_TAG = "glowskin2026-22"   # Amazonアソシエイト（値段は載せない。検索結果へのリンクだけ）
+AMAZON_TAG = "glowstats-22"   # Amazonアソシエイト（値段は載せない。検索結果へのリンクだけ）
 E = html.escape
 yen = lambda v: f"{int(v):,}円"
 
