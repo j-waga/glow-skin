@@ -76,7 +76,7 @@
       "name": "診断結果でおすすめされた商品は購入できますか？",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "各ブランドに楽天市場の検索リンクが付いており、そこから購入できます（一部アフィリエイトリンクを含むPRです）。"
+        "text": "各ブランドに楽天市場とAmazonの検索リンクが付いており、そこから購入できます（一部アフィリエイトリンクを含むPRです）。"
       }
     },
     {
@@ -534,7 +534,7 @@
       <dd>乾燥肌・脂性肌・混合肌・敏感肌・インナードライ・エイジング肌の6タイプに対応。肌悩み・こだわり・予算と組み合わせて、国内外のブランドから最適なスキンケアを提案します。</dd>
 
       <dt>診断結果でおすすめされた商品は購入できますか？</dt>
-      <dd>各ブランドに楽天市場の検索リンクが付いており、そこから購入できます（一部アフィリエイトリンクを含むPRです）。</dd>
+      <dd>各ブランドに楽天市場とAmazonの検索リンクが付いており、そこから購入できます（一部アフィリエイトリンクを含むPRです）。</dd>
 
       <dt>個人情報の登録は必要ですか？</dt>
       <dd>不要です。アカウント作成やメール登録なしで、その場ですぐに診断できます。</dd>
@@ -680,6 +680,8 @@ const DB = {
 })();
 
 
+// Amazonアソシエイト（検索結果へのリンク。楽天と同じ検索語を使う）
+function amzUrl(b){try{var u=(b.__ggBuy!==undefined?b.__ggBuy:b.buyUrl)||'';var m=u.match(/search\/mall\/([^\/?#]+)/);if(!m)return '';var kw=decodeURIComponent(m[1]).replace(/\+/g,' ');return 'https://www.amazon.co.jp/s?k='+encodeURIComponent(kw)+'&tag=glowstats-22';}catch(e){return '';}}
 function showResult() {
   document.querySelectorAll('.step-card').forEach(c => c.classList.remove('active'));
   document.getElementById('progressWrap').style.display = 'none';
@@ -783,7 +785,7 @@ budgetPicks = brandIds.filter(id => DB.profiles[id] && cheaperAllowed.has(id) &&
         ${b.tag?`<span class="chip chip-pharma">${b.tag}</span>`:''}
       </div>
       <div class="brand-note"><span class="stars">${'★'.repeat(b.stars)+'☆'.repeat(5-b.stars)}</span>&nbsp;${b.note}</div>
-      ${b.comingSoon?`<div style="display:inline-block;margin-top:10px;padding:8px 18px;background:linear-gradient(90deg,#c9a86c,#8a6d3b);color:#fff;border-radius:20px;font-size:0.80rem;font-weight:700;">🔜 ${b.comingSoon}｜発売後に購入リンクをご案内します</div>`:(b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="sponsored nofollow noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:${idx+1},link_type:'buy_button',live:${b.__ggLive?1:0},skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`:'')}
+      ${b.comingSoon?`<div style="display:inline-block;margin-top:10px;padding:8px 18px;background:linear-gradient(90deg,#c9a86c,#8a6d3b);color:#fff;border-radius:20px;font-size:0.80rem;font-weight:700;">🔜 ${b.comingSoon}｜発売後に購入リンクをご案内します</div>`:(b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="sponsored nofollow noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:${idx+1},link_type:'buy_button',live:${b.__ggLive?1:0},skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`+` ${(function(){var au=amzUrl(b);return au?`<a href="${au}" target="_blank" rel="sponsored nofollow noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:${idx+1},link_type:'amazon_button',skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#232f3e;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">Amazonで見る(PR)</a>`:'';})()}`:'')}
     </div>`;
   }).join('');
 
@@ -869,7 +871,7 @@ return `<div class="brand-card" style="border-left:3px solid var(--sage);">
 </div>
 <div class="brand-reason">${b.reason}</div>
 <div class="brand-note">💡 今回選んだ予算帯より手頃な価格で、同じ好みの方に人気の一品です</div>
-${b.comingSoon?`<div style="display:inline-block;margin-top:10px;padding:8px 18px;background:linear-gradient(90deg,#c9a86c,#8a6d3b);color:#fff;border-radius:20px;font-size:0.80rem;font-weight:700;">🔜 ${b.comingSoon}｜発売後に購入リンクをご案内します</div>`:(b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="sponsored nofollow noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:'budget_pick',link_type:'buy_button',live:${b.__ggLive?1:0},skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`:'')}
+${b.comingSoon?`<div style="display:inline-block;margin-top:10px;padding:8px 18px;background:linear-gradient(90deg,#c9a86c,#8a6d3b);color:#fff;border-radius:20px;font-size:0.80rem;font-weight:700;">🔜 ${b.comingSoon}｜発売後に購入リンクをご案内します</div>`:(b.buyUrl?`<a href="${b.buyUrl}" target="_blank" rel="sponsored nofollow noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:'budget_pick',link_type:'buy_button',live:${b.__ggLive?1:0},skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#bf0000;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">🛒 楽天市場で購入(PR)</a>`+` ${(function(){var au=amzUrl(b);return au?`<a href="${au}" target="_blank" rel="sponsored nofollow noopener" onclick="trackEvent('affiliate_click',{event_category:'skindiag',brand_id:'${id}',rank:'budget_pick',link_type:'amazon_button',skin_type:'${skin}',concern:'${concern}',preference:'${pref}',budget:'${budget}'})" style="display:inline-block;margin-top:10px;padding:8px 20px;background:#232f3e;color:#fff;border-radius:20px;font-size:0.82rem;font-weight:700;text-decoration:none;">Amazonで見る(PR)</a>`:'';})()}`:'')}
 </div>`;
 }).join('');
 } else {
@@ -1044,7 +1046,7 @@ function resetDiagnosis() {
 <a href="/privacy.html">プライバシーポリシー</a>
 <a href="https://x.com/stats_log_net" target="_blank" rel="me noopener">X：@stats_log_net</a>
 </div>
-<p class="gfoot-note"><b>▪ 広告について</b>／本サイトは楽天アフィリエイトプログラム等に参加しており、商品リンクの一部から収益を得ています（PR）。報酬の有無は掲載順位・評価に影響していません。<br>
+<p class="gfoot-note"><b>▪ 広告について</b>／本サイトは楽天アフィリエイトプログラム等に参加しており、商品リンクの一部から収益を得ています（PR）。報酬の有無は掲載順位・評価に影響していません。<br><b>▪ Amazonアソシエイト</b>／Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。<br>
 <b>▪ 免責事項</b>／掲載内容は公開されている成分情報と一般的な皮膚科学の考え方にもとづく参考情報であり、医学的な診断・治療を目的としたものではありません。肌トラブルが続く場合は皮膚科専門医にご相談ください。価格・ランキングは各ページに記載の調査日時点のものです。</p>
 <div class="gfoot-cr">© 2026 Glow</div>
 </div></footer>
